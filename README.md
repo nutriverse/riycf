@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# R Commands for Generating
+# R Commands for IYCF
 
 <!-- badges: start -->
 <!-- badges: end -->
