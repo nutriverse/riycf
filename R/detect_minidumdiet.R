@@ -26,23 +26,17 @@
 #'    :--- | :---
 #'    *calc_age_months* | child age in months (numeric decimal format)
 #'    *child_bf* | child has ever breastfeed or not
-#'    *child_eibf* |
-#'    *child_eibf_hrs* |
-#'    *child_eibf_days* |
-#'    *chhild_addbf* |
-#'    *chhild_addbf1* |
-#'    *chhild_addbf2* |
-#'    *chhild_addbf3* |
-#'    *chhild_addbf4* |
-#'    *chhild_addbf5* |
-#'    *chhild_addbf888* |
+#'    *child_eibf* | the very first time the child was put to the breast (after birth)
+#'    *child_eibf_hrs* | in hours (after birth)
+#'    *child_eibf_days* | in days (after birth)
+#'    *chhild_addbf* | child received other liquid food other than breastmilk after two days of birth
 #'    *child_bfyest* | child breastfeed yesterday
-#'    *child_vitdrop* |
+#'    *child_vitdrop* | child received vitamin supplementation
 #'    *child_ors* | child get ORS yesterday
 #'    *child_water* | child get plain water yesterday
 #'    *child_juice* | child get Fruit juice or fruit-flavoured drinks including those made from syrups or powders yesterday
-#'    *child_broth* |
-#'    *child_porridge* |
+#'    *child_broth* | child get soup and broth
+#'    *child_porridge* | child get rice or other grain porridge
 #'    *child_bms* | child get any type of Infant formula yesterday
 #'    *child_bms_freq* | frequency of Infant formula feeding yesterday
 #'    *child_milk* | child get milk from animals, such as fresh, tinned or powdered milk yesterday
