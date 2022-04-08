@@ -133,7 +133,7 @@
 #'  food_score <- fg_score(breastmilk, grains, pulses, diary, meat,
 #'                         eggs, vita_fruveg, oth_fruveg)
 #'
-#'
+#'  df$food_score <- food_score
 #'
 #' @author Nicholus Tint Zaw
 #' @export
