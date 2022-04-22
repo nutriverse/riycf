@@ -1,9 +1,11 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# R Commands for IYCF
+# R Commands for Generating
 
 <!-- badges: start -->
+
+[![R-CMD-check](https://github.com/nutriverse/riycf/workflows/R-CMD-check/badge.svg)](https://github.com/nutriverse/riycf/actions)
 <!-- badges: end -->
 
 This package aims to generate updated indicators to assess infant and

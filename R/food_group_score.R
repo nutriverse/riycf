@@ -1,32 +1,23 @@
 ################################################################################
 #
-#' @title Construct the food groups consumption score (from Minimum Dietary Diversity 6-23 months (MDD))
+#' @title Construct the food groups consumption score (from Minimum Dietary
+#'    Diversity 6-23 months (MDD))
 #'
 #' @description Identification of individual 6-23 months old children dietary
-#' practices require the diversity of food group consumption. This command
-#' contains the series of function to calculate the individual food group (8 in
-#' total) and construct the total food group consumption score required to
-#' calculate Minimum Dietary Diversity (MDD)
-#'
+#'    practices require the diversity of food group consumption. This command
+#'    contains the series of function to calculate the individual food group
+#'    (8 in total) and construct the total food group consumption score required
+#'    to calculate Minimum Dietary Diversity (MDD)
 #'
 #' @param age This parameter holds the information about child age in the month
-#'    format, and it should be the continuous variable. It is either generated
-#'    from the child's birth date or self-reported answers from the caregivers.
-#'    If this was generated from the calculation based on the child's date of birth,
-#'    the decimal class of the variable would be the decimal numeric format.
+#'    format.
 #'
 #' @param q4 The binary variable which mentioned that the child was receiving
-#'    breastfeeding yesterday (previous days), which were coded as "1", or
-#'    not - as "0".
+#'    breastfeeding in the previous day (yes = "1", no = "0").
 #'
 #' The following variables were use for solid food group construction and it
 #' should be code as "1" for meeting the condition (consumed in last 24 hours),
 #' "0" for didn't (not consumed in last 24 hours), and "9" for don't know.
-#' The value coding pattern applied the same for all of the following parameters
-#' mentioned for this `fg_score` function.
-#'
-#' The following parameter input variables must contains the children information
-#' received any food items yesterday;
 #'
 #' @param q7b Porridge, bread, rice, noodles, and pasta.
 #'
@@ -65,10 +56,6 @@
 #'
 #' @param q7f Any other vegetables
 #'
-#'
-#' The following input parameters will be resulted after calculation of
-#' individual food group using above parameters.
-#'
 #' @param breastmilk child received breastfeeding or not
 #'
 #' @param  grains child consumed grains food group or not
@@ -85,24 +72,16 @@
 #'
 #' @param oth_fruveg child consumed fruits and vegetables or not
 #'
+#' @param var_list list of food consumption variables
 #'
-#' @return
-#' Each command produces the respective vector with "0" and "1" binary code. For
-#' the vector which meet the respective function, code as "1" and if didn't code
-#' as "0".
+#' @param df the data-frame which include the list of variables to calculate food
+#'    groups variables
+#'
+#'
+#' @return Each command produces the respective vector with "0" and "1" binary
+#'    result. For the `food_score` function, the return result was integer value
+#'    at continuous scale (0-8 as the IYCF food groups have 8 food groups).
 #' The return variable's detailed explanation is mentioned below.
-#'
-#'    **Variables** | **Description**
-#'    :--- | :---
-#'    *breastmilk* | binary variables indicate child get the breastfeeding at yesterday (breastmilk =1 ) or not (breastmilk = 0)
-#'    *grains* | binary variables indicate child get the food group related to grains, white/pale starchy roots, tubers and plantains at yesterday (grains =1 ) or not (grains = 0)
-#'    *pulses* | binary variables indicate child get the food group related to beans, peas, lentils, nuts and seeds at yesterday (legumes =1 ) or not (legumes = 0)
-#'    *diary* | binary variables indicate child get the food group related to dairy products (milk, infant formula, yogurt, cheese) at yesterday (diary =1 ) or not (diary = 0)
-#'    *meat* | binary variables indicate child get the food group related to flesh foods (meat, fish, poultry, organ meats) at yesterday (meat =1 ) or not (meat = 0)
-#'    *eggs* | binary variables indicate child get the any kind of eggs at yesterday (eggs =1 ) or not (eggs = 0)
-#'    *vita_fruveg* | binary variables indicate child get the food group related to vitamin A-rich fruits and vegetables at yesterday (vita_fruveg =1 ) or not (vita_fruveg)
-#'    *oth_fruveg* | binary variables indicate child get the food group related to other fruits and vegetables at yesterday (oth_fruveg =1 ) or not (oth_fruveg = 0)
-#'    *food_score* | continuous variables indicate child consume number of food groups including solid, semi-solid or soft foods and breastfeeding
 #'
 #'
 #'
@@ -112,28 +91,56 @@
 #'
 #'  df <- cfData
 #'
+#' # Individual Food Group Specific Function
 #'  breastmilk <- fg_breastmilk(df$child_bfyest, df$calc_age_months)
 #'
 #'  grains <- fg_grains(df$child_rice, df$child_potatoes, df$calc_age_months)
 #'
 #'  pulses <- fg_pulses(df$child_beans, df$calc_age_months)
 #'
-#'  diary <- fg_milk(df$child_bms, df$child_milk, df$child_mproduct, df$child_yogurt, df$child_yogurt, df$calc_age_months)
+#'  dairy <- fg_milk(df$child_bms, df$child_milk, df$child_mproduct,
+#'                   df$child_yogurt, df$child_yogurt, df$calc_age_months)
 #'
-#'  meat <- fg_meat(df$child_organ, df$child_insects, df$child_beef, df$child_fish, df$calc_age_months)
+#'  meat <- fg_meat(df$child_organ, df$child_insects, df$child_beef,
+#'                  df$child_fish, df$calc_age_months)
 #'
 #'  eggs <- fg_egg(df$child_eggs, df$calc_age_months)
 #'
-#'  vita_fruveg <- fg_vita_fruveg(df$child_pumpkin, df$child_leafyveg, df$child_mango, df$calc_age_months)
+#'  vita_fruveg <- fg_vita_fruveg(df$child_pumpkin, df$child_leafyveg,
+#'                                df$child_mango, df$calc_age_months)
 #'
-#'  oth_fruveg <- fg_oth_fruveg(df$child_fruit, df$child_fruit, df$calc_age_months)
+#'  oth_fruveg <- fg_oth_fruveg(df$child_fruit, df$child_fruit,
+#'                              df$calc_age_months)
 #'
+#' # General Dummy variable generator function
+#'  breastmilk <- dummy_gen(df, list("child_bfyest"))
+#'
+#'  grains <- dummy_gen(df, list("child_rice", "child_potatoes"))
+#'
+#'  pulses <- dummy_gen(df, list("child_beans"))
+#'
+#'  dairy_list <- list("child_bms", "child_milk", "child_mproduct",
+#'                     "child_yogurt", "child_yogurt" )
+#'
+#'  dairy <- dummy_gen(df, dairy_list)
+#'
+#'  meat_list <- list("child_organ", "child_insects", "child_beef",
+#'                    "child_fish")
+#'
+#'  meat <- dummy_gen(df, meat_list)
+#'
+#'  eggs <- dummy_gen(df, list("child_eggs"))
+#'
+#'  vita_fruveg_list <- list("child_pumpkin", "child_leafyveg", "child_mango")
+#'
+#'  vita_fruveg <- dummy_gen(df, vita_fruveg_list)
+#'
+#'  oth_fruveg <- dummy_gen(df, list("child_fruit", "child_fruit"))
 #'
 #'  # Calculate Food Consumption Score
-#'  food_score <- fg_score(breastmilk, grains, pulses, diary, meat,
+#'  food_score <- fg_score(breastmilk, grains, pulses, dairy, meat,
 #'                         eggs, vita_fruveg, oth_fruveg)
 #'
-#'  df$food_score <- food_score
 #'
 #' @author Nicholus Tint Zaw
 #' @export
@@ -305,3 +312,30 @@ fg_oth_fruveg <- function(q7h, q7f, age){
     return(oth_fruveg)
   }
 }
+
+
+################################################################################
+#
+#' @export
+#' @rdname fg_score
+#'
+#
+################################################################################
+# dummy var generator
+dummy_gen <- function(df, var_list){
+
+  if(!is.null(var_list)){
+
+    dummy_var <- NA
+
+    for (name in var_list){
+
+      print(name)
+
+      dummy_var <- ifelse(df[name] == 1, 1, dummy_var)
+    }
+
+    return(dummy_var)
+  }
+}
+
