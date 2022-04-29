@@ -44,15 +44,18 @@ Identification of individual 6-23 months old children dietary
    food group out of 8 food groups)
 }
 \examples{
-df$mdd <- rbinom(n = nrow(df), size = 1, prob = 0.5)
-df$mmf <- rbinom(n = nrow(df), size = 1, prob = 0.5)
-df$mmff <- rbinom(n = nrow(df), size = 1, prob = 0.5)
+  df <- iycfData
+  df$mdd <- rbinom(n = nrow(df), size = 1, prob = 0.5)
+  df$mmf <- rbinom(n = nrow(df), size = 1, prob = 0.5)
+  df$mmff <- rbinom(n = nrow(df), size = 1, prob = 0.5)
 
-mad <- get_mad(df$calc_age_months, df$child_bfyest, df$mdd, df$mmf, df$mmff)
+  mad <- get_mad(df$calc_age_months, df$child_bfyest, df$mdd, df$mmf, df$mmff)
 
 
 
 # Minimum Dietary Diversity
+  df <- iycfData
+
   df$food_score <- round(runif(nrow(df), min = 0, max = 8), 0)
 
   mdd <- get_mdd(df$food_score, df$calc_age_months)

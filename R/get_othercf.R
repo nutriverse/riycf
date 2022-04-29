@@ -29,7 +29,7 @@
 #'
 #' @examples
 #'
-#' df <- bfData
+#'   df <- iycfData
 #'
 #' # Introduction of Solid, Semi-solid or soft foods (6-8 months)
 #' # Solid food consumption previous day - yes/no

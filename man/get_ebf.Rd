@@ -30,7 +30,7 @@ Identification of individual 0-5 months old children exclusive
 }
 \examples{
 
- df <- bfData
+ df <- iycfData
 
 # Liquid consumption previous day - yes/no
  liquid <- list("child_vitdrop", "child_ors", "child_water", "child_juice",

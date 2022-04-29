@@ -25,11 +25,12 @@
 #'    (mad =1 ) or not (mad = 0)
 #'
 #' @examples
-#' df$mdd <- rbinom(n = nrow(df), size = 1, prob = 0.5)
-#' df$mmf <- rbinom(n = nrow(df), size = 1, prob = 0.5)
-#' df$mmff <- rbinom(n = nrow(df), size = 1, prob = 0.5)
+#'   df <- iycfData
+#'   df$mdd <- rbinom(n = nrow(df), size = 1, prob = 0.5)
+#'   df$mmf <- rbinom(n = nrow(df), size = 1, prob = 0.5)
+#'   df$mmff <- rbinom(n = nrow(df), size = 1, prob = 0.5)
 #'
-#' mad <- get_mad(df$calc_age_months, df$child_bfyest, df$mdd, df$mmf, df$mmff)
+#'   mad <- get_mad(df$calc_age_months, df$child_bfyest, df$mdd, df$mmf, df$mmff)
 #'
 #'
 #'

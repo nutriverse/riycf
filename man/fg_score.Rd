@@ -129,7 +129,7 @@ Identification of individual 6-23 months old children dietary
 
 # Individual Food Group Variable Construction
 
- df <- cfData
+ df <- iycfData
 
 # Individual Food Group Specific Function
  breastmilk <- fg_breastmilk(df$child_bfyest, df$calc_age_months)
@@ -153,29 +153,32 @@ Identification of individual 6-23 months old children dietary
                              df$calc_age_months)
 
 # General Dummy variable generator function
- breastmilk <- dummy_gen(df, list("child_bfyest"))
+ breastmilk <- dummy_gen(list(df$child_bfyest))
 
- grains <- dummy_gen(df, list("child_rice", "child_potatoes"))
+ grains <- dummy_gen(list(df$child_rice, df$child_potatoes))
 
- pulses <- dummy_gen(df, list("child_beans"))
+ pulses <- dummy_gen(list(df$child_beans))
 
- dairy_list <- list("child_bms", "child_milk", "child_mproduct",
-                    "child_yogurt", "child_yogurt" )
+ dairy_list <- list(df$child_bms, df$child_milk,
+                    df$child_mproduct, df$child_yogurt,
+                    df$child_yogurt)
 
- dairy <- dummy_gen(df, dairy_list)
+ dairy <- dummy_gen(dairy_list)
 
- meat_list <- list("child_organ", "child_insects", "child_beef",
-                   "child_fish")
+ meat_list <- list(df$child_organ, df$child_insects,
+                   df$child_beef, df$child_fish)
 
- meat <- dummy_gen(df, meat_list)
+ meat <- dummy_gen(meat_list)
 
- eggs <- dummy_gen(df, list("child_eggs"))
+ eggs <- dummy_gen(list(df$child_eggs))
 
- vita_fruveg_list <- list("child_pumpkin", "child_leafyveg", "child_mango")
+ vita_fruveg_list <- list(df$child_pumpkin,
+                          df$child_leafyveg,
+                          df$child_mango)
 
- vita_fruveg <- dummy_gen(df, vita_fruveg_list)
+ vita_fruveg <- dummy_gen(vita_fruveg_list)
 
- oth_fruveg <- dummy_gen(df, list("child_fruit", "child_fruit"))
+ oth_fruveg <- dummy_gen(list(df$child_fruit, df$child_fruit))
 
  # Calculate Food Consumption Score
  food_score <- fg_score(breastmilk, grains, pulses, dairy, meat,

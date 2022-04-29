@@ -15,4 +15,9 @@ usethis::use_data(bfData, overwrite = TRUE, compress = "xz")
 cfData <- read.csv("data-raw/iycf_data.csv")
 usethis::use_data(cfData, overwrite = TRUE, compress = "xz")
 
+
+iycfData <- rbind(bfData, cfData)
+usethis::use_data(iycfData, overwrite = TRUE, compress = "xz")
+
+
 ################################################################################

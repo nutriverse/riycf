@@ -67,6 +67,9 @@ Identification of individual 6-23 months old children received
 \examples{
 
 # Minimum Meal Frequency
+
+  df <- iycfData
+
   # breastfeeding children
   mmfbf_6to8 <- get_mmf_bf_6to8(df$child_bfyest,
                                 df$child_food_freq,

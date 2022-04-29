@@ -48,6 +48,8 @@ Identification of individual 6-23 months old children minimum
 \examples{
 
 # Calculate Non-breastfeed Children Milk Frequency
+ df <- iycfData
+
  df$milk_frq <- get_milk_frq(df$child_bms_freq, df$child_milk_freq,
                              df$child_mproduct_freq, df$child_yogurt)
 

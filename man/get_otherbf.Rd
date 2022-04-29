@@ -61,7 +61,7 @@ Identification of individual 0-23 months old children
 }
 \examples{
 
- df <- bfData
+ df <- iycfData
 
 # Ever Breastfed
 evbf <- get_evbf(df$child_bfyest, df$calc_age_months)

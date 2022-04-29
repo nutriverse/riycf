@@ -18,6 +18,8 @@
 #'
 #' @examples
 #' # Minimum Dietary Diversity
+#'   df <- iycfData
+#'
 #'   df$food_score <- round(runif(nrow(df), min = 0, max = 8), 0)
 #'
 #'   mdd <- get_mdd(df$food_score, df$calc_age_months)
