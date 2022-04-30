@@ -18,7 +18,7 @@ fg_score(
   breastmilk,
   grains,
   pulses,
-  diary,
+  dairy,
   meat,
   eggs,
   vita_fruveg,
@@ -41,7 +41,7 @@ fg_vita_fruveg(q7c, q7e, q7g, age)
 
 fg_oth_fruveg(q7h, q7f, age)
 
-dummy_gen(df, var_list)
+dummy_gen(var_list = NULL)
 }
 \arguments{
 \item{breastmilk}{child received breastfeeding or not}
@@ -50,7 +50,7 @@ dummy_gen(df, var_list)
 
 \item{pulses}{child consumed pulses food group or not}
 
-\item{diary}{child consumed diary and milk product food group or not}
+\item{dairy}{child consumed diary and milk product food group or not}
 
 \item{meat}{child consumed meat food group or not}
 
@@ -107,9 +107,6 @@ that are yellow or orange inside}
 
 \item{q7f}{Any other vegetables}
 
-\item{df}{the data-frame which include the list of variables to calculate food
-groups variables}
-
 \item{var_list}{list of food consumption variables}
 }
 \value{
@@ -153,32 +150,32 @@ Identification of individual 6-23 months old children dietary
                              df$calc_age_months)
 
 # General Dummy variable generator function
- breastmilk <- dummy_gen(list(df$child_bfyest))
+ breastmilk <- dummy_gen(var_list = list(df$child_bfyest))
 
- grains <- dummy_gen(list(df$child_rice, df$child_potatoes))
+ grains <- dummy_gen(var_list = list(df$child_rice, df$child_potatoes))
 
- pulses <- dummy_gen(list(df$child_beans))
+ pulses <- dummy_gen(var_list = list(df$child_beans))
 
  dairy_list <- list(df$child_bms, df$child_milk,
                     df$child_mproduct, df$child_yogurt,
                     df$child_yogurt)
 
- dairy <- dummy_gen(dairy_list)
+ dairy <- dummy_gen(var_list = dairy_list)
 
  meat_list <- list(df$child_organ, df$child_insects,
                    df$child_beef, df$child_fish)
 
- meat <- dummy_gen(meat_list)
+ meat <- dummy_gen(var_list = meat_list)
 
- eggs <- dummy_gen(list(df$child_eggs))
+ eggs <- dummy_gen(var_list = list(df$child_eggs))
 
  vita_fruveg_list <- list(df$child_pumpkin,
                           df$child_leafyveg,
                           df$child_mango)
 
- vita_fruveg <- dummy_gen(vita_fruveg_list)
+ vita_fruveg <- dummy_gen(var_list = vita_fruveg_list)
 
- oth_fruveg <- dummy_gen(list(df$child_fruit, df$child_fruit))
+ oth_fruveg <- dummy_gen(var_list = list(df$child_fruit, df$child_fruit))
 
  # Calculate Food Consumption Score
  food_score <- fg_score(breastmilk, grains, pulses, dairy, meat,

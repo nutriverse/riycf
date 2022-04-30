@@ -62,7 +62,7 @@
 #'
 #' @param pulses child consumed pulses food group or not
 #'
-#' @param diary child consumed diary and milk product food group or not
+#' @param dairy child consumed diary and milk product food group or not
 #'
 #' @param meat child consumed meat food group or not
 #'
@@ -73,10 +73,6 @@
 #' @param oth_fruveg child consumed fruits and vegetables or not
 #'
 #' @param var_list list of food consumption variables
-#'
-#' @param df the data-frame which include the list of variables to calculate food
-#'    groups variables
-#'
 #'
 #' @return Each command produces the respective vector with "0" and "1" binary
 #'    result. For the `food_score` function, the return result was integer value
@@ -113,32 +109,32 @@
 #'                              df$calc_age_months)
 #'
 #' # General Dummy variable generator function
-#'  breastmilk <- dummy_gen(list(df$child_bfyest))
+#'  breastmilk <- dummy_gen(var_list = list(df$child_bfyest))
 #'
-#'  grains <- dummy_gen(list(df$child_rice, df$child_potatoes))
+#'  grains <- dummy_gen(var_list = list(df$child_rice, df$child_potatoes))
 #'
-#'  pulses <- dummy_gen(list(df$child_beans))
+#'  pulses <- dummy_gen(var_list = list(df$child_beans))
 #'
 #'  dairy_list <- list(df$child_bms, df$child_milk,
 #'                     df$child_mproduct, df$child_yogurt,
 #'                     df$child_yogurt)
 #'
-#'  dairy <- dummy_gen(dairy_list)
+#'  dairy <- dummy_gen(var_list = dairy_list)
 #'
 #'  meat_list <- list(df$child_organ, df$child_insects,
 #'                    df$child_beef, df$child_fish)
 #'
-#'  meat <- dummy_gen(meat_list)
+#'  meat <- dummy_gen(var_list = meat_list)
 #'
-#'  eggs <- dummy_gen(list(df$child_eggs))
+#'  eggs <- dummy_gen(var_list = list(df$child_eggs))
 #'
 #'  vita_fruveg_list <- list(df$child_pumpkin,
 #'                           df$child_leafyveg,
 #'                           df$child_mango)
 #'
-#'  vita_fruveg <- dummy_gen(vita_fruveg_list)
+#'  vita_fruveg <- dummy_gen(var_list = vita_fruveg_list)
 #'
-#'  oth_fruveg <- dummy_gen(list(df$child_fruit, df$child_fruit))
+#'  oth_fruveg <- dummy_gen(var_list = list(df$child_fruit, df$child_fruit))
 #'
 #'  # Calculate Food Consumption Score
 #'  food_score <- fg_score(breastmilk, grains, pulses, dairy, meat,
@@ -153,15 +149,15 @@
 #################################################################################
 
 ## Food Groups Score ##
-fg_score <- function(breastmilk, grains, pulses, diary, meat, eggs,
+fg_score <- function(breastmilk, grains, pulses, dairy, meat, eggs,
                      vita_fruveg, oth_fruveg){
 
   if(!is.null(breastmilk) & !is.null(grains) & !is.null(pulses) &
-     !is.null(diary) & !is.null(meat) & !is.null(eggs) &
+     !is.null(dairy) & !is.null(meat) & !is.null(eggs) &
      !is.null(vita_fruveg) & !is.null(oth_fruveg)){
 
        fg_group <- as.data.frame(
-         cbind(breastmilk, grains, pulses, diary, meat, eggs, vita_fruveg, oth_fruveg)
+         cbind(breastmilk, grains, pulses, dairy, meat, eggs, vita_fruveg, oth_fruveg)
          )
 
        food_score <- rowSums(fg_group, na.rm = FALSE)
@@ -239,11 +235,11 @@ fg_pulses <- function(q7n, age){
 fg_milk <- function(q6b, q6c, q6d, q7a, q7o, age){
   if(!is.null(q6b) & !is.null(q6c) & !is.null(q6d) & !is.null(q7a) &
      !is.null(q7o)){
-    diary <- ifelse(age >= 6 & age < 24 &
+    dairy <- ifelse(age >= 6 & age < 24 &
                       (q6b == 1 | q6c == 1 | q6d == 1 |
                          q7a == 1 | q7o == 1), 1, 0)
 
-    return(diary)
+    return(dairy)
   }
 }
 
@@ -310,7 +306,7 @@ fg_vita_fruveg <- function(q7c, q7e, q7g, age){
 # Other Fruits and vegetables
 fg_oth_fruveg <- function(q7h, q7f, age){
   if(!is.null(q7h) & !is.null(q7f)){
-    oth_fruveg <- ifelse(age >= 6 & age < 24 & (q7h == 1 | q7f == 1), 1, 0)
+    oth_fruveg <- ifelse(age >= 6 & age < 24 & (q7h == 1 | q7f == 1), 1, 0) # apply NA for age out of range
 
     return(oth_fruveg)
   }
@@ -325,14 +321,16 @@ fg_oth_fruveg <- function(q7h, q7f, age){
 #
 ################################################################################
 # dummy var generator
-dummy_gen <- function(var_list){
+dummy_gen <- function(var_list = NULL){
 
   if(!is.null(var_list)){
 
     vect_df <- as.data.frame(do.call(cbind, var_list))
-    dummy_var <- rowSums(vect_df, na.rm = TRUE)
-    dummy_var <- ifelse(dummy_var > 0 & !is.na(dummy_var), 1,
-                        ifelse(is.na(dummy_var), NA, 0))
+
+    total <- rowSums(vect_df, na.rm = FALSE)
+
+    dummy_var <- ifelse(total > 0, 1,
+                        ifelse(is.na(total), NA, 0))
 
     return(dummy_var)
   }

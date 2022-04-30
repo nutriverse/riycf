@@ -51,48 +51,50 @@ Identification of individual 0-23 months old children
 
 # Introduction of Solid, Semi-solid or soft foods (6-8 months)
 # Solid food consumption previous day - yes/no
- solid <- list("child_rice", "child_potatoes", "child_pumpkin",
-               "child_beans", "child_leafyveg", "child_mango", "child_fruit",
-               "child_organ", "child_beef", "child_fish", "child_insects",
-               "child_eggs", "child_yogurt", "child_fat", "child_plam",
-               "child_sweets", "child_condiments")
+ solid <- list(df$child_rice, df$child_potatoes, df$child_pumpkin,
+               df$child_beans, df$child_leafyveg, df$child_mango,
+               df$child_fruit, df$child_organ, df$child_beef, df$child_fish,
+               df$child_insects, df$child_eggs, df$child_yogurt,
+               df$child_fat, df$child_plam, df$child_sweets,
+               df$child_condiments)
 
- df$solid_food <- dummy_gen(df, solid)
+ df$solid_food <- dummy_gen(var_list = solid)
 
  isssf <- get_isssf(df$solid_food, df$calc_age_months)
 
 
 # Egg and/or Flesh food consumption (6-23 months)
 # Egg and/or Flesh food consumption previous day - yes/no
- egg_meat <- list("child_organ", "child_beef", "child_fish", "child_insects",
-                  "child_eggs")
+ egg_meat <- list(df$child_organ, df$child_beef, df$child_fish,
+                  df$child_insects, df$child_eggs)
 
- df$egg_meat <- dummy_gen(df, egg_meat)
+ df$egg_meat <- dummy_gen(var_list = egg_meat)
 
  eff <- get_eff(df$egg_meat, df$calc_age_months)
 
 # Sweet beverage consumption (6-23 months)
 # Sweet beverage consumption previous day - yes/no
- sweet <- list("child_juice", "child_broth", "child_milk", "child_mproduct")
+ sweet <- list(df$child_juice, df$child_broth, df$child_milk,
+               df$child_mproduct)
 
- df$sweet <- dummy_gen(df, sweet)
+ df$sweet <- dummy_gen(var_list = sweet)
 
  swb <- get_swb(df$sweet, df$calc_age_months)
 
 # Unhealthy food consumption (6-23 months)
 # Unhealthy food consumption previous day - yes/no
- unhealthy <- list("child_sweets", "child_condiments")
+ unhealthy <- list(df$child_sweets, df$child_condiments)
 
- df$unhealthy <- dummy_gen(df, unhealthy)
+ df$unhealthy <- dummy_gen(var_list = unhealthy)
 
  ufc <- get_ufc(df$unhealthy, df$calc_age_months)
 
 # Zero vegetable or fruit consumption (6-23 months)
 # Zero vegetable or fruit consumption previous day - yes/no
- vege_fruit <- list("child_pumpkin", "child_leafyveg", "child_mango",
-                    "child_fruit")
+ vege_fruit <- list(df$child_pumpkin, df$child_leafyveg, df$child_mango,
+                    df$child_fruit)
 
- df$vege_fruit <- dummy_gen(df, vege_fruit)
+ df$vege_fruit <- dummy_gen(var_list = vege_fruit)
 
  zvf <- get_zvf(df$vege_fruit, df$calc_age_months)
 
