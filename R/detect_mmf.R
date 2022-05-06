@@ -92,11 +92,9 @@ get_mmf <- function(mmf_bf, mmf_nonbf){
 
   if(!is.null(get_mmf_bf) & !is.null(mmf_nonbf)){
 
-    mmf <- as.data.frame(
-      cbind(mmf_bf, mmf_nonbf)
-    )
-
-    mmf <- rowSums(mmf, na.rm = TRUE)
+    mmf <- ifelse((!is.na(mmf_bf) & mmf_bf == 1) |
+                    (!is.na(mmf_nonbf) & mmf_nonbf == 1), 1,
+                  ifelse(is.na(mmf_bf) & is.na(mmf_nonbf), NA, 0))
 
     return(mmf)
   }
@@ -116,12 +114,9 @@ get_mmf_bf <- function(mmfbf_6to8, mmfbf_9to23){
 
   if(!is.null(mmfbf_6to8) & !is.null(mmfbf_9to23)){
 
-    mmf_bf <- as.data.frame(
-      cbind(mmfbf_6to8, mmfbf_9to23)
-    )
-
-    mmf_bf <- rowSums(mmf_bf, na.rm = TRUE)
-
+    mmf_bf <- ifelse((!is.na(mmfbf_6to8) & mmfbf_6to8 == 1) |
+                       (!is.na(mmfbf_9to23) & mmfbf_9to23 == 1), 1,
+                     ifelse(is.na(mmfbf_6to8) & is.na(mmfbf_9to23), NA, 0))
     return(mmf_bf)
   }
 }
@@ -137,7 +132,12 @@ get_mmf_bf_6to8 <- function(q4, q8, age){
 
   if(!is.null(q4) & !is.null(q8) & !is.null(age)){
 
-    mmfbf_6to8 <- ifelse(q4 == 1 & age >= 6 & age < 9 & q8 >= 2, 1, 0)
+    mmfbf_6to8 <- ifelse(q4 == 1 & age >= 6 & age < 9 & q8 >= 2, 1,
+                         ifelse(age < 6, NA,
+                                ifelse(age >= 9, NA, 0)))
+
+    mmfbf_6to8 <- ifelse(is.na(q4) | is.na(q8) | is.na(age) | q4 == 0,
+                         NA, mmfbf_6to8)
 
     return(mmfbf_6to8)
   }
@@ -154,7 +154,12 @@ get_mmf_bf_9to23 <- function(q4, q8, age){
 
   if(!is.null(q4) & !is.null(q8) & !is.null(age)){
 
-    mmfbf_9to23 <- ifelse(q4 == 1 & age >= 9 & age < 24 & q8 >= 3, 1, 0)
+    mmfbf_9to23 <- ifelse(q4 == 1 & age >= 9 & age < 24 & q8 >= 3, 1,
+                          ifelse(age < 9, NA,
+                                 ifelse(age >= 24, NA, 0)))
+
+    mmfbf_9to23 <- ifelse(is.na(q4) | is.na(q8) | is.na(age) | q4 == 0,
+                          NA, mmfbf_9to23)
 
     return(mmfbf_9to23)
   }
@@ -175,7 +180,12 @@ get_mmf_nonbf <- function(q4, q8, nonbf_frq, age){
     if(!is.null(q4) & !is.null(q8) & !is.null(nonbf_frq) & !is.null(age)){
 
       mmf_nonbf <- ifelse(q4 == 0 & age >= 6 & age < 24 & q8 >= 1 &
-                            nonbf_frq >= 4, 1, 0)
+                            nonbf_frq >= 4, 1,
+                          ifelse(age < 6, NA,
+                                 ifelse(age >= 24, NA, 0)))
+
+      mmf_nonbf <- ifelse(is.na(q4) | is.na(q8) | is.na(nonbf_frq) |
+                            is.na(age) | q4 == 1, NA, mmf_nonbf)
 
       return(mmf_nonbf)
     }
@@ -197,7 +207,7 @@ get_nonbf_frq <- function(q6bnum, q6cnum, q6dnum, q8){
       cbind(q6bnum, q6cnum, q6dnum, q8)
     )
 
-    nonbf_frq <- rowSums(nonbf_frq, na.rm = TRUE)
+    nonbf_frq <- rowSums(nonbf_frq, na.rm = FALSE)
 
     return(nonbf_frq)
   }

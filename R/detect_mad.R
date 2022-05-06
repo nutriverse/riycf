@@ -50,7 +50,12 @@ get_mad <- function(age, q4, mdd, mmf, mmff){
 
     mad <- ifelse(age >= 6 & age < 24 &
                     (q4 == 1 | mmff == 1) &
-                    mdd == 1 & mmf == 1, 1, 0)
+                    mdd == 1 & mmf == 1, 1,
+                  ifelse(age < 6, NA,
+                         ifelse(age >= 24, NA, 0)))
+
+    mad <- ifelse(is.na(age) | is.na(mdd) | is.na(mmf) |
+                    (is.na(q4) & is.na(mmff)), NA, mad)
 
     return(mad)
 

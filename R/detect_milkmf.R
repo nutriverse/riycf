@@ -67,7 +67,12 @@ get_mmff <- function(q4, age, milk_frq){
 
   if(!is.null(q4) & !is.null(milk_frq) & !is.null(age)){
 
-    mmff <- ifelse(q4 == 0 & age >= 6 & age < 24 & milk_frq >= 2, 1, 0)
+    mmff <- ifelse(q4 == 0 & age >= 6 & age < 24 & milk_frq >= 2, 1,
+                   ifelse(age < 6, NA,
+                          ifelse(age >= 24, NA, 0)))
+
+    mmff <- ifelse(is.na(q4) | is.na(age) | is.na(milk_frq) | q4 == 1,
+                   NA, mmff)
 
     return(mmff)
 
@@ -92,7 +97,7 @@ get_milk_frq <- function(q6bnum, q6cnum, q6dnum, q7anum){
       cbind(q6bnum, q6cnum, q6dnum, q7anum)
     )
 
-    milk_frq <- rowSums(milk_frq, na.rm = TRUE)
+    milk_frq <- rowSums(milk_frq, na.rm = FALSE)
 
     return(milk_frq)
 

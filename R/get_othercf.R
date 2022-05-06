@@ -40,7 +40,7 @@
 #'                df$child_fat, df$child_plam, df$child_sweets,
 #'                df$child_condiments)
 #'
-#'  df$solid_food <- dummy_gen(var_list = solid)
+#'  df$solid_food <- get_dummy(var_list = solid)
 #'
 #'  isssf <- get_isssf(df$solid_food, df$calc_age_months)
 #'
@@ -50,7 +50,7 @@
 #'  egg_meat <- list(df$child_organ, df$child_beef, df$child_fish,
 #'                   df$child_insects, df$child_eggs)
 #'
-#'  df$egg_meat <- dummy_gen(var_list = egg_meat)
+#'  df$egg_meat <- get_dummy(var_list = egg_meat)
 #'
 #'  eff <- get_eff(df$egg_meat, df$calc_age_months)
 #'
@@ -59,7 +59,7 @@
 #'  sweet <- list(df$child_juice, df$child_broth, df$child_milk,
 #'                df$child_mproduct)
 #'
-#'  df$sweet <- dummy_gen(var_list = sweet)
+#'  df$sweet <- get_dummy(var_list = sweet)
 #'
 #'  swb <- get_swb(df$sweet, df$calc_age_months)
 #'
@@ -67,7 +67,7 @@
 #' # Unhealthy food consumption previous day - yes/no
 #'  unhealthy <- list(df$child_sweets, df$child_condiments)
 #'
-#'  df$unhealthy <- dummy_gen(var_list = unhealthy)
+#'  df$unhealthy <- get_dummy(var_list = unhealthy)
 #'
 #'  ufc <- get_ufc(df$unhealthy, df$calc_age_months)
 #'
@@ -76,7 +76,7 @@
 #'  vege_fruit <- list(df$child_pumpkin, df$child_leafyveg, df$child_mango,
 #'                     df$child_fruit)
 #'
-#'  df$vege_fruit <- dummy_gen(var_list = vege_fruit)
+#'  df$vege_fruit <- get_dummy(var_list = vege_fruit)
 #'
 #'  zvf <- get_zvf(df$vege_fruit, df$calc_age_months)
 #'

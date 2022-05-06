@@ -38,7 +38,7 @@ Identification of individual 0-5 months old children exclusive
                 df$child_bms, df$child_milk, df$child_mproduct,
                 df$child_liquid)
 
- df$liquid_food <- dummy_gen(var_list = liquid)
+ df$liquid_food <- get_dummy(var_list = liquid)
 
 
 # Solid food consumption previous day - yes/no
@@ -49,7 +49,7 @@ Identification of individual 0-5 months old children exclusive
                df$child_fat, df$child_plam, df$child_sweets,
                df$child_condiments)
 
- df$solid_food <- dummy_gen(var_list = solid)
+ df$solid_food <- get_dummy(var_list = solid)
 
 
 # Child exclusively breastfed

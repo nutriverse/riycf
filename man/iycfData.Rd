@@ -67,8 +67,11 @@ will update later!
 iycfData
 }
 \description{
-This sample dataset (`iycfData`) contained 359 observations and 49 variables.
-The detailed variable's description are mentioned in the following table.
+This sample demo dataset (`iycfData`) contained 359 observations and 49
+variables. The following tables explain the detailed description of each
+variable included in the sample dataset. The CARE International Myanmar
+Country program provided this demo dataset, and all the Personal
+Identifiable Information (PII) were excluded.
 }
 \examples{
 # explore the first 6 observations from the dataset

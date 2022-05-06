@@ -1,0 +1,74 @@
+################################################################################
+#
+#' @title Construct the food groups consumption score (from Minimum Dietary
+#'    Diversity 6-23 months (MDD))
+#'
+#' @description Identification of individual 6-23 months old children who meet
+#'    the minimum dietary diversity requirement require the information about
+#'    how many food groups the child consumed yesterday (8 groups in total).
+#'
+#' @param breastmilk child received breastfeeding or not
+#'
+#' @param grains child consumed grains food group or not
+#'
+#' @param pulses child consumed pulses food group or not
+#'
+#' @param dairy child consumed diary and milk product food group or not
+#'
+#' @param meat child consumed meat food group or not
+#'
+#' @param eggs child consumed eggs food group or not
+#'
+#' @param vita_fruveg child consumed vitamin A-rich fruits and vegetables or not
+#'
+#' @param oth_fruveg child consumed fruits and vegetables or not
+#'
+#' @return the integer value at continuous scale (0-8 as the IYCF food groups
+#'    have 8 food groups).
+#'
+#' @examples
+#'
+#' # Individual Food Group Variable Construction
+#'
+#'  df <- iycfData
+#'
+#' # General Dummy variable generator function
+#'  breastmilk <- round(runif(nrow(df), min = 0, max = 1), 0)
+#'  grains <- round(runif(nrow(df), min = 0, max = 1), 0)
+#'  pulses <- round(runif(nrow(df), min = 0, max = 1), 0)
+#'  dairy <- round(runif(nrow(df), min = 0, max = 1), 0)
+#'  meat <- round(runif(nrow(df), min = 0, max = 1), 0)
+#'  eggs <- round(runif(nrow(df), min = 0, max = 1), 0)
+#'  vita_fruveg <- round(runif(nrow(df), min = 0, max = 1), 0)
+#'  oth_fruveg <- round(runif(nrow(df), min = 0, max = 1), 0)
+#'
+#'  # Calculate Food Consumption Score
+#'  food_score <- get_foodscore(breastmilk, grains, pulses, dairy, meat,
+#'                              eggs, vita_fruveg, oth_fruveg)
+#'
+#'
+#' @author Nicholus Tint Zaw
+#' @export
+#' @rdname get_foodscore
+#'
+#'
+#################################################################################
+
+## Food Groups Score ##
+get_foodscore <- function(breastmilk, grains, pulses, dairy, meat, eggs,
+                     vita_fruveg, oth_fruveg){
+
+  if(!is.null(breastmilk) & !is.null(grains) & !is.null(pulses) &
+     !is.null(dairy) & !is.null(meat) & !is.null(eggs) &
+     !is.null(vita_fruveg) & !is.null(oth_fruveg)){
+
+       fg_group <- as.data.frame(
+         cbind(breastmilk, grains, pulses, dairy, meat, eggs, vita_fruveg,
+               oth_fruveg)
+         )
+
+       food_score <- rowSums(fg_group, na.rm = FALSE)
+
+       return(food_score)
+  }
+}

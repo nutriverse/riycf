@@ -37,7 +37,10 @@ get_mdd <- function(food_score, age){
 
   if(!is.null(age) & !is.null(food_score)){
 
-    mdd <- ifelse(age >= 6 & age < 24 & food_score >= 5, 1 , 0)
+    mdd <- ifelse(age >= 6 & age < 24 & food_score >= 5, 1,
+                  ifelse(age < 6, NA,
+                         ifelse(age >= 24, NA,
+                                ifelse(is.na(food_score), NA, 0))))
 
     return(mdd)
   }
