@@ -64,7 +64,11 @@ get_ebf <- function(q4, age, liquid_food, solid_food){
   if(!is.null(q4) & !is.null(age) & !is.null(liquid_food) &
      !is.null(solid_food)){
 
-    ebf <- ifelse(age < 6 & q4 == 1 & liquid_food == 0 & solid_food == 0, 1, 0)
+    ebf <- ifelse(age < 6 & q4 == 1 & liquid_food == 0 & solid_food == 0, 1,
+                  ifelse(age >= 6, NA, 0))
+
+    ebf <- ifelse(is.na(q4) | is.na(age) | is.na(liquid_food) |
+                    is.na(solid_food), NA, ebf)
 
     return(ebf)
   }

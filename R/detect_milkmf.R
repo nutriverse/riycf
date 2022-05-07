@@ -62,7 +62,7 @@
 
 
 ################################################################################
-
+# Minimum Milk Feeding Frequency
 get_mmff <- function(q4, age, milk_frq){
 
   if(!is.null(q4) & !is.null(milk_frq) & !is.null(age)){
@@ -87,7 +87,7 @@ get_mmff <- function(q4, age, milk_frq){
 #' @rdname get_mmff
 #'
 ################################################################################
-
+# Milk Feeding Frequency Score
 get_milk_frq <- function(q6bnum, q6cnum, q6dnum, q7anum){
 
   if(!is.null(q6bnum) & !is.null(q6cnum) & !is.null(q6dnum) &

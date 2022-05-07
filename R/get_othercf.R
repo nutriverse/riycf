@@ -92,7 +92,11 @@ get_isssf <- function(solid_food, age){
 
   if(!is.null(solid_food) & !is.null(age)){
 
-    isssf <- ifelse(age >= 6 & age < 9 & solid_food == 1, 1, 0)
+    isssf <- ifelse(age >= 6 & age < 9 & solid_food == 1, 1,
+                    ifelse(age < 6, NA,
+                           ifelse(age >= 9, NA, 0)))
+
+    isssf <- ifelse(is.na(solid_food) | is.na(age), NA, isssf)
 
     return(isssf)
   }
@@ -111,7 +115,11 @@ get_eff <- function(egg_meat, age){
 
   if(!is.null(egg_meat) & !is.null(age)){
 
-    eff <- ifelse(age >= 6 & age < 24 & egg_meat == 1, 1, 0)
+    eff <- ifelse(age >= 6 & age < 24 & egg_meat == 1, 1,
+                  ifelse(age < 6, NA,
+                         ifelse(age >= 24, NA, 0)))
+
+    eff <- ifelse(is.na(egg_meat) | is.na(age), NA, eff)
 
     return(eff)
   }
@@ -130,7 +138,11 @@ get_swb <- function(sweet, age){
 
   if(!is.null(sweet) & !is.null(age)){
 
-    swb <- ifelse(age >= 6 & age < 24 & sweet == 1, 1, 0)
+    swb <- ifelse(age >= 6 & age < 24 & sweet == 1, 1,
+                  ifelse(age < 6, NA,
+                         ifelse(age >= 24, NA, 0)))
+
+    swb <- ifelse(is.na(sweet) | is.na(age), NA, swb)
 
     return(swb)
   }
@@ -149,7 +161,11 @@ get_ufc <- function(unhealthy, age){
 
   if(!is.null(unhealthy) & !is.null(age)){
 
-    ufc <- ifelse(age >= 6 & age < 24 & unhealthy == 1, 1, 0)
+    ufc <- ifelse(age >= 6 & age < 24 & unhealthy == 1, 1,
+                  ifelse(age < 6, NA,
+                         ifelse(age >= 24, NA, 0)))
+
+    ufc <- ifelse(is.na(unhealthy) | is.na(age), NA, ufc)
 
     return(ufc)
   }
@@ -169,7 +185,11 @@ get_zvf <- function(vege_fruit, age){
 
   if(!is.null(vege_fruit) & !is.null(age)){
 
-    zvf <- ifelse(age >= 6 & age < 24 & vege_fruit == 0, 1, 0)
+    zvf <- ifelse(age >= 6 & age < 24 & vege_fruit == 0, 1,
+                  ifelse(age < 6, NA,
+                         ifelse(age >= 24, NA, 0)))
+
+    zvf <- ifelse(is.na(vege_fruit) |is.na(age), NA, zvf)
 
     return(zvf)
   }

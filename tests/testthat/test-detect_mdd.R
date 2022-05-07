@@ -1,6 +1,7 @@
 library(riycf)
 
-
+################################################################################
+# Minimum Dietary Diversity (MDD)
 # Return result values check
 result_1 <- get_mdd(7, 1)
 result_2 <- get_mdd(c(NA, 4, 5), c(6, 10, 20))

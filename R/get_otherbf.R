@@ -77,7 +77,10 @@ get_evbf <- function(q4, age){
 
   if(!is.null(q4) & !is.null(age)){
 
-    evbf <- ifelse(age < 24 & q4 == 1, 1, 0)
+    evbf <- ifelse(age < 24 & q4 == 1, 1,
+                   ifelse(age >= 24, NA, 0))
+
+    evbf <- ifelse(is.na(q4) | is.na(age), NA, evbf)
 
     return(evbf)
   }
@@ -96,7 +99,10 @@ get_eibf <- function(age, q2, q2_hour){
 
   if(!is.null(age) & !is.null(q2) & !is.null(q2_hour)){
 
-    eibf <- ifelse(age < 24 & (q2 == 0 | q2_hour == 0), 1, 0)
+    eibf <- ifelse(age < 24 & (q2 == 0 | q2_hour == 0), 1,
+                   ifelse(age >= 24, NA, 0))
+
+    eibf <- ifelse(is.na(age) | (is.na(q2) & is.na(q2_hour)), NA, eibf)
 
     return(eibf)
   }
@@ -115,7 +121,10 @@ get_ebf2d <- function(q3, age){
 
   if(!is.null(q3) & !is.null(age)){
 
-    ebf2d <- ifelse(age < 24 & q3 == 2, 1, 0)
+    ebf2d <- ifelse(age < 24 & q3 == 0, 1,
+                    ifelse(age >= 24, NA, 0))
+
+    ebf2d <- ifelse(is.na(q3) |  is.na(age), NA, ebf2d)
 
     return(ebf2d)
   }
@@ -134,7 +143,11 @@ get_mixmf <- function(q4, age, q6b, q6c){
 
   if(!is.null(q4) & !is.null(age) & !is.null(q6b) & !is.null(q6c)){
 
-    mixmf <- ifelse(age < 6 & q4 == 1 & (q6b == 1 | q6c == 1), 1, 0)
+    mixmf <- ifelse(age < 6 & q4 == 1 & (q6b == 1 | q6c == 1), 1,
+                    ifelse(age >= 6, NA, 0))
+
+    mixmf <- ifelse(is.na(q4) | is.na(age) | (is.na(q6b) & is.na(q6c)),
+                    NA, mixmf)
 
     return(mixmf)
   }
@@ -153,7 +166,11 @@ get_cbf <- function(q4, age){
 
   if(!is.null(q4) & !is.null(age)){
 
-    cbf <- ifelse(age >= 12 & age < 24 & q4 == 1, 1, 0)
+    cbf <- ifelse(age >= 12 & age < 24 & q4 == 1, 1,
+                  ifelse(age < 12, NA,
+                         ifelse(age >= 24, NA, 0)))
+
+    cbf <- ifelse(is.na(q4) | is.na(age), NA, cbf)
 
     return(cbf)
 
@@ -173,7 +190,10 @@ get_bof <- function(q5, age){
 
   if(!is.null(q5) & !is.null(age)){
 
-    bof <- ifelse(age < 24 & q5 == 1, 1, 0)
+    bof <- ifelse(age < 24 & q5 == 1, 1,
+                  ifelse(age >= 24, NA, 0))
+
+    bof <- ifelse(is.na(q5) | is.na(age), NA, bof)
 
     return(bof)
 

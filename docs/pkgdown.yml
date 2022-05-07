@@ -1,0 +1,7 @@
+pandoc: 2.17.1.1
+pkgdown: 2.0.3
+pkgdown_sha: ~
+articles:
+  minimum_diet: minimum_diet.html
+last_built: 2022-05-06T23:24Z
+

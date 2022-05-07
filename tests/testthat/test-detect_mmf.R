@@ -5,7 +5,7 @@ library(riycf)
 ################################################################################
 # Return result values check
 ################################################################################
-
+# Breastfeeding Child - MMF 6-8 months
 # get_mmf_bf_6to8
 check_1 <- get_mmf_bf_6to8(0, 1, 2)
 check_2 <- get_mmf_bf_6to8(1, 1, 2)
@@ -30,7 +30,7 @@ test_that("`get_mmf_bf_6to8` function define the output values correctly", {
 
 })
 
-
+# Breastfeeding Child - MMF 9-23 months
 # get_mmf_bf_9to23
 check_1 <- get_mmf_bf_9to23(0, 1, 9)
 check_2 <- get_mmf_bf_9to23(1, 1, 8)
@@ -56,7 +56,7 @@ test_that("`get_mmf_bf_9to23` function define the output values correctly", {
 
 })
 
-
+# Breastfeeding Child - MMF 6-23 months
 # get_mmf_bf
 check_1 <- get_mmf_bf(NA, 1)
 check_2 <- get_mmf_bf(1, NA)
@@ -80,7 +80,7 @@ test_that("`get_mmf_bf` function define the output values correctly", {
 
 })
 
-
+# Non-Breastfeeding Child Meal Frequency including milk feeding
 # get_nonbf_frq
 check_1 <- get_nonbf_frq(0, 0, 0, 0)
 check_2 <- get_nonbf_frq(1, 1, 1, 1)
@@ -110,7 +110,7 @@ test_that("`get_nonbf_frq` function define the output values correctly", {
 })
 
 
-
+# Non-Breastfeeding Child - MMF 6-23 months
 # get_mmf_nonbf
 check_1 <- get_mmf_nonbf(NA, NA, NA, NA)
 check_2 <- get_mmf_nonbf(NA, 1, 4, 6)
@@ -140,7 +140,7 @@ test_that("`get_mmf_nonbf` function define the output values correctly", {
 
 })
 
-
+# Child - MMF 6-23 months
 # get_mmf
 check_1 <- get_mmf(NA, 1)
 check_2 <- get_mmf(1, NA)

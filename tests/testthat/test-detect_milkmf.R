@@ -6,7 +6,7 @@ library(riycf)
 ################################################################################
 # Return result values check
 ################################################################################
-
+# Milk Feeding Frequency Score
 # get_milk_frq
 check_1 <- get_milk_frq(0, 0, 0, 0)
 check_2 <- get_milk_frq(1, 1, 1, 1)
@@ -35,7 +35,7 @@ test_that("`get_milk_frq` function define the output values correctly", {
 
 })
 
-
+# Minimum Milk Feeding Frequency
 # get_mmff
 check_1 <- get_mmff(0, 2, 1)
 check_2 <- get_mmff(1, 2, 1)

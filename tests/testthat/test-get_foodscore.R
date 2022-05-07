@@ -1,6 +1,10 @@
+
+
 library(riycf)
 
 
+################################################################################
+## Food Groups Score ##
 # individual vector
 breastmilk <- c(0, 0, 1, 1, 1, 0, 0, 1, 1, NA)
 grains <- c(1, NA, 0, 1, 1, 0, 0, 1, 1, 0)
