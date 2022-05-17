@@ -58,11 +58,11 @@ yogurt drinks the child received in the previous day.}
 }
 \value{
 binary variables indicate child get the minimum meal frequency
-   (mmf =1 ) or not (mmf = 0)
+(mmf =1 ) or not (mmf = 0)
 }
 \description{
 Identification of individual 6-23 months old children received
-   the minimum meal frequency based on their breastfeeding status.
+the minimum meal frequency based on their breastfeeding status.
 }
 \examples{
 

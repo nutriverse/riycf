@@ -1,0 +1,173 @@
+---
+title: "Complementary Feeding Indicators - Other"
+author: "Nicholus Tint Zaw" 
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{cf_oth}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  message =  FALSE, 
+  warning = FALSE, 
+  error = FALSE, 
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+
+# Introduction 
+
+This is the subset of complementary feeding indicators which are not related in calculating minimum acceptable diet indicator. There are 5 indicators which fall into this category and we are going to explin how `riycf` package can use for calcuation of each single indicators mentioned below. 
+
+1. Introduction Of Solid, Semi-solid Or Soft Foods 6-8 months (ISSSF)
+2. Egg And/Or Flesh Food Consumption 6-23 Months (EFF) 
+3. Sweet Beverage Consumption 6-23 Months (SwB)  
+4. Unhealthy Food Consumption 6-23 Months (UFC) 
+5. Zero Vegetable Or Fruit Consumption 6-23 Months (ZVF) 
+
+
+# Dataset Set-up 
+
+Firstly, load the required libraries for data analysis work. I will use `riycf` package for the IYCF indicator generation work. 
+
+```{r setup}
+library(riycf)
+```
+
+
+For this guideline demonstration, I will use the sample dataset provided by the CARE Myanmar team on IYCF modules. A detailed description of the variable's name and variable labels are mentioned in the documentation. Use the following syntax to check for the dataset description. 
+
+```{r df_load}
+?iycfData
+
+df <- iycfData
+head(df[1:5])
+
+```
+
+This dataset contains 359 observations and 46 variables, and all variables were organized based on the WHO IYCF sample questionnaire. We tried to mentioned explicitly on matching function inputs parameters and questions numbers from the WHO IYCF sample question. If your dataset did not have the exact variables as the WHO sample one, please apply the most relevance one in the respective input parameter.  
+
+# Complementary Feeding Indicators 
+
+## Introduction Of Solid, Semi-solid Or Soft Foods 6-8 Months (ISSSF)
+
+The introduction of semi-solid food indicator account for the 6-8 months old children who receive the solid (or semi-solid food) during the previous day. Here, we don't use the self reported variable "number of meal frequency" feeding in this calculation, and instead of that, we use the dietary recall variables from WHO IYCF sample question `Question 7A` to `Question 7R`. IF the children received one of the food items from those list of question, those children are consider as introduction of solid, semi-solid or soft food (ISSF). Use the `get_dummy` function to create the dummy variable for solid food consumption from all solid food diet recall questions. 
+
+```{r}
+solid <- list(df$child_rice, df$child_potatoes, df$child_pumpkin, df$child_beans, 
+              df$child_leafyveg, df$child_mango, df$child_fruit, df$child_organ, 
+              df$child_beef, df$child_fish, df$child_insects, df$child_eggs, 
+              df$child_yogurt,  df$child_fat, df$child_plam, df$child_sweets, 
+              df$child_condiments)
+
+df$solid_food <- get_dummy(var_list = solid)
+```
+
+Then, use `get_isssf` function to get the number of children who meet this indicator definition or not. 
+
+```{r}
+df$isssf <- get_isssf(solid_food = df$solid_food, 
+                      age = df$calc_age_months)
+table(df$isssf)
+```
+
+## Egg And/Or Flesh Food Consumption 6-23 Months (EFF) 
+
+The another indicators related to complementary feeding is EFF, account for 6-23 months children get eggs and/or flesh food in the previous day.  We can use `get_dummy` to create the dummy variable to indicator who got those food or not. 
+
+According to the WHO guideline, the following questions were consider in the sweet beverage foods category. 
+
++ `Question 7I`: Liver, kidney, heart  
++ `Question 7J`: Sausages, hot dogs, ham, bacon, salami, canned meat
++ `Question 7K`: Any other meat, such as beef, pork, lamb, goat, chicken, duck
++ `Question 7L`: Eggs 
++ `Question 7M`: Fresh fish, dried fish or shellfish  
+
+```{r}
+egg_meat <- list(df$child_organ, df$child_beef, df$child_fish, df$child_insects, df$child_eggs)
+
+df$egg_meat <- get_dummy(var_list = egg_meat)
+```
+
+Then, using `get_eff` to calculate EFF indicator using the dummy variable create before and child age variable. 
+
+```{r}
+df$eff <- get_eff(egg_meat = df$egg_meat, 
+                  age = df$calc_age_months)
+table(df$eff)
+```
+
+
+## Sweet Beverage Consumption 6-23 Months (SwB) 
+
+To identify the children who get the sweet beverage food from the previous day, we can use Sweet Beverage Consumption indicator. Like other indicator from this complementary feeding indicator, use `get_dummy` to identify the children who get those type of food, and then, calculate the specific indicator "SwB" using `get_swb`. 
+
+According to the WHO guideline, the following questions were consider in the sweet beverage foods category. 
+
++ `Question 6Cswt`: Milk from animals - sweet or flavored type milk 
++ `Question 6Dswt`: Yogurt drinks - sweet or flavored type yogurt
++ `Question 6E`: Chocolate-flavored drinks
++ `Question 6F`: Fruit juice or fruit-flavored drinks
++ `Question 6G`: Sodas, malt drinks, sports drinks or energy drinks
++ `Question 6Hswt`: Tea, coffee, or herbal drinks - sweetened
++ `Question 6Jswt`: Other liquids - sweetened 
+
+```{r}
+sweet <- list(df$child_milk_sweet, df$child_mproduct_sweet, df$child_chocolate, 
+              df$child_juice, df$child_soda,  df$child_tea_sweet, 
+              df$child_oth_drink_swee)
+
+df$sweet <- get_dummy(var_list = sweet)
+
+df$swb <- get_swb(sweet = df$sweet, 
+                  age = df$calc_age_months)
+table(df$swb)
+```
+
+
+## Unhealthy Food Consumption 6-23 Months (UFC) 
+
+According to definition this indicator account for the two type of foods from the diet recall; `Question 7P` (sentinel sweet foods) and `Question 7Q` (sentinel fried and salty foods). Using `get_dummy` function to create the dummy variable which indicate which the child took for food from the previous day or not. Then, We can use `get_ufc` fucntion to calculate the indicator.  
+
+```{r}
+unhealthy <- list(df$child_sweets, df$child_condiments)
+
+df$unhealthy <- get_dummy(var_list = unhealthy)
+
+df$ufc <- get_ufc(unhealthy = df$unhealthy, 
+                  age = df$calc_age_months)
+table(df$ufc)
+```
+
+
+## Zero Vegetable Or Fruit Consumption 6-23 Months (ZVF) 
+
+This indicator calculate for the 6-23 months children who did not consume any vegetables or fruits during the previous day. Using the list of vegetables and fruits questions from the diet recall model to calculate the dummy variable using `get_dummy` function. Then, apply that variable into the `get_zvf` to get the number of children who did or did not consumed vegetable or fruits in the previous day. 
+
+According to the guideline, fruit and vegetable questions list were recommend as following. However, if your survey did not have that complete list of questions (variables), apply which were available relevance to the indicator definition. 
+
++ `Questions 7C`: Vitamin A-rich yellow/orange vegetables 
++ `Questions 7E`: Dark green leafy vegetables 
++ `Questions 7F`: Other vegetables 
++ `Questions 7G`: Vitamin A-rich fruits  
++ `Questions 7H`: Other fruits 
+
+```{r}
+vege_fruit <- list(df$child_pumpkin, df$child_leafyveg, df$child_mango, df$child_fruit)
+
+df$vege_fruit <- get_dummy(var_list = vege_fruit)
+
+df$zvf <- get_zvf(vege_fruit = df$vege_fruit, 
+                  age = df$calc_age_months)
+table(df$zvf)
+```
+
+
+
+
+
+

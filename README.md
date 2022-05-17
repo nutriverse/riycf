@@ -3,6 +3,8 @@
 
 # riycf: Utilities for Calculating Infant and Young Child Feeding Indicators
 
+<img src="man/figures/logo.png" width="200px" align="right" />
+
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/nutriverse/riycf/workflows/R-CMD-check/badge.svg)](https://github.com/nutriverse/riycf/actions)
@@ -87,6 +89,15 @@ will perform the following tasks.
     new dichotomous variable that indicates whether each child met the
     minimum meal frequency. More sample codes from this package were
     present in each function documentation.
+
+## Data Collection with CATI
+
+This package also provides the already programmed IYCF Questionnaires
+(based on WHO sample IYCF questionnaires) in XLS programming format.
+Detailed guidelines for accessing those forms are provided in the
+vignette article called “WHO IYCF Questionnaire XLS Forms.” The
+different types of XLS programmed IYCF questionnaires can download on
+[this Github page](https://github.com/nicholustintzaw/iycf_xls_forms).
 
 ## Code of Conduct
 

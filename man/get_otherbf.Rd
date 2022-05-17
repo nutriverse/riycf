@@ -50,21 +50,21 @@ in the previous day}
 }
 \value{
 binary variables indicate child met the respective breastfeeding
-   status or not (yes = 1 or no = 0)
+status or not (yes = 1 or no = 0)
 }
 \description{
 Identification of individual 0-23 months old children
-   breastfeeding status; Ever breastfed, Early initiation of breastfeeding,
-   Exclusive breastfeeding for the first two days after birth, Mixed milk
-   feeding under 6 months, Continuous breastfeeding 12-23 months, and Bottle
-   feeding 0-23 months
+breastfeeding status; Ever breastfed, Early initiation of breastfeeding,
+Exclusive breastfeeding for the first two days after birth, Mixed milk
+feeding under 6 months, Continuous breastfeeding 12-23 months, and Bottle
+feeding 0-23 months
 }
 \examples{
 
  df <- iycfData
 
 # Ever Breastfed
-evbf <- get_evbf(df$child_bfyest, df$calc_age_months)
+evbf <- get_evbf(df$child_bf, df$calc_age_months)
 
 # Early Initiation of Breastfeeding
 eibf <- get_eibf(df$calc_age_months, df$child_eibf, df$child_eibf_hrs)

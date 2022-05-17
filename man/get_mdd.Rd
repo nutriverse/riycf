@@ -30,18 +30,18 @@ the number of food groups the child consumed in previous day}
 }
 \value{
 binary variable indicate child get the minimum acceptable diet
-   (mad =1 ) or not (mad = 0)
+(mad =1 ) or not (mad = 0)
 
 binary variables indicate child get the minimum dietary diversity
-   (mdd = 1 ) or not (mdd = 0)
+(mdd = 1 ) or not (mdd = 0)
 }
 \description{
 Identification of individual 6-23 months old children minimum
-   acceptable diet based on their breastfeeding status
+acceptable diet based on their breastfeeding status
 
 Identification of individual 6-23 months old children dietary
-   practices meet the minimum requirement of dietary diversity (at least 5
-   food group out of 8 food groups)
+practices meet the minimum requirement of dietary diversity (at least 5
+food group out of 8 food groups)
 }
 \examples{
   df <- iycfData

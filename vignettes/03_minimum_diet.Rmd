@@ -1,0 +1,287 @@
+---
+title: "Minimum Diet Related Indicators"
+author: "Nicholus Tint Zaw" 
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{minimum_diet}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  message =  FALSE, 
+  warning = FALSE, 
+  error = FALSE, 
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+
+# Introduction 
+
+In this article, we will mainly demonstrate how `riycf` package's function can apply for calculation of minimum diet related indicators. According to the new WHO 2021 guideline, there are four type of complementary feeding practice indicators related to minimum diet requirement; 
+
++ Minimum Dietary Diversity 6-23 Months (MDD), 
++ Minimum Meal Frequency 6-23 Months (MMF), 
++ Minimum Milk Feeding Frequency For Non-Breastfed Children 6-23 Months (MMFF) and
++ Minimum Acceptable Diet. 
+
+
+# Dataset Set-up 
+
+Firstly, load the required libraries for data analysis work. I will use `riycf` package for the IYCF indicator generation work. 
+
+```{r setup}
+library(riycf)
+```
+
+
+For this guideline demonstration, I will use the sample dataset provided by the CARE Myanmar team on IYCF modules. A detailed description of the variable's name and variable labels are mentioned in the documentation. Use the following syntax to check for the dataset description. 
+
+```{r df_load}
+?iycfData
+
+df <- iycfData
+head(df[1:5])
+
+```
+
+This dataset contains 359 observations and 46 variables, and all variables were organized based on the WHO IYCF sample questionnaire. We tried to mentioned explicitly on matching function inputs parameters and questions numbers from the WHO IYCF sample question. If your dataset did not have the exact variables as the WHO sample one, please apply the most relevance one in the respective input parameter. 
+
+
+# Minimum Diet Related Indicators 
+
+## Minimum Dietary Diversity 6-23 Months (MDD) 
+
+Calculation of MDD included three main steps: (1) identification of food groups which were consumed by the children 6-23 month of age in the previous days, (2) calculate the total number of food groups (out of total 8 food groups) consumed in the previous day, and (3) identification of children who meet the minimum requirement of food groups (at least 5 food groups) in their previous days consumption. 
+
+### Individual food group consumption: dummy variables 
+
+As a first step of MDD, we are now going to identify the food group the children consumed in the previous day. We will use the `get_dummy` function to generate the dummy variable for each 8 food groups: 
+
++ breast milk;
++ grains, white/pale starchy roots, tubers and plantains; 
++ beans, peas, lentils, nuts and seeds; 
++ dairy products (milk, infant formula, yogurt, cheese); 
++ flesh foods (meat, fish, poultry, organ meats); 
++ eggs; 
++ vitamin A-rich fruits and vegetables; and 
++ other fruits and vegetables. 
+
+Please note that the input parameter of `get_dummy` function is the `list`, not `vector`. We need to prepare the list of variables for the food items we would like to included in the calculation for each food group dummy variable. In this article, I used the same variables applied in the 2021 WHO IYCF indicators guideline. The detail description of the input variables used for each food group calculation can be check at sample dataset description file using the following syntax. 
+
+```{r}
+?iycfData
+```
+
+For breastfeeding dummy variable, the guideline recommended to use the `Question  4`:  breastfed yesterday during the day or at night. 
+
+```{r}
+df$breastmilk <- get_dummy(var_list = list(df$child_bfyest))
+```
+
+For grains related food groups include grains, white/pale starchy roots, tubers and plantains, I used `Question 7B` and `Question 7D` from the WHO IYCF sample questionnaires. 
+
+```{r}
+df$grains <- get_dummy(var_list = list(df$child_rice, df$child_potatoes))
+```
+
+For pulses food groups which include beans, peas, lentils, nuts and seeds, we only need to use one variable `Question 7N`.  
+
+```{r}
+df$pulses <- get_dummy(var_list = list(df$child_beans))
+```
+
+In the dairy products food group, the following foods items are included; milk, infant formula, yogurt, and cheese) and the following questions from WHO guideline provides those information; `Question 6B`, `Question 6C`, `Question 6D`, `Question 7A`, and `Question 7O`. 
+
+```{r}
+dairy_list <- list(df$child_bms, df$child_milk, df$child_mproduct, df$child_yogurt, df$child_yogurt)
+
+df$dairy <- get_dummy(var_list = dairy_list)
+```
+
+The information about flesh foods; meat, fish, poultry, and organ meats, are available from the following four questions from the guideline; `Question 7I`, `Question 7J`, `Question 7K`, and `Question 7M`. 
+
+```{r}
+meat_list <- list(df$child_organ, df$child_insects,  df$child_beef, df$child_fish)
+
+df$meat <- get_dummy(var_list = meat_list)
+```
+
+Only one variable require for Eggs food group which is `Question 7L`. 
+
+```{r}
+df$eggs <- get_dummy(var_list = list(df$child_eggs))
+```
+
+We will use the following questions from the guideline for calculation of vitamin A-rich fruits and vegetables; `Question 7C`, `Question 7E` and `Question 7G`. 
+
+```{r}
+vita_fruveg_list <- list(df$child_pumpkin, df$child_leafyveg, df$child_mango)
+
+df$vita_fruveg <- get_dummy(var_list = vita_fruveg_list)
+```
+
+For other fruits and vegetables food group, we used the following two variable; `Question 7F` and `Question 7H`. 
+
+```{r}
+df$oth_fruveg <- get_dummy(var_list = list(df$child_fruit, df$child_fruit))
+```
+
+
+### Food groups score claculation  
+
+Then, we can now calculate the total food groups score the children consumed in the previous day. We will using all the individual food group variable in this calculation. 
+
+```{r}
+df$food_score <- get_foodscore(breastmilk = df$breastmilk, 
+                               grains = df$grains, 
+                               pulses = df$pulses, 
+                               dairy = df$dairy, 
+                               meat = df$meat, 
+                               eggs = df$eggs, 
+                               vita_fruveg = df$vita_fruveg, 
+                               oth_fruveg = df$oth_fruveg)
+table(df$food_score)
+summary(df$food_score)
+```
+
+### Calculation of MDD
+
+Finally, we can calculate indicator for minimum dietary diversity. Which is identified by the children 6-23 months who get at least 5 food group in their previous day diet. 
+
+```{r}
+df$mdd <- get_mdd(food_score = df$food_score, 
+                  age = df$calc_age_months)
+table(df$mdd)
+```
+
+
+
+## Minimum Meal Frequency 6-23 Months (MMF) 
+
+Different from the MDD, the MMF required more complex criteria and those are depend on the children breastfeeding status and the age range. We require four key information to calculate this indicators; child age, breastfeeding status, meal frequency and milk (beside breastmilk) feeding frequency. 
+
+### Breastfed child 
+
+The minimum meal frequency for breastfeeding vary by the child age. It only require at least time time of meal for 6-8 months old children , but at least three time for 9-23 months old children. Below are the sample syntax using three function to calculate the minimum meal frequency for breastfeeding children. 
+
++ `get_mmf_bf_6to8` - to calculate the minimum meal frequency for 6-8 months old breastfed children 
++ `get_mmf_bf_9to23` - to calculate the minimum meal frequency for 6-8 months old breastfed children 
++ `get_mmf_bf` - to calculate the minimum meal frequency for 6-8 months old breastfed children 
+
+```{r}
+# BF 6-8 months 
+df$mmfbf_6to8 <- get_mmf_bf_6to8(q4 = df$child_bfyest, 
+                                 q8 = df$child_food_freq, 
+                                 age = df$calc_age_months)
+table(df$mmfbf_6to8)
+
+# BF 9-23 months 
+df$mmfbf_9to23 <- get_mmf_bf_9to23(q4 = df$child_bfyest, 
+                                   q8 = df$child_food_freq, 
+                                   age = df$calc_age_months)
+
+table(df$mmfbf_9to23)
+
+# Overall BF
+df$mmf_bf <- get_mmf_bf(mmfbf_6to8 = df$mmfbf_6to8, 
+                        mmfbf_9to23 = df$mmfbf_9to23)
+table(df$mmf_bf)
+```
+
+### Non-Breastfed child 
+
+In MMF calculation for non-breastfeeding children, we need to take account on the number of milk feeds in addition to the meal frequency. To get that, use the `get_nonbf_frq` function to calculate the milk & meal feeding frequency using the following questions; 
+
++ `Question 6Bnum`: infant formula feeding frequency, 
++ `Question 6Cnum`: animal milk feeding frequency, 
++ `Question 6Dnum`: milk-product liquid feeding frequency and 
++ `Question 8`: meal frequency.  
+
+```{r}
+
+df$nonbf_frq <- get_nonbf_frq(q6bnum = df$child_bms_freq, 
+                              q6cnum = df$child_milk_freq, 
+                              q6dnum = df$child_mproduct_freq, 
+                              q8 = df$child_food_freq)
+
+table(df$nonbf_frq)
+sum(df$nonbf_frq)
+```
+
+Then, calculate the minimum meal frequency for the 6-23 months non-breastfeeding children using that milk & meal frequency information calculate above. Whoever get at least 4 time milk and meal frequency in the previous are identified as the children who get minimum meal frequency for non-breastfed children. Use `get_mmf_nonbf` function to calculate this indicator as the sample syntax provided below. 
+
+```{r}
+df$mmf_nonbf <- get_mmf_nonbf(q4 = df$child_bfyest,  
+                              q8 = df$child_food_freq, 
+                              nonbf_frq = df$nonbf_frq, 
+                              age = df$calc_age_months)
+table(df$mmf_nonbf)
+```
+
+
+### Calculation of MMF 
+
+After calculated minimum meal frequency for both breastfed and non-breastfed children separately, use the `get_mmf` function to consolidate as one overall minimum meal frequency indicator for reporting. We also frequently report this indicator in the aggregated figure by breastfeeding status and age range (for breastfed children). Therefore, all the immediate variables we created a long the path to calculate this overall MMF indicator are also useful for reporting work. 
+
+```{r}
+df$mmf <- get_mmf(mmf_bf = df$mmf_bf, 
+                  mmf_nonbf = df$mmf_nonbf)
+table(df$mmf)
+```
+
+
+## Minimum Milk Feeding Frequency For Non-Breastfed Children 6-23 Months (MMFF)
+
+This is minimum milk feeding frequency indicator for non-breastfeeding children. It require two stage of calculation; (1) calculating the milk feeding frequency score, and (2) calculating MMFF indicator. From our package, we can use the `get_milk_frq` function to get this score and the input information are required for this score; 
+
++ `Question 6Bnum`: infant formula feeding frequency, 
++ `Question 6Cnum`: animal milk feeding frequency, 
++ `Question 6Dnum`: milk product liquid feeding frequency, and 
++ `Question 7Anum`: the milk-product solid food feeding frequency. 
+
+```{r}
+df$milk_frq <- get_milk_frq(q6bnum = df$child_bms_freq, 
+                            q6cnum = df$child_milk_freq, 
+                            q6dnum = df$child_mproduct_freq, 
+                            q7anum = df$child_yogurt)
+table(df$milk_frq)
+sum(df$milk_frq)
+```
+
+
+Whoever 6-23 months old non-breastfed children who get at least two milk feeds from the previous day are considered as minimally milk fed children. Use `get_mmff` function to calculate this indicator and it only require two input parameters; age and milk feeding frequency score. 
+
+```{r}
+df$mmff <- get_mmff(q4 = df$child_bfyest, 
+                    age = df$calc_age_months, 
+                    milk_frq = df$milk_frq)
+table(df$mmff)
+```
+
+
+## Minimum Acceptable Diet 
+
+Using all the information calculate before in this article; minimum dietary diversity, minimum meal frequency and minimum milk frequency for non-breastfeed children. Whoever 6-23 months old children who meet the following condition are identified as children who get the minimum acceptable diet; 
+
++ get minimum acceptable diet, 
++ get minimum meal frequency (for both breastfed or non-breastfed), and 
++ get breastfed or get minimum milk feeding frequency. 
+
+We are going to use `get_mad` function to calculate this MAD indicator, and sample syntax are provided as below. 
+
+```{r}
+df$mad <- get_mad(age = df$calc_age_months, 
+                  q4 = df$child_bfyest, 
+                  mdd = df$mdd, 
+                  mmf = df$mmf, 
+                  mmff = df$mmff)
+table(df$mad)
+```
+
+
+
+

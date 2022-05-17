@@ -33,17 +33,16 @@ yogurt drinks the child received in the previous day.}
 frequency of yogurt (solid or semi-solid) the child consumed yesterday.}
 }
 \value{
-The output of the `get_mmff` and `get_milk_frq` variables includes the
-following added variable.
-
-   **Variables** | **Description**
-   :--- | :---
-   *mf_frq* | continuous variables indicate non-breastfeed child consume number of milk and milk-product food feeding
-   *mmff* | binary variables indicate child get the minimum milk feeding frequency (mmff =1 ) or not (mmff = 0)
+The output of the \code{get_mmff} and \code{get_milk_frq} variables includes the
+following added variable.\tabular{ll}{
+   \strong{Variables} \tab \strong{Description} \cr
+   \emph{mf_frq} \tab continuous variables indicate non-breastfeed child consume number of milk and milk-product food feeding \cr
+   \emph{mmff} \tab binary variables indicate child get the minimum milk feeding frequency (mmff =1 ) or not (mmff = 0) \cr
+}
 }
 \description{
 Identification of individual 6-23 months old children minimum
-   milk feeding frequency for non-breastfeed children 6-23 months (MMFF)
+milk feeding frequency for non-breastfeed children 6-23 months (MMFF)
 }
 \examples{
 

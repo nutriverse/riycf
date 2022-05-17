@@ -39,11 +39,11 @@ received any vegetables or fruits yesterday}
 }
 \value{
 binary variables indicate child met the respective complementary
-   feeding status or not (yes = 1 or no = 0)
+feeding status or not (yes = 1 or no = 0)
 }
 \description{
 Identification of individual 0-23 months old children
-   breastfeeding status
+breastfeeding status
 }
 \examples{
 
@@ -74,8 +74,9 @@ Identification of individual 0-23 months old children
 
 # Sweet beverage consumption (6-23 months)
 # Sweet beverage consumption previous day - yes/no
- sweet <- list(df$child_juice, df$child_broth, df$child_milk,
-               df$child_mproduct)
+ sweet <- list(df$child_milk_sweet, df$child_mproduct_sweet,
+               df$child_chocolate, df$child_juice, df$child_soda,
+               df$child_tea_sweet, df$child_oth_drink_swee)
 
  df$sweet <- get_dummy(var_list = sweet)
 

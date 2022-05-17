@@ -14,10 +14,10 @@ the vector with "0" and "1" binary result.
 }
 \description{
 generate dummy variables based on the input vector(s) binary
-   parameters (true = 1 and false = 0). If the observation of one of the
-   input parameter was true, that observation's newly generated dummy
-   variable will return as true (1). And, if all input parameters were false,
-   the return will be false (0).
+parameters (true = 1 and false = 0). If the observation of one of the
+input parameter was true, that observation's newly generated dummy
+variable will return as true (1). And, if all input parameters were false,
+the return will be false (0).
 }
 \examples{
 

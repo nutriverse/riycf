@@ -1,0 +1,73 @@
+---
+title: "WHO IYCF Questionnaire XLS Forms"
+author: "Nicholus Tint Zaw"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{iycf_xlsform}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+
+# Purpose 
+
+To provide ready-to-use [\textcolor{blue}{WHO IYCF standard questionnaires}](https://www.who.int/publications/i/item/9789240018389) in XLS programming format for CATI based data collection (support XLS programming format; for example - ODK, SurveyCTO, ONA, KoboToolbox) 
+
+#### This guideline will help provide information on 
+
++ which XLS format will be suitable for what type of data collection purpose, and 
++ what type of questionnaires administration approach will be used for IYCF data collection. 
+
+#### This guideline does not cover; 
+
++ how to program the XLS form, or 
++ how to use the XLS form in the respective CATI platform (which supports the XLS form). 
++ But the user can still above to go and check the following links for that information. 
+  + [SurveyCTO](https://www.surveycto.com/product/how-it-works/) 
+  + [Open Data Kit (ODK)](https://getodk.org/) 
+  + [ONA](https://ona.io/home/products/ona-data/features/) 
+  + [Kobotoolbox](https://www.kobotoolbox.org/#features)
+
+
+# Available of XLS Forms
+
+Four different types of `iycf-XLS` forms are available and based on the user application purpose, and the user can select the most appropriate `iycf-XLS` form. In general, the `iycf-XLS` forms can be categorized into two; 
+
+1. Household Survey with IYCF modules and 
+1. IYCF module only XLS form. 
+
+And in each category, two types of `iycf-XLS` form are provided based on the WHO food questions administration guideline. Users can select two different `iycf-XLS` forms as mentioned below. 
++ Open Recall Questionnaires for Foods: Food consumption questions are not administered by asking individual food items (from the list). Ask the respondent for each different time of meal the child ate yesterday (from the morning the child wake-up to the night before the child goes to sleep).  
++ List-Based Questionnaires for Foods: This approach directly asks the individual food group mentioned in the food consumption questions. 
+
+Both approaches contain the same questions, and the only difference is the display format is customized based on the questionnaire`s administration purpose. For more information about these two approaches, please go to [WHO IYCF indicator guideline](https://www.who.int/publications/i/item/9789240018389), page 28. 
+
+To download the IYCF XLS forms, please go to [this Github repository](https://github.com/nicholustintzaw/iycf_xls_forms). 
+
+
+
+### Household Survey with IYCF modules 
+If the user wants the `iycf-XLS` form with the already built-in household roster module, use the XLS forms from this category. This type of `iycf-XLS` form will first ask the Household Roster module to identify the relevant under 2 years old children in the household for the IYCF module. Then, the XLS form will create the IYCF modules based on the number of under 2 years old children (currently living) in the household. 
+
++ `hhsvy_iycf_open_recall`: IYCF module with Open Recall Questionnaires 
++ `hhsvy_iycf_list_based`: IYCF module with List-Based Questionnaires 
+
+###  IYCF module only XLS 
+If the user wants the pure IYCF module and has the idea to use that as part of the multi-sectoral survey, please use this type of `iycf-XLS` form. Users can easily add or customize this in their respective master XLS form. 
+
++ `iycf_list_based`: IYCF module with Open Recall Questionnaires 
++ `iycf_open_recall`: IYCF module with List-Based Questionnaires  
+
+
+.\linebreak 
+.\linebreak 
+
+
+* Report a bug at [this Github page](https://github.com/nicholustintzaw/iycf_xls_forms/issues/new).  

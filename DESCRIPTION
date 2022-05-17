@@ -9,10 +9,11 @@ Authors@R: c(
            email = "ernest@guevarra.io", role = "aut"), 
     person("Rebecca", "Wolfe", role = "aut"))
 Description: This package aims to generate updated indicators to assess infant 
-    and young child feeding (IYCF) practices at the household level. The 
-    indicators were developed using the technical guideline from the Indicators 
-    for assessing infant and young child feeding practices: definitions and 
-    measurement methods <https://www.who.int/publications/i/item/9789240018389>.
+    and young child feeding (IYCF) practices at the individual under 2 years old 
+    children level. The indicators were developed using the technical guideline 
+    from the Indicators for assessing infant and young child feeding practices: 
+    definitions and measurement methods 
+    <https://www.who.int/publications/i/item/9789240018389>.
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
@@ -24,4 +25,5 @@ Suggests:
     testthat (>= 3.0.0)
 VignetteBuilder: knitr
 RoxygenNote: 7.1.2
+Roxygen: list(markdown = TRUE)
 Config/testthat/edition: 3

@@ -3,7 +3,7 @@
 \name{get_foodscore}
 \alias{get_foodscore}
 \title{Construct the food groups consumption score (from Minimum Dietary
-   Diversity 6-23 months (MDD))}
+Diversity 6-23 months (MDD))}
 \usage{
 get_foodscore(
   breastmilk,
@@ -35,12 +35,12 @@ get_foodscore(
 }
 \value{
 the integer value at continuous scale (0-8 as the IYCF food groups
-   have 8 food groups).
+have 8 food groups).
 }
 \description{
 Identification of individual 6-23 months old children who meet
-   the minimum dietary diversity requirement require the information about
-   how many food groups the child consumed yesterday (8 groups in total).
+the minimum dietary diversity requirement require the information about
+how many food groups the child consumed yesterday (8 groups in total).
 }
 \examples{
 

@@ -22,11 +22,11 @@ receiving any type of solid foods yesterday (yes = 1 or no = 0).}
 }
 \value{
 binary variables indicate child was exclusively breastfed or not
-   during the previous day (ebf = 1 or 0)
+during the previous day (ebf = 1 or 0)
 }
 \description{
 Identification of individual 0-5 months old children exclusive
-   breastfeeding status
+breastfeeding status
 }
 \examples{
 

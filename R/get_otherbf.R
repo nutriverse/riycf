@@ -43,7 +43,7 @@
 #'  df <- iycfData
 #'
 #' # Ever Breastfed
-#' evbf <- get_evbf(df$child_bfyest, df$calc_age_months)
+#' evbf <- get_evbf(df$child_bf, df$calc_age_months)
 #'
 #' # Early Initiation of Breastfeeding
 #' eibf <- get_eibf(df$calc_age_months, df$child_eibf, df$child_eibf_hrs)
@@ -102,7 +102,7 @@ get_eibf <- function(age, q2, q2_hour){
     eibf <- ifelse(age < 24 & (q2 == 0 | q2_hour == 0), 1,
                    ifelse(age >= 24, NA, 0))
 
-    eibf <- ifelse(is.na(age) | (is.na(q2) & is.na(q2_hour)), NA, eibf)
+    eibf <- ifelse(is.na(age) | is.na(q2), NA, eibf)
 
     return(eibf)
   }
