@@ -2,9 +2,12 @@ pandoc: 2.17.1.1
 pkgdown: 2.0.3
 pkgdown_sha: ~
 articles:
-  01_iycf_xlsform: 01_iycf_xlsform.html
-  02_bf_indicatros: 02_bf_indicatros.html
-  03_minimum_diet: 03_minimum_diet.html
-  04_cf_oth: 04_cf_oth.html
-last_built: 2022-05-17T18:48Z
+  bf_indicators: bf_indicators.html
+  cf_oth: cf_oth.html
+  iycf_xlsform: iycf_xlsform.html
+  minimum_diet: minimum_diet.html
+last_built: 2022-05-25T08:32Z
+urls:
+  reference: https://nutriverse.io/riycf/reference
+  article: https://nutriverse.io/riycf/articles
 

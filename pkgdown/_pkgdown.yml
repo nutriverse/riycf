@@ -1,0 +1,72 @@
+title: riycf
+
+url: https://nutriverse.io/riycf/
+
+template:
+  bootstrap: 5
+  bootswatch: lumen
+  theme: haddock
+  ganalytics: #
+
+navbar:
+  bg: primary
+  type: light
+  structure:
+    left:  [home, reference, articles, news]
+    right: [twitter, linkedin, github]
+
+  components:
+    articles:
+      text: Articles
+      menu:
+      - text: "Breastfeeding indicators"
+        href: articles/bf_indicators.html
+      - text: "Minimum diet related indicators"
+        href: articles/minimum_diet.html
+      - text: "Complementary feeding indicators - other"
+        href: articles/cf_oth.html
+      - text: "WHO IYCF Questionnaire XLSForms"
+        href: articles/iycf_xlsform.html
+    twitter:
+      icon: "fab fa-twitter fa-lg"
+      href: https://twitter.com/katilingban
+    linkedin:
+      icon: "fab fa-linkedin fa-lg"
+      href: https://www.linkedin.com/company/katilingban
+
+home:
+  links:
+  - text: Read more about IYCF indicators
+    href: https://www.who.int/publications/i/item/9789240018389
+
+reference:
+  - title: Description
+    contents:
+    - micronutr
+
+  - title: Breastfeeding
+    contents:
+    - get_ebf
+    - get_otherbf
+
+  - title: Minimum diet
+    contents:
+    - get_foodscore
+    - get_mdd
+
+  - title: Minimum meal frequency
+    contents:
+    - get_mmf
+    - get_mmff
+
+  - title: Complementary feeding
+    contents:
+    - get_other_cf
+
+  - title: Datasets
+    contents:
+    - iycfData
+
+  - title: Utilities
+    contents:
+    - get_dummy

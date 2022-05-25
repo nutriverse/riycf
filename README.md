@@ -1,13 +1,15 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# riycf: Utilities for Calculating Infant and Young Child Feeding Indicators
-
-<img src="man/figures/logo.png" width="200px" align="right" />
+# riycf: Utilities for Calculating Infant and Young Child Feeding Indicators <img src="man/figures/logo.png" width="200px" align="right" />
 
 <!-- badges: start -->
 
+[![Lifecycle:
+experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 [![R-CMD-check](https://github.com/nutriverse/riycf/workflows/R-CMD-check/badge.svg)](https://github.com/nutriverse/riycf/actions)
+[![Codecov test
+coverage](https://codecov.io/gh/nutriverse/riycf/branch/main/graph/badge.svg)](https://app.codecov.io/gh/nutriverse/riycf?branch=main)
 <!-- badges: end -->
 
 ## What are the IYCF Indicators?
