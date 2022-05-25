@@ -3,7 +3,7 @@ title: "Minimum Diet Related Indicators"
 author: "Nicholus Tint Zaw" 
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{minimum_diet}
+  %\VignetteIndexEntry{Minimum Diet Related Indicators}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

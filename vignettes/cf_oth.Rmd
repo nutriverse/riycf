@@ -3,7 +3,7 @@ title: "Complementary Feeding Indicators - Other"
 author: "Nicholus Tint Zaw" 
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{cf_oth}
+  %\VignetteIndexEntry{Complementary Feeding Indicators - Other}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

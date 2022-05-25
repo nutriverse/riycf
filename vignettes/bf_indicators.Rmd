@@ -3,7 +3,7 @@ title: "Breastfeeding Indicators"
 author: "Nicholus Tint Zaw" 
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{bf_indicatros}
+  %\VignetteIndexEntry{Breastfeeding Indicators}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

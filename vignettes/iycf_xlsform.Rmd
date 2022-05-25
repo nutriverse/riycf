@@ -3,7 +3,7 @@ title: "WHO IYCF Questionnaire XLS Forms"
 author: "Nicholus Tint Zaw"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{iycf_xlsform}
+  %\VignetteIndexEntry{WHO IYCF Questionnaire XLS Forms}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

@@ -33,6 +33,9 @@ navbar:
     linkedin:
       icon: "fab fa-linkedin fa-lg"
       href: https://www.linkedin.com/company/katilingban
+    github:
+      icon: "fab fa-github fa-lg"
+      href: https://github.com/nutriverse/riycf
 
 home:
   links:
@@ -42,12 +45,17 @@ home:
 reference:
   - title: Description
     contents:
-    - micronutr
+    - riycf
 
   - title: Breastfeeding
     contents:
     - get_ebf
-    - get_otherbf
+    - get_evbf
+    - get_eibf
+    - get_ebf2d
+    - get_mixmf
+    - get_cbf
+    - get_bof
 
   - title: Minimum diet
     contents:
@@ -58,10 +66,24 @@ reference:
     contents:
     - get_mmf
     - get_mmff
+    - get_milk_frq
+    - get_mmf_bf
+    - get_mmf_bf_6to8
+    - get_mmf_bf_9to23
+    - get_mmf_nonbf
+    - get_nonbf_frq
+
+  - title: Minimum acceptable diet
+    contents:
+    - get_mad
 
   - title: Complementary feeding
     contents:
-    - get_other_cf
+    - get_isssf
+    - get_eff
+    - get_swb
+    - get_ufc
+    - get_zvf
 
   - title: Datasets
     contents:
