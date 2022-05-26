@@ -1,202 +1,78 @@
 ################################################################################
 #
-#' @title Determining Iron Storage Status in individual
+#' @title Construct exclusive breastfeeding status for under 6 months old child
 #'
-#' @description Identification of individual iron storage status on the basis of
-#' serum ferritin concentration
+#' @description Identification of individual 0-5 months old children exclusive
+#'    breastfeeding status
 #'
+#' @param age This parameter holds the information about child age in the month
+#'    format.
 #'
-#' This package includes two main components of functions; (1) to identify the
-#' individual iron storage status for each specific target group (for example,
-#' for under 5 children or the children at 5 years old or older), and (2) to
-#' identify the individual iron storage for the general population. In the
-#' first component of the package, you can use the specific type of command to
-#' identify the iron storage status of your specific interested population.
-#' If your interested sample population is children under 5 years old, you can
-#' use `detect_iron_u5` commend. If your target is the children at 5 years old
-#' or older (including adults), the commend called `detect_iron_over5` is
-#' available. The below-detailed parameter description session explained the
-#' detailed requirement of each parameter to execute those commands. In the
-#' second component, the commend for the general population, you can use the
-#' `detect_iron` commend. This is the instrumental one of your study population
-#' mixed with different interest groups (including both under 5 years old
-#' children and over). This will help you execute the function in one commend
-#' line and generate one variable to indicate the study dataset's individual
-#' observation iron storage status.
+#' @param q4 The binary variable which mentioned that the child was receiving
+#'    breastfeeding in the previous day (yes = "1", no = "0").
 #'
-#' For overall population function;
+#' @param liquid_food The binary variable which mentioned that the child was
+#'    receiving any type of liquid foods beside breastfeeding yesterday
+#'    (yes = 1 or no = 0).
 #'
-#' The arguments applied in this overall population function is almost identical
-#' with the individual commends:`detect_iron_u5` and `detect_iron_over5`. The
-#' only exception is this overall function has one additional argument, which is
-#' `age_group`. In the survey, which did not have the variables related to lab
-#' values to identify the infection and inflammation, the `detect_iron_infu5`
-#' function will be helpful to deal with the identification of iron storage
-#' status using qualitative information on the presence of disease or not. For
-#' that function, the user needs to identify the variable name that contains the
-#' dummy value of the existence of infection or not (`infection` argument and
-#' should be coded as `1` for the presence of disease and `0` for no condition).
+#' @param solid_food The binary variable which mentioned that the child was
+#'    receiving any type of solid foods yesterday (yes = 1 or no = 0).
 #'
+#' @return binary variables indicate child was exclusively breastfed or not
+#'    during the previous day (ebf = 1 or 0)
 #'
-#' @param df Survey dataset (as an R data.frame) with the presence of serum
-#'    ferritin variable recorded in (µg/l) uint. The following variables were
-#'    also required to apply function commend thoroughly, but those are not
-#'    compulsory.
-#'
-#'    | **Variable** | **Description** |
-#'    | :--- | :--- |
-#'    | child's sex |	indicate the sample observation is male or female |
-#'    | CRP |	acute phase response proteine: C-reactive protein (CRP) value |
-#'    | AGP	| acute phase response proteine: α1-acid-glycoprotein (AGP) value |
-#'
-#' @param ferritin Sample observation's serum ferritin level from the dataset.
-#'    The values should record in the micrograms per liter (µg/l) unit.
-#'
-#' @param sex This parameter indicates the observation's sex category, coded as
-#'    `1` for males and `2` for females. However, for this child under 5 years
-#'    old population, this parameter is not mandatory. The cut-off point
-#'    applied in the classification of iron status for children with under 5
-#'    years population was not affected by the child's sex status. Therefore,
-#'    this argument is not a mendatory one for the function `detect_iron_u5`.
-#'    However, if you apply for the children at 5 years or older (including
-#'    adults population), this argument is a mandatory for `detect_iron_over5`
-#'    commend.
-#'
-#' @param app The serum ferritin level is affected by the presence of
-#'    inflammation and infection. If you want to correct the serum ferritin
-#'    value in the presence of inflammation in the study population, you can
-#'    apply this parameter. This vector indicates the specific acute phase
-#'    response protein you want to include in the process of serum ferritin
-#'    value correction. There were two main vector names you can apply in this
-#'    parameter which were "agp" (α1-acid-glycoprotein (AGP)) and "crp"
-#'    (C-reactive protein (CRP)). You can use either a single vector or both in
-#'    this parameter assignment. Based on your input protein(s) type(s), the
-#'    function will identify the inflammation stages of each observation in the
-#'    dataset. Then, based on the inflammation stage, the respective correction
-#'    values will apply. The detailed classification of inflammation stages is
-#'    mentioned in the below table.
-#'
-#'    | **inflammation Categories** | **Cut-off Points** | **Correction Values** |
-#'    | :--- | :--- | :--- |
-#'    | Incubation | CRP only: CRP > 5 mg/L | 0.77 |
-#'    | Early convalescence | CRP & AGP: CRP > 5 mg/L and AGP > 1 g/L | 0.53 |
-#'    | Late convalescence | AGP only: AGP > 1 g/L | 0.75 |
-#'    Multiple the serumn ferritin avlue (µg/l) by the number mentioned in the
-#'    correction values column.
-#'
-#' @param crp After mentioning the type of acute phase response protein in the
-#'    `app` parameter, you need to identify the variable name of each protein
-#'    type in your dataset. If you mentioned `crp` in the `app` argument, you
-#'    need to specify the variable's name, which contains the "C-reactive
-#'    protein (CRP)" value (mg/L) in your dataset here.
-#'
-#' @param agp If you mentioned `agp` in the `app` argument, you need to specify
-#'    the variable's name, which contains the "α1-acid-glycoprotein (AGP)" value
-#'    (g/L) in your dataset here.
-#'
-#' @param add If you want to add the new generated variable `iron_storage` to
-#'    identify each dataset observation's iron storage status, please apply
-#'    `TRUE` in this argument, which is also the default option. The new
-#'    variable `iron_storage` has three distinct values for iron storage status;
-#'    deficiency, no deficiency, and iron overload. The cut-off points value for
-#'    each category is mentioned in the below table.
-#'
-#'    | **Population** | **No Deficiency** |	**Deficiency** | **Iron Overload** |
-#'    | :--- | :--- | :--- | :--- |
-#'    | < 5 year old (both sex) |	Ferritin < 12 |	Ferritin >= 12 | NA  |
-#'    | >= 5 years old (Male) |	Ferritin < 15	|  15 >= Ferritin >= 200 |	Ferritin > 200 |
-#'    | >= 5 years old (Female)	| Ferritin < 15	| 15 >= Ferritin >= 150 |	Ferritin > 150 |
-#'
-#'
-#' @param age_group The variable name that identifies the type of target
-#'    population included in the dataset was required to execute this function
-#'    properly. It would be best to assign two numeric values in this variable
-#'    which were coded as `1` for "5 years and older" and `2` for "under 5
-#'    years". In this argument, you only need to mention that age group assigned
-#'    variable name (from your dataset) in the commend.
-#'
-#'
-#' @param infection This should be the dummy variable containing the value of
-#'    `1`, which means the presence of disease or inflammation, and `0` for no
-#'    condition.
-#'
-#'
-#' @return A data frame with the same structure as `df` is named
-#'    `iron_storage`. In this data.frame, the new variable called `iron_storage`
-#'    contains the result of iron storage status for each observation in the
-#'    dataset.
 #'
 #' @examples
 #'
-#'  # For individual target group function;
-#'  ## U5 children
-#'  ## no ferritin correction
-#'   detect_iron_u5(df = ferritin_sample, ferritin = ferritin, add = TRUE)
+#'  df <- iycfData
 #'
-#'  ## ferritin correction (CRP only)
-#'   detect_iron_u5(df = ferritin_sample, ferritin = ferritin,
-#'                      app = "crp", crp = crp, add = TRUE)
+#' # Liquid consumption previous day - yes/no
+#'  liquid <- list(df$child_vitdrop, df$child_ors, df$child_water,
+#'                 df$child_juice, df$child_broth, df$child_porridge,
+#'                 df$child_bms, df$child_milk, df$child_mproduct,
+#'                 df$child_liquid)
 #'
-#'  ## ferritin correction (AGP only)
-#'   detect_iron_u5(df = ferritin_sample, ferritin = ferritin,
-#'                      app = "agp", crp = agp, add = TRUE)
-#'
-#'  ## ferritin correction (AGP and CRP combined)
-#'   detect_iron_u5(df = ferritin_sample, ferritin = ferritin,
-#'                      app = c("crp", "agp"), crp = crp,
-#'                      agp = agp, add = TRUE)
+#'  df$liquid_food <- get_dummy(var_list = liquid)
 #'
 #'
-#'  ## 5 years old and older
-#'  ## no ferritin correction
-#'   detect_iron_over5(df = ferritin_sample, ferritin = ferritin,
-#'                       sex = sex, add = TRUE)
+#' # Solid food consumption previous day - yes/no
+#'  solid <- list(df$child_rice, df$child_potatoes, df$child_pumpkin,
+#'                df$child_beans, df$child_leafyveg, df$child_mango,
+#'                df$child_fruit, df$child_organ, df$child_beef, df$child_fish,
+#'                df$child_insects, df$child_eggs, df$child_yogurt,
+#'                df$child_fat, df$child_plam, df$child_sweets,
+#'                df$child_condiments)
 #'
-#'  ## ferritin correction (CRP only)
-#'   detect_iron_over5(df = ferritin_sample, ferritin = ferritin, sex = sex,
-#'                       app = "crp", crp = crp, add = TRUE)
-#'
-#'  ## ferritin correction (AGP only)
-#'   detect_iron_over5(df = ferritin_sample, ferritin = ferritin, sex = sex,
-#'                       app = "agp", crp = agp, add = TRUE)
-#'
-#'  ## ferritin correction (AGP and CRP combined)
-#'   detect_iron_over5(df = ferritin_sample, ferritin = ferritin, sex = sex,
-#'                       app = c("crp", "agp"), crp = crp,
-#'                       agp = agp, add = TRUE)
+#'  df$solid_food <- get_dummy(var_list = solid)
 #'
 #'
-#'
-#'  # For overall population function;
-#'  ## no ferritin correction
-#'   detect_iron(df = ferritin_sample, ferritin = ferritin,
-#'                      sex = sex, age_group = age_group,
-#'                      add = TRUE)
-#'
-#'  ## ferritin correction (CRP only)
-#'   detect_iron(df = ferritin_sample, ferritin = ferritin,
-#'                      sex = sex, age_group = age_group,
-#'                      app = "crp", crp = crp, add = TRUE)
-#'
-#'  ## ferritin correction (AGP only)
-#'   detect_iron(df = ferritin_sample, ferritin = ferritin,
-#'                      sex = sex, age_group = age_group,
-#'                      app = "agp", agp = agp, add = TRUE)
-#'
-#'  ## ferritin correction (AGP and CRP combined)
-#'   detect_iron(df = ferritin_sample, ferritin = ferritin,
-#'                      sex = sex, age_group = age_group,
-#'                      app = c("crp", "agp"), crp = crp, agp = agp,
-#'                      add = TRUE)
-#'
-#'  ## with qualitative information on infection
-#'  detect_iron_infu5(df = ferritin_sample, ferritin = ferritin,
-#'                      infection = infection)
+#' # Child exclusively breastfed
+#' ebf <- get_ebf(df$child_bfyest, df$calc_age_months, df$liquid_food,
+#'                df$solid_food)
 #'
 #'
+#' @author Nicholus Tint Zaw
 #' @export
-#'
-#' @rdname detect_iron
+#' @rdname get_ebf
 #'
 #'
 #################################################################################
+
+# Exclusive Breastfeeding
+get_ebf <- function(q4, age, liquid_food, solid_food){
+
+  if(!is.null(q4) & !is.null(age) & !is.null(liquid_food) &
+     !is.null(solid_food)){
+
+    ebf <- ifelse(age < 6 & q4 == 1 & liquid_food == 0 & solid_food == 0, 1,
+                  ifelse(age >= 6, NA, 0))
+
+    ebf <- ifelse(is.na(q4) | is.na(age) | is.na(liquid_food) |
+                    is.na(solid_food), NA, ebf)
+
+    return(ebf)
+  }
+}
+
+#################################################################################
+

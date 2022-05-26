@@ -1,13 +1,30 @@
 Package: riycf
 Type: Package
-Title: What the Package Does (Title Case)
-Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+Title: Utilities for Calculating Infant and Young Child Feeding Indicators
+Version: 0.0.0.9000
+Authors@R: c(
+    person("Nicholus", "Tint Zaw", email = "nicholustintzaw@katilingban.io",
+           role = c("aut", "cre")),
+    person("Ernest", "Guevarra", comment = c(ORCID = "0000-0002-4887-4415"), 
+           email = "ernest@guevarra.io", role = "aut"), 
+    person("Rebecca", "Wolfe", role = "aut"))
+Description: This package aims to generate updated indicators to assess infant 
+    and young child feeding (IYCF) practices at the individual under 2 years old 
+    children level. The indicators were developed using the technical guideline 
+    from the Indicators for assessing infant and young child feeding practices: 
+    definitions and measurement methods 
+    <https://www.who.int/publications/i/item/9789240018389>.
+License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
 Depends: 
     R (>= 2.10)
+Suggests: 
+    rmarkdown,
+    knitr,
+    testthat (>= 3.0.0),
+    covr
+VignetteBuilder: knitr
+RoxygenNote: 7.1.2
+Roxygen: list(markdown = TRUE)
+Config/testthat/edition: 3
