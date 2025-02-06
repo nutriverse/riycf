@@ -90,7 +90,7 @@ Based on the WHO guideline’s indicator definition, the `{riycf}` package
 functions will calculate all the IYCF indicators. Each `{riycf}`
 function will perform the following tasks.
 
-\#\#\# (Beneficial in) Data cleaning
+### (Beneficial in) Data cleaning
 
 Each IYCF package function will perform the data quality check to ensure
 all the required data (variables) were correctly constructed in the
@@ -104,7 +104,7 @@ package function will ensure that integer variables are actually
 integers and variables that need to be re-coded into numeric scores are
 re-coded.
 
-\#\#\# IYCF indicator generation
+### IYCF indicator generation
 
 The indicator calculation process would continue if there were no issues
 with the data entry. The new IYCF indicator variables will be generated
