@@ -1,7 +1,7 @@
 Package: riycf
 Type: Package
 Title: Utilities for Calculating Infant and Young Child Feeding Indicators
-Version: 0.0.0.9000
+Version: 0.1.0.9000
 Authors@R: c(
     person("Nicholus", "Tint Zaw", email = "nicholustintzaw@katilingban.io",
            role = c("aut", "cre")),
@@ -21,8 +21,10 @@ Suggests:
     rmarkdown,
     knitr,
     testthat (>= 3.0.0),
-    covr
+    covr,
+    spelling
 Encoding: UTF-8
+Language: en-GB
 LazyData: true
 RoxygenNote: 7.3.2
 Roxygen: list(markdown = TRUE)

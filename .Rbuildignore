@@ -8,3 +8,4 @@
 ^pkgdown$
 ^codecov\.yml$
 ^_pkgdown\.yml$
+^CITATION\.cff$
