@@ -38,11 +38,11 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Nicholus Tint Zaw \email{nicholustintzaw@katilingban.io}
+\strong{Maintainer}: Nicholus Tint Zaw \email{nicholustintzaw@katilingban.io} [copyright holder]
 
 Authors:
 \itemize{
-  \item Ernest Guevarra \email{ernest@guevarra.io} (\href{https://orcid.org/0000-0002-4887-4415}{ORCID})
+  \item Ernest Guevarra \email{ernest@guevarra.io} (\href{https://orcid.org/0000-0002-4887-4415}{ORCID}) [copyright holder]
 }
 
 Other contributors:
