@@ -65,9 +65,15 @@ to make it easier for those less familiar with R software.
 
 ## Installation
 
+The `{riycf}` package is not yet available on
+[CRAN](https://cran.r-project.org) but can be installed via the
+[nutriverse R Universe](https://nutriverse.r-universe.dev):
+
 ``` r
-if(!require(remotes)) install.packages("remotes") 
-remotes::install_github("nutriverse/riycf")
+install.packages(
+  "riycf",
+  repos = c('https://nutriverse.r-universe.dev', 'https://cloud.r-project.org')
+)
 ```
 
 ## How does the package work?
@@ -98,7 +104,7 @@ will perform the following tasks.
     minimum meal frequency. More sample codes from this package were
     present in each function documentation.
 
-## Data Collection with CATI
+## Data collection with computer-assisted personal interviews (CAPI)
 
 This package also provides the already programmed IYCF Questionnaires
 (based on WHO sample IYCF questionnaires) in XLS programming format.
@@ -107,9 +113,39 @@ vignette article called “WHO IYCF Questionnaire XLS Forms.” The
 different types of XLS programmed IYCF questionnaires can download on
 [this Github page](https://github.com/nicholustintzaw/iycf_xls_forms).
 
-## Code of Conduct
+## Citation
 
-Please note that the riycf project is released with a [Contributor Code
-of
-Conduct](https://contributor-covenant.org/version/2/0/CODE_OF_CONDUCT.html).
-By contributing to this project, you agree to abide by its terms.
+If you use `{riycf}` in your work, please cite using the suggested
+citation provided by a call to the `citation` function as follows:
+
+``` r
+citation("riycf")
+#> Warning in citation("riycf"): could not determine year for 'riycf' from package
+#> DESCRIPTION file
+#> To cite package 'riycf' in publications use:
+#> 
+#>   Tint Zaw N, Guevarra E (????). _riycf: Utilities for Calculating
+#>   Infant and Young Child Feeding Indicators_. R package version
+#>   0.0.0.9000, https://github.com/nutriverse/riycf,
+#>   <https://nutriverse.io/riycf/>.
+#> 
+#> A BibTeX entry for LaTeX users is
+#> 
+#>   @Manual{,
+#>     title = {riycf: Utilities for Calculating Infant and Young Child Feeding Indicators},
+#>     author = {Nicholus {Tint Zaw} and Ernest Guevarra},
+#>     note = {R package version 0.0.0.9000, https://github.com/nutriverse/riycf},
+#>     url = {https://nutriverse.io/riycf/},
+#>   }
+```
+
+## Community guidelines
+
+Feedback, bug reports, and feature requests are welcome; file issues or
+seek support [here](https://github.com/nutriverse/riycf/issues). If you
+would like to contribute to the package, please see our [contributing
+guidelines](https://nutriverse.io/riycf/CONTRIBUTING.html).
+
+This project is released with a [Contributor Code of
+Conduct](https://nutriverse.io/riycf/CODE_OF_CONDUCT.html). By
+contributing to this project, you agree to abide by its terms.

@@ -1,12 +1,12 @@
 Package: riycf
 Type: Package
 Title: Utilities for Calculating Infant and Young Child Feeding Indicators
-Version: 0.1.0.9000
+Version: 0.0.0.9000
 Authors@R: c(
     person("Nicholus", "Tint Zaw", email = "nicholustintzaw@katilingban.io",
-           role = c("aut", "cre")),
+           role = c("aut", "cre", "cph")),
     person("Ernest", "Guevarra", comment = c(ORCID = "0000-0002-4887-4415"), 
-           email = "ernest@guevarra.io", role = "aut"), 
+           email = "ernest@guevarra.io", role = c("aut", "cph")), 
     person("Rebecca", "Wolfe", role = "rev"))
 Description: This package aims to generate updated indicators to assess infant
     and young child feeding (IYCF) practices at the individual under 2 years old
