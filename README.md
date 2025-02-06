@@ -15,6 +15,7 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 [![Codecov test
 coverage](https://codecov.io/gh/nutriverse/riycf/branch/main/graph/badge.svg)](https://app.codecov.io/gh/nutriverse/riycf?branch=main)
 [![CodeFactor](https://www.codefactor.io/repository/github/nutriverse/riycf/badge)](https://www.codefactor.io/repository/github/nutriverse/riycf)
+[![DOI](https://zenodo.org/badge/410309510.svg)](https://zenodo.org/badge/latestdoi/410309510)
 <!-- badges: end -->
 
 ## What are the IYCF Indicators?

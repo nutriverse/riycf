@@ -23,6 +23,7 @@ knitr::opts_chunk$set(
 [![test-coverage](https://github.com/nutriverse/riycf/actions/workflows/test-coverage.yaml/badge.svg)](https://github.com/nutriverse/riycf/actions/workflows/test-coverage.yaml)
 [![Codecov test coverage](https://codecov.io/gh/nutriverse/riycf/branch/main/graph/badge.svg)](https://app.codecov.io/gh/nutriverse/riycf?branch=main)
 [![CodeFactor](https://www.codefactor.io/repository/github/nutriverse/riycf/badge)](https://www.codefactor.io/repository/github/nutriverse/riycf)
+[![DOI](https://zenodo.org/badge/410309510.svg)](https://zenodo.org/badge/latestdoi/410309510)
 <!-- badges: end -->
 
 
