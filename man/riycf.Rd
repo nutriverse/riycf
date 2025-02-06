@@ -28,6 +28,15 @@ categories: (1) breastfeeding indicators, (2) complementary indicators, and
 (3) other indicators, which are focused on bottle-feeding practices and the
 generation of data visualization plots for the breastfeeding status by age.
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://nutriverse.io/riycf/}
+  \item \url{https://github.com/nutriverse/riycf}
+  \item Report bugs at \url{https://github.com/nutriverse/mwana/issues}
+}
+
+}
 \author{
 \strong{Maintainer}: Nicholus Tint Zaw \email{nicholustintzaw@katilingban.io}
 

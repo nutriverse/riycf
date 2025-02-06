@@ -5,12 +5,16 @@
 
 <!-- badges: start -->
 
+[![Project Status: WIP – Initial development is in progress, but there
+has not yet been a stable, usable release suitable for the
+public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
-[![R-CMD-check](https://github.com/nutriverse/riycf/workflows/R-CMD-check/badge.svg)](https://github.com/nutriverse/riycf/actions)
+[![R-CMD-check](https://github.com/nutriverse/riycf/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/nutriverse/riycf/actions/workflows/R-CMD-check.yaml)
 [![test-coverage](https://github.com/nutriverse/riycf/actions/workflows/test-coverage.yaml/badge.svg)](https://github.com/nutriverse/riycf/actions/workflows/test-coverage.yaml)
 [![Codecov test
 coverage](https://codecov.io/gh/nutriverse/riycf/branch/main/graph/badge.svg)](https://app.codecov.io/gh/nutriverse/riycf?branch=main)
+[![CodeFactor](https://www.codefactor.io/repository/github/nutriverse/riycf/badge)](https://www.codefactor.io/repository/github/nutriverse/riycf)
 <!-- badges: end -->
 
 ## What are the IYCF Indicators?
@@ -77,12 +81,12 @@ will perform the following tasks.
     the minimum meal frequency indicator analysis requires the following
     variables for data analysis: child age, breastfeeding status, and
     frequency of child feeding on the previous day. The child age and
-    child meal frequency data should be present in the
-    `numeric - integer` format, and the breastfeeding status should be
-    coded as a binary true/false variable with yes = 1 and no = 0. The
-    riycf package function will ensure that integer variables are
-    actually integers and variables that need to be re-coded into
-    numeric scores are re-coded.
+    child meal frequency data should be present in the `numeric -
+    integer` format, and the breastfeeding status should be coded as a
+    binary true/false variable with yes = 1 and no = 0. The riycf
+    package function will ensure that integer variables are actually
+    integers and variables that need to be re-coded into numeric scores
+    are re-coded.
 2.  *IYCF indicator generation*: The indicator calculation process would
     continue if there were no issues with the data entry. The new IYCF
     indicator variables will be generated based on which indicators the
