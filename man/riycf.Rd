@@ -2,8 +2,8 @@
 % Please edit documentation in R/riycf.R
 \docType{package}
 \name{riycf}
-\alias{riycf}
 \alias{riycf-package}
+\alias{riycf}
 \title{Utilities for Calculating Infant and Young Child Feeding Indicators}
 \description{
 The first 1,000 days of life (from pregnancy to a child’s 2nd birthday) are
@@ -34,7 +34,11 @@ generation of data visualization plots for the breastfeeding status by age.
 Authors:
 \itemize{
   \item Ernest Guevarra \email{ernest@guevarra.io} (\href{https://orcid.org/0000-0002-4887-4415}{ORCID})
-  \item Rebecca Wolfe
+}
+
+Other contributors:
+\itemize{
+  \item Rebecca Wolfe [reviewer]
 }
 
 }
