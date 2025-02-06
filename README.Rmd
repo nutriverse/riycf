@@ -42,9 +42,13 @@ This riycf package aims to address that technical gap by providing an easy-to-us
 
 ## Installation 
 
+The `{riycf}` package is not yet available on [CRAN](https://cran.r-project.org) but can be installed via the [nutriverse R Universe](https://nutriverse.r-universe.dev):
+
 ```{r, eval = FALSE}
-if(!require(remotes)) install.packages("remotes") 
-remotes::install_github("nutriverse/riycf")
+install.packages(
+  "riycf",
+  repos = c('https://nutriverse.r-universe.dev', 'https://cloud.r-project.org')
+)
 ```
 
 
@@ -55,12 +59,21 @@ Based on the WHO guideline’s indicator definition, the riycf package functions
  2. *IYCF indicator generation*: The indicator calculation process would continue if there were no issues with the data entry. The new IYCF indicator variables will be generated based on which indicators the user asks to calculate. For example, suppose the user wanted to calculate whether the beneficiaries meet the minimum meal frequency. In this case, the user can use the `get_mmf` functions to create a new dichotomous variable that indicates whether each child met the minimum meal frequency. More sample codes from this package were present in each function documentation.
 
 
-## Data Collection with CATI 
+## Data collection with computer-assisted personal interviews (CAPI)  
 
 This package also provides the already programmed IYCF Questionnaires (based on WHO sample IYCF questionnaires) in XLS programming format. Detailed guidelines for accessing those forms are provided in the vignette article called "WHO IYCF Questionnaire XLS Forms." The different types of XLS programmed IYCF questionnaires can download on [this Github page](https://github.com/nicholustintzaw/iycf_xls_forms). 
 
+## Citation
 
-## Code of Conduct
+If you use `{riycf}` in your work, please cite using the suggested citation provided by a call to the `citation` function as follows:
 
-Please note that the riycf project is released with a [Contributor Code of Conduct](https://contributor-covenant.org/version/2/0/CODE_OF_CONDUCT.html). By contributing to this project, you agree to abide by its terms.
+```{r cite}
+citation("riycf")
+```
+
+## Community guidelines
+
+Feedback, bug reports, and feature requests are welcome; file issues or seek support [here](https://github.com/nutriverse/riycf/issues). If you would like to contribute to the package, please see our [contributing guidelines](https://nutriverse.io/riycf/CONTRIBUTING.html).
+
+This project is released with a [Contributor Code of Conduct](https://nutriverse.io/riycf/CODE_OF_CONDUCT.html). By contributing to this project, you agree to abide by its terms.
 
