@@ -54,8 +54,8 @@ collect and analyze, they need a considerable amount of time to re-code
 all the syntax (depending on which statistical program they are using).
 That is time-consuming work.
 
-This riycf package aims to address that technical gap by providing an
-easy-to-use package of automated functions\` to calculate all IYCF
+This `{riycf}` package aims to address that technical gap by providing
+an easy-to-use package of automated functions\` to calculate all IYCF
 indicators provided in the WHO guideline ([the Indicators for assessing
 infant and young child feeding practices: definitions and measurement
 methods](https://www.who.int/publications/i/item/9789240018389)). This
@@ -76,33 +76,44 @@ install.packages(
 )
 ```
 
+Current development version of `{riycf}` can also be installed using the
+`{pak}` package as follows:
+
+``` r
+if (require("pak")) install.packages("pak")
+pak::pak("nutriverse/riycf")
+```
+
 ## How does the package work?
 
-Based on the WHO guideline’s indicator definition, the riycf package
-functions will calculate all the IYCF indicators. Each riycf function
-will perform the following tasks.
+Based on the WHO guideline’s indicator definition, the `{riycf}` package
+functions will calculate all the IYCF indicators. Each `{riycf}`
+function will perform the following tasks.
 
-1.  *(Beneficial in) Data cleaning*: Each IYCF package function will
-    perform the data quality check to ensure all the required data
-    (variables) were correctly constructed in the dataset. For example,
-    the minimum meal frequency indicator analysis requires the following
-    variables for data analysis: child age, breastfeeding status, and
-    frequency of child feeding on the previous day. The child age and
-    child meal frequency data should be present in the `numeric -
-    integer` format, and the breastfeeding status should be coded as a
-    binary true/false variable with yes = 1 and no = 0. The riycf
-    package function will ensure that integer variables are actually
-    integers and variables that need to be re-coded into numeric scores
-    are re-coded.
-2.  *IYCF indicator generation*: The indicator calculation process would
-    continue if there were no issues with the data entry. The new IYCF
-    indicator variables will be generated based on which indicators the
-    user asks to calculate. For example, suppose the user wanted to
-    calculate whether the beneficiaries meet the minimum meal frequency.
-    In this case, the user can use the `get_mmf` functions to create a
-    new dichotomous variable that indicates whether each child met the
-    minimum meal frequency. More sample codes from this package were
-    present in each function documentation.
+\#\#\# (Beneficial in) Data cleaning
+
+Each IYCF package function will perform the data quality check to ensure
+all the required data (variables) were correctly constructed in the
+dataset. For example, the minimum meal frequency indicator analysis
+requires the following variables for data analysis: child age,
+breastfeeding status, and frequency of child feeding on the previous
+day. The child age and child meal frequency data should be present in
+the `numeric - integer` format, and the breastfeeding status should be
+coded as a binary true/false variable with yes = 1 and no = 0. The riycf
+package function will ensure that integer variables are actually
+integers and variables that need to be re-coded into numeric scores are
+re-coded.
+
+\#\#\# IYCF indicator generation
+
+The indicator calculation process would continue if there were no issues
+with the data entry. The new IYCF indicator variables will be generated
+based on which indicators the user asks to calculate. For example,
+suppose the user wanted to calculate whether the beneficiaries meet the
+minimum meal frequency. In this case, the user can use the `get_mmf()`
+functions to create a new dichotomous variable that indicates whether
+each child met the minimum meal frequency. More sample codes from this
+package were present in each function documentation.
 
 ## Data collection with computer-assisted personal interviews (CAPI)
 
