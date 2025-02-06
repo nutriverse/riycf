@@ -93,7 +93,7 @@
 <p>Based on the WHO guideline’s indicator definition, the riycf package functions will calculate all the IYCF indicators. Each riycf function will perform the following tasks.</p>
 <ol style="list-style-type: decimal">
 <li>
-<em>(Beneficial in) Data cleaning</em>: Each IYCF package function will perform the data quality check to ensure all the required data (variables) were correctly constructed in the dataset. For example, the minimum meal frequency indicator analysis requires the following variables for data analysis: child age, breastfeeding status, and frequency of child feeding on the previous day. The child age and child meal frequency data should be present in the <code>numeric - integer</code> format, and the breastfeeding status should be coded as a binary true/false variable with yes = 1 and no = 0. The riycf package function will ensure that integer variables are actually integers and variables that need to be re-coded into numeric scores are re-coded.</li>
+<em>(Beneficial in) Data cleaning</em>: Each IYCF package function will perform the data quality check to ensure all the required data (variables) were correctly constructed in the dataset. For example, the minimum meal frequency indicator analysis requires the following variables for data analysis: child age, breastfeeding status, and frequency of child feeding on the previous day. The child age and child meal frequency data should be present in the <code>numeric -     integer</code> format, and the breastfeeding status should be coded as a binary true/false variable with yes = 1 and no = 0. The riycf package function will ensure that integer variables are actually integers and variables that need to be re-coded into numeric scores are re-coded.</li>
 <li>
 <em>IYCF indicator generation</em>: The indicator calculation process would continue if there were no issues with the data entry. The new IYCF indicator variables will be generated based on which indicators the user asks to calculate. For example, suppose the user wanted to calculate whether the beneficiaries meet the minimum meal frequency. In this case, the user can use the <code>get_mmf</code> functions to create a new dichotomous variable that indicates whether each child met the minimum meal frequency. More sample codes from this package were present in each function documentation.</li>
 </ol>
@@ -112,6 +112,8 @@
   </main><aside class="col-md-3"><div class="links">
 <h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
+<li><a href="https://github.com/nutriverse/mwana/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/nutriverse/mwana/issues" class="external-link">Report a bug</a></li>
 <li><a href="https://www.who.int/publications/i/item/9789240018389" class="external-link">Read more about IYCF indicators</a></li>
 </ul>
 </div>
@@ -150,10 +152,12 @@
 <div class="dev-status">
 <h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
+<li><a href="https://www.repostatus.org/#wip" class="external-link"><img src="https://www.repostatus.org/badges/latest/wip.svg" alt="Project Status: WIP – Initial development is in progress, but there has not yet been a stable, usable release suitable for the public."></a></li>
 <li><a href="https://lifecycle.r-lib.org/articles/stages.html#experimental" class="external-link"><img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg" alt="Lifecycle: experimental"></a></li>
-<li><a href="https://github.com/nutriverse/riycf/actions" class="external-link"><img src="https://github.com/nutriverse/riycf/workflows/R-CMD-check/badge.svg" alt="R-CMD-check"></a></li>
+<li><a href="https://github.com/nutriverse/riycf/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/nutriverse/riycf/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
 <li><a href="https://github.com/nutriverse/riycf/actions/workflows/test-coverage.yaml" class="external-link"><img src="https://github.com/nutriverse/riycf/actions/workflows/test-coverage.yaml/badge.svg" alt="test-coverage"></a></li>
 <li><a href="https://app.codecov.io/gh/nutriverse/riycf?branch=main" class="external-link"><img src="https://codecov.io/gh/nutriverse/riycf/branch/main/graph/badge.svg" alt="Codecov test coverage"></a></li>
+<li><a href="https://www.codefactor.io/repository/github/nutriverse/riycf" class="external-link"><img src="https://www.codefactor.io/repository/github/nutriverse/riycf/badge" alt="CodeFactor"></a></li>
 </ul>
 </div>
 
