@@ -102,10 +102,16 @@
 <h2 id="how-does-the-package-work">How does the package work?<a class="anchor" aria-label="anchor" href="#how-does-the-package-work"></a>
 </h2>
 <p>Based on the WHO guideline’s indicator definition, the <a href="https://nutriverse.io/riycf/">riycf</a> package functions will calculate all the IYCF indicators. Each <a href="https://nutriverse.io/riycf/">riycf</a> function will perform the following tasks.</p>
-<p>### (Beneficial in) Data cleaning</p>
+<div class="section level3">
+<h3 id="beneficial-in-data-cleaning">(Beneficial in) Data cleaning<a class="anchor" aria-label="anchor" href="#beneficial-in-data-cleaning"></a>
+</h3>
 <p>Each IYCF package function will perform the data quality check to ensure all the required data (variables) were correctly constructed in the dataset. For example, the minimum meal frequency indicator analysis requires the following variables for data analysis: child age, breastfeeding status, and frequency of child feeding on the previous day. The child age and child meal frequency data should be present in the <code>numeric - integer</code> format, and the breastfeeding status should be coded as a binary true/false variable with yes = 1 and no = 0. The riycf package function will ensure that integer variables are actually integers and variables that need to be re-coded into numeric scores are re-coded.</p>
-<p>### IYCF indicator generation</p>
+</div>
+<div class="section level3">
+<h3 id="iycf-indicator-generation">IYCF indicator generation<a class="anchor" aria-label="anchor" href="#iycf-indicator-generation"></a>
+</h3>
 <p>The indicator calculation process would continue if there were no issues with the data entry. The new IYCF indicator variables will be generated based on which indicators the user asks to calculate. For example, suppose the user wanted to calculate whether the beneficiaries meet the minimum meal frequency. In this case, the user can use the <code><a href="reference/get_mmf.html">get_mmf()</a></code> functions to create a new dichotomous variable that indicates whether each child met the minimum meal frequency. More sample codes from this package were present in each function documentation.</p>
+</div>
 </div>
 <div class="section level2">
 <h2 id="data-collection-with-computer-assisted-personal-interviews-capi">Data collection with computer-assisted personal interviews (CAPI)<a class="anchor" aria-label="anchor" href="#data-collection-with-computer-assisted-personal-interviews-capi"></a>
