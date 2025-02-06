@@ -7,12 +7,12 @@ Authors@R: c(
            role = c("aut", "cre")),
     person("Ernest", "Guevarra", comment = c(ORCID = "0000-0002-4887-4415"), 
            email = "ernest@guevarra.io", role = "aut"), 
-    person("Rebecca", "Wolfe", role = "aut"))
-Description: This package aims to generate updated indicators to assess infant 
-    and young child feeding (IYCF) practices at the individual under 2 years old 
-    children level. The indicators were developed using the technical guideline 
-    from the Indicators for assessing infant and young child feeding practices: 
-    definitions and measurement methods 
+    person("Rebecca", "Wolfe", role = "rev"))
+Description: This package aims to generate updated indicators to assess infant
+    and young child feeding (IYCF) practices at the individual under 2 years old
+    children level. The indicators were developed using the technical guideline
+    from the Indicators for assessing infant and young child feeding practices:
+    definitions and measurement methods
     <https://www.who.int/publications/i/item/9789240018389>.
 License: GPL (>= 3)
 Encoding: UTF-8
@@ -25,6 +25,7 @@ Suggests:
     testthat (>= 3.0.0),
     covr
 VignetteBuilder: knitr
-RoxygenNote: 7.1.2
+RoxygenNote: 7.3.2
 Roxygen: list(markdown = TRUE)
 Config/testthat/edition: 3
+URL: https://nutriverse.io/riycf/

@@ -64,6 +64,4 @@ food group out of 8 food groups)
 }
 \author{
 Nicholus Tint Zaw
-
-Nicholus Tint Zaw
 }
