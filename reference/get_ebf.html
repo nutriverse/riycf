@@ -81,8 +81,8 @@ receiving any type of solid foods yesterday (yes = 1 or no = 0).</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>binary variables indicate child was exclusively breastfed or not
-during the previous day (ebf = 1 or 0)</p>
+    <p>A vector of binary values indicating whether a child was exclusively
+breastfed or not during the previous day (1 = Yes or 0 = No).</p>
     </div>
     <div class="section level2">
     <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a></h2>
@@ -99,6 +99,10 @@ during the previous day (ebf = 1 or 0)</p>
 <span class="r-in"><span>                <span class="va">df</span><span class="op">$</span><span class="va">child_juice</span>, <span class="va">df</span><span class="op">$</span><span class="va">child_broth</span>, <span class="va">df</span><span class="op">$</span><span class="va">child_porridge</span>,</span></span>
 <span class="r-in"><span>                <span class="va">df</span><span class="op">$</span><span class="va">child_bms</span>, <span class="va">df</span><span class="op">$</span><span class="va">child_milk</span>, <span class="va">df</span><span class="op">$</span><span class="va">child_mproduct</span>,</span></span>
 <span class="r-in"><span>                <span class="va">df</span><span class="op">$</span><span class="va">child_liquid</span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Unknown or uninitialised column: `child_vitdrop`.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Unknown or uninitialised column: `child_ors`.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Unknown or uninitialised column: `child_porridge`.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Unknown or uninitialised column: `child_liquid`.</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span> <span class="va">df</span><span class="op">$</span><span class="va">liquid_food</span> <span class="op">&lt;-</span> <span class="fu"><a href="get_dummy.html">get_dummy</a></span><span class="op">(</span>var_list <span class="op">=</span> <span class="va">liquid</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
@@ -110,6 +114,10 @@ during the previous day (ebf = 1 or 0)</p>
 <span class="r-in"><span>               <span class="va">df</span><span class="op">$</span><span class="va">child_insects</span>, <span class="va">df</span><span class="op">$</span><span class="va">child_eggs</span>, <span class="va">df</span><span class="op">$</span><span class="va">child_yogurt</span>,</span></span>
 <span class="r-in"><span>               <span class="va">df</span><span class="op">$</span><span class="va">child_fat</span>, <span class="va">df</span><span class="op">$</span><span class="va">child_plam</span>, <span class="va">df</span><span class="op">$</span><span class="va">child_sweets</span>,</span></span>
 <span class="r-in"><span>               <span class="va">df</span><span class="op">$</span><span class="va">child_condiments</span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Unknown or uninitialised column: `child_insects`.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Unknown or uninitialised column: `child_fat`.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Unknown or uninitialised column: `child_plam`.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Unknown or uninitialised column: `child_condiments`.</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span> <span class="va">df</span><span class="op">$</span><span class="va">solid_food</span> <span class="op">&lt;-</span> <span class="fu"><a href="get_dummy.html">get_dummy</a></span><span class="op">(</span>var_list <span class="op">=</span> <span class="va">solid</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>

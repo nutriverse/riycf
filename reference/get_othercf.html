@@ -119,6 +119,10 @@ feeding status or not (yes = 1 or no = 0)</p>
 <span class="r-in"><span>               <span class="va">df</span><span class="op">$</span><span class="va">child_insects</span>, <span class="va">df</span><span class="op">$</span><span class="va">child_eggs</span>, <span class="va">df</span><span class="op">$</span><span class="va">child_yogurt</span>,</span></span>
 <span class="r-in"><span>               <span class="va">df</span><span class="op">$</span><span class="va">child_fat</span>, <span class="va">df</span><span class="op">$</span><span class="va">child_plam</span>, <span class="va">df</span><span class="op">$</span><span class="va">child_sweets</span>,</span></span>
 <span class="r-in"><span>               <span class="va">df</span><span class="op">$</span><span class="va">child_condiments</span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Unknown or uninitialised column: `child_insects`.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Unknown or uninitialised column: `child_fat`.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Unknown or uninitialised column: `child_plam`.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Unknown or uninitialised column: `child_condiments`.</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span> <span class="va">df</span><span class="op">$</span><span class="va">solid_food</span> <span class="op">&lt;-</span> <span class="fu"><a href="get_dummy.html">get_dummy</a></span><span class="op">(</span>var_list <span class="op">=</span> <span class="va">solid</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
@@ -129,6 +133,7 @@ feeding status or not (yes = 1 or no = 0)</p>
 <span class="r-in"><span><span class="co"># Egg and/or Flesh food consumption previous day - yes/no</span></span></span>
 <span class="r-in"><span> <span class="va">egg_meat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">child_organ</span>, <span class="va">df</span><span class="op">$</span><span class="va">child_beef</span>, <span class="va">df</span><span class="op">$</span><span class="va">child_fish</span>,</span></span>
 <span class="r-in"><span>                  <span class="va">df</span><span class="op">$</span><span class="va">child_insects</span>, <span class="va">df</span><span class="op">$</span><span class="va">child_eggs</span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Unknown or uninitialised column: `child_insects`.</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span> <span class="va">df</span><span class="op">$</span><span class="va">egg_meat</span> <span class="op">&lt;-</span> <span class="fu"><a href="get_dummy.html">get_dummy</a></span><span class="op">(</span>var_list <span class="op">=</span> <span class="va">egg_meat</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
@@ -139,6 +144,7 @@ feeding status or not (yes = 1 or no = 0)</p>
 <span class="r-in"><span> <span class="va">sweet</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">child_milk_sweet</span>, <span class="va">df</span><span class="op">$</span><span class="va">child_mproduct_sweet</span>,</span></span>
 <span class="r-in"><span>               <span class="va">df</span><span class="op">$</span><span class="va">child_chocolate</span>, <span class="va">df</span><span class="op">$</span><span class="va">child_juice</span>, <span class="va">df</span><span class="op">$</span><span class="va">child_soda</span>,</span></span>
 <span class="r-in"><span>               <span class="va">df</span><span class="op">$</span><span class="va">child_tea_sweet</span>, <span class="va">df</span><span class="op">$</span><span class="va">child_oth_drink_swee</span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Unknown or uninitialised column: `child_oth_drink_swee`.</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span> <span class="va">df</span><span class="op">$</span><span class="va">sweet</span> <span class="op">&lt;-</span> <span class="fu"><a href="get_dummy.html">get_dummy</a></span><span class="op">(</span>var_list <span class="op">=</span> <span class="va">sweet</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
@@ -147,6 +153,7 @@ feeding status or not (yes = 1 or no = 0)</p>
 <span class="r-in"><span><span class="co"># Unhealthy food consumption (6-23 months)</span></span></span>
 <span class="r-in"><span><span class="co"># Unhealthy food consumption previous day - yes/no</span></span></span>
 <span class="r-in"><span> <span class="va">unhealthy</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">child_sweets</span>, <span class="va">df</span><span class="op">$</span><span class="va">child_condiments</span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Unknown or uninitialised column: `child_condiments`.</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span> <span class="va">df</span><span class="op">$</span><span class="va">unhealthy</span> <span class="op">&lt;-</span> <span class="fu"><a href="get_dummy.html">get_dummy</a></span><span class="op">(</span>var_list <span class="op">=</span> <span class="va">unhealthy</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
