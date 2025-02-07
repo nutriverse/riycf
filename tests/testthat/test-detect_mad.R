@@ -44,3 +44,7 @@ test_that("`get_mad` function define the output values correctly", {
   }
 
 })
+
+test_that("errors are produced as expected", {
+  expect_error(get_mad(NULL, 0, 1, 1, 0))
+})

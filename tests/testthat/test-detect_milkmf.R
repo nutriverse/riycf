@@ -1,7 +1,5 @@
 
 
-library(riycf)
-
 
 ################################################################################
 # Return result values check
@@ -58,4 +56,10 @@ test_that("`get_mmff` function define the output values correctly", {
     expect_equal(check_list[i], exp_result[i])
   }
 
+})
+
+
+test_that("errors are produced as expected", {
+  expect_error(get_mmff(0, 2, NULL))
+  expect_error(get_milk_frq(0, 0, 0, NULL))
 })
