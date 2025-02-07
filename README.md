@@ -38,30 +38,26 @@ measurement guidelines in 2008. In 2021, these guidelines were updated
 along with a revised standard questionnaire to capture the information
 required to calculate the updated IYCF indicators since the first
 initial publication. In general, the IYCF indicators can be categorized
-into three main categories: (1) breastfeeding indicators, (2)
-complementary indicators, and (3) other indicators, which are focused on
-bottle-feeding practices and the generation of data visualization plots
-for the breastfeeding status by age.
+into three main categories: *(1) breastfeeding indicators*, *(2)
+complementary indicators*, and *(3) other indicators*.
 
-## Why riycf package?
+## Why the {riycf} package?
 
 Although the initial measurement guidelines were published in 2008 with
-many humanitarian organizations and country health ministries
+many humanitarian organisations and country health ministries
 implementing these indicators, no comprehensive statistical programming
 package to calculate these indicators is yet available. Therefore, every
-time the researchers (or humanitarian organizations) are required to
-collect and analyze, they need a considerable amount of time to re-code
+time the researchers (or humanitarian organisations) are required to
+collect and analyse, they need a considerable amount of time to recode
 all the syntax (depending on which statistical program they are using).
 That is time-consuming work.
 
 This `{riycf}` package aims to address that technical gap by providing
-an easy-to-use package of automated functions\` to calculate all IYCF
-indicators provided in the WHO guideline ([the Indicators for assessing
-infant and young child feeding practices: definitions and measurement
-methods](https://www.who.int/publications/i/item/9789240018389)). This
+an easy-to-use package of functions to calculate all IYCF indicators
+provided in the [WHO
+guidelines](https://www.who.int/publications/i/item/9789240018389). This
 include comprehensive guidelines for step-by-step usage of each
-automated function to analyze individual IYCF indicators in R software
-to make it easier for those less familiar with R software.
+automated function to analyse individual IYCF indicators using R.
 
 ## Installation
 
@@ -99,10 +95,10 @@ requires the following variables for data analysis: child age,
 breastfeeding status, and frequency of child feeding on the previous
 day. The child age and child meal frequency data should be present in
 the `numeric - integer` format, and the breastfeeding status should be
-coded as a binary true/false variable with yes = 1 and no = 0. The riycf
-package function will ensure that integer variables are actually
-integers and variables that need to be re-coded into numeric scores are
-re-coded.
+coded as a binary true/false variable with yes = 1 and no = 0. The
+`{riycf}` package function will ensure that integer variables are
+actually integers and variables that need to be recoded into numeric
+scores are recoded accordingly.
 
 ### IYCF indicator generation
 
@@ -122,7 +118,7 @@ This package also provides the already programmed IYCF Questionnaires
 Detailed guidelines for accessing those forms are provided in the
 vignette article called “WHO IYCF Questionnaire XLS Forms.” The
 different types of XLS programmed IYCF questionnaires can download on
-[this Github page](https://github.com/nicholustintzaw/iycf_xls_forms).
+[this GitHub page](https://github.com/nicholustintzaw/iycf_xls_forms).
 
 ## Citation
 

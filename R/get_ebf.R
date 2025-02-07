@@ -1,5 +1,4 @@
-################################################################################
-#
+#' 
 #' @title Construct exclusive breastfeeding status for under 6 months old child
 #'
 #' @description Identification of individual 0-5 months old children exclusive
@@ -7,20 +6,16 @@
 #'
 #' @param age This parameter holds the information about child age in the month
 #'    format.
-#'
 #' @param q4 The binary variable which mentioned that the child was receiving
 #'    breastfeeding in the previous day (yes = "1", no = "0").
-#'
 #' @param liquid_food The binary variable which mentioned that the child was
 #'    receiving any type of liquid foods beside breastfeeding yesterday
 #'    (yes = 1 or no = 0).
-#'
 #' @param solid_food The binary variable which mentioned that the child was
 #'    receiving any type of solid foods yesterday (yes = 1 or no = 0).
 #'
-#' @return binary variables indicate child was exclusively breastfed or not
-#'    during the previous day (ebf = 1 or 0)
-#'
+#' @returns A vector of binary values indicating whether a child was exclusively
+#'   breastfed or not during the previous day (1 = Yes or 0 = No).
 #'
 #' @examples
 #'
@@ -53,10 +48,7 @@
 #'
 #' @author Nicholus Tint Zaw
 #' @export
-#' @rdname get_ebf
 #'
-#'
-#################################################################################
 
 # Exclusive Breastfeeding
 get_ebf <- function(q4, age, liquid_food, solid_food){
@@ -70,9 +62,6 @@ get_ebf <- function(q4, age, liquid_food, solid_food){
     ebf <- ifelse(is.na(q4) | is.na(age) | is.na(liquid_food) |
                     is.na(solid_food), NA, ebf)
 
-    return(ebf)
+    ebf
   }
 }
-
-#################################################################################
-

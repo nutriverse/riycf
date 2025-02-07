@@ -3,27 +3,27 @@
 \docType{data}
 \name{iycfData}
 \alias{iycfData}
-\title{Infant and Young Children Indicators Sample Dataset}
+\title{Infant and young child feeding indicators sample dataset}
 \format{
 A data frame with 46 columns and 359 rows.\tabular{lll}{
    \strong{Variables} \tab \strong{WHO Question Number} \tab \strong{Description} \cr
-   \emph{csex} \tab  \tab child sex \cr
-   \emph{calc_age_months} \tab  \tab child age in month \cr
-   \emph{child_bf} \tab Q1 \tab ever breastfed \cr
-   \emph{child_eibf} \tab Q2 \tab first put to the breast - immediately \cr
-   \emph{child_eibf_hrs} \tab Q2 \tab first put to the breast - hours \cr
-   \emph{child_eibf_days} \tab Q2 \tab first put to the breast - days \cr
-   \emph{bf_2days} \tab Q3 \tab given anything other than breast milk, first 2-days of child age \cr
-   \emph{child_bfyest} \tab Q4 \tab breastfed yesterday during the day or at night \cr
-   \emph{bf_bottle} \tab Q5 \tab drink anything from a bottle with a nipple yesterday \cr
-   \emph{child_water} \tab Q6A \tab Plain water \cr
-   \emph{child_bms} \tab Q6B \tab Infant formula \cr
-   \emph{child_bms_freq} \tab Q6Bnum \tab Infant formula - frequency \cr
-   \emph{child_milk} \tab Q6C \tab Milk from animals \cr
-   \emph{child_milk_freq} \tab Q6Cnum \tab Milk from animals - frequency \cr
-   \emph{child_milk_sweet} \tab Q6Cswt \tab Milk from animals - sweet or flavored type milk \cr
-   \emph{child_mproduct} \tab Q6D \tab Yogurt drinks \cr
-   \emph{child_mproduct_freq} \tab Q6Dnum \tab Yogurt drinks - frequency \cr
+   \emph{csex} \tab  \tab Sex of child; 1 = male; 0 = female. \cr
+   \emph{calc_age_months} \tab  \tab Age of child in months (calculated). \cr
+   \emph{child_bf} \tab Q1 \tab Has child ever been breastfed?; 1 = Yes; 0 = No. \cr
+   \emph{child_eibf} \tab Q2 \tab When was child first put to the breast: 0 = immediately; 1 = hours; 2 = days; 999 = Don't know/no response. \cr
+   \emph{child_eibf_hrs} \tab Q2 \tab If \emph{child_eibf} is 1, number of hours child first put to the breast; integer value. \cr
+   \emph{child_eibf_days} \tab Q2 \tab If \emph{child_eibf} is 2, number of days child first put to the breast; integer value. \cr
+   \emph{bf_2days} \tab Q3 \tab Has child been given anything other than breast milk within the child's first 2 days of age? 1 = Yes; 0 = No. \cr
+   \emph{child_bfyest} \tab Q4 \tab Has child been breastfed yesterday during the day or at night? 1 = Yes; 0 = No. \cr
+   \emph{bf_bottle} \tab Q5 \tab Has child drank anything from a bottle with a nipple yesterday? 1 = Yes; 0 = No. \cr
+   \emph{child_water} \tab Q6A \tab Has child drank \emph{plain water} yesterday? 1 = Yes; 0 = No. \cr
+   \emph{child_bms} \tab Q6B \tab Has child drank \emph{infant formula} yesterday? 1 = Yes; 0 = No. \cr
+   \emph{child_bms_freq} \tab Q6Bnum \tab How many times has child drank \emph{infant formula}? Integer value. \cr
+   \emph{child_milk} \tab Q6C \tab Has child drank \emph{milk from animals} yesterday? 1 = Yes; 0 = No. \cr
+   \emph{child_milk_freq} \tab Q6Cnum \tab How many times has child drank \emph{milk from animals}? Integer value. \cr
+   \emph{child_milk_sweet} \tab Q6Cswt \tab For children who drank \emph{milk from animals}, was milk sweetened or flavoured? 1 = Yes; = No. \cr
+   \emph{child_mproduct} \tab Q6D \tab Has child drank \emph{yogurt drinks} yesterday? 1 = Yes; 0 = No. \cr
+   \emph{child_mproduct_freq} \tab Q6Dnum \tab How many times has child rank \emph{yogurt drinks}? Integer value. \cr
    \emph{child_mproduct_sweet} \tab Q6Dswt \tab Yogurt drinks - sweet or flavored type yogurt \cr
    \emph{child_chocolate} \tab Q6E \tab Chocolate-flavored drinks \cr
    \emph{child_juice} \tab Q6F \tab Fruit juice or fruit-flavored drinks \cr
@@ -62,15 +62,12 @@ CARE Myanmar
 iycfData
 }
 \description{
-This sample demo dataset (\code{iycfData}) contained 359 observations and 46
-variables. The following tables explain the detailed description of each
-variable included in the sample dataset. The CARE International Myanmar
-Country program provided this demo dataset, and all the Personal
-Identifiable Information (PII) were excluded.
+This is an example IYCF dataset with 359 observations and 46
+variables. The dataset is from CARE International Myanmar country programme.
+All personally identifiable information have been excluded.
 }
 \examples{
-# explore the first 6 observations from the dataset
-head(iycfData)
+iycfData
 
 }
 \keyword{datasets}

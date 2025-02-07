@@ -21,8 +21,8 @@ receiving any type of liquid foods beside breastfeeding yesterday
 receiving any type of solid foods yesterday (yes = 1 or no = 0).}
 }
 \value{
-binary variables indicate child was exclusively breastfed or not
-during the previous day (ebf = 1 or 0)
+A vector of binary values indicating whether a child was exclusively
+breastfed or not during the previous day (1 = Yes or 0 = No).
 }
 \description{
 Identification of individual 0-5 months old children exclusive
