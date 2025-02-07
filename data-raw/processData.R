@@ -1,22 +1,20 @@
-
 # SAMPLE DATASET for IYCF INDICATORS EXAMPLE
 
-################################################################################
-
-# Breastfeeding Sample Data
+## Breastfeeding Sample Data
 bfData <- read.csv("data-raw/bf_data.csv")
+
 # usethis::use_data(bfData, overwrite = TRUE, compress = "xz")
 
-################################################################################
 
-# Complementary Feeding Sample Data
+## Complementary Feeding Sample Data
 cfData <- read.csv("data-raw/iycf_data.csv")
 # usethis::use_data(cfData, overwrite = TRUE, compress = "xz")
 
-# IYCF Dataset - CARE Myanmar Sample data
+
+## IYCF Dataset - CARE Myanmar Sample data
 iycfData <- rbind(bfData, cfData)
 
-# required additional variable creation - to matched with WHO questionnaires
+## required additional variable creation - to matched with WHO questionnaires
 iycfData$bf_2days <- rbinom(n = nrow(iycfData), size = 1, prob = 0.3)
 iycfData$bf_bottle <- rbinom(n = nrow(iycfData), size = 1, prob = 0.15)
 iycfData$child_milk_sweet <- rbinom(n = nrow(iycfData), size = 1, prob = 0.3)
@@ -58,9 +56,6 @@ final_var <- c('csex', 'calc_age_months', 'child_bf', 'child_eibf',
                'child_fish', 'child_beans', 'child_cheese', 'child_sweets',
                'child_snack', 'child_oth_food', 'child_food_freq')
 
-iycfData <- iycfData[, final_var]
+iycfData <- tibble::as_tibble(iycfData[, final_var])
 
 usethis::use_data(iycfData, overwrite = TRUE, compress = "xz")
-
-
-################################################################################

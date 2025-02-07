@@ -1,35 +1,31 @@
-################################################################################
 #'
-#' Infant and Young Children Indicators Sample Dataset
+#' Infant and young child feeding indicators sample dataset
 #'
-#' This sample demo dataset (`iycfData`) contained 359 observations and 46
-#' variables. The following tables explain the detailed description of each
-#' variable included in the sample dataset. The CARE International Myanmar
-#' Country program provided this demo dataset, and all the Personal
-#' Identifiable Information (PII) were excluded.
+#' This is an example IYCF dataset with 359 observations and 46
+#' variables. The dataset is from CARE International Myanmar country programme.
+#' All personally identifiable information have been excluded.
 #'
 #' @format A data frame with 46 columns and 359 rows.
 #'
-#'
 #' **Variables** | **WHO Question Number** | **Description**
 #' :--- | :--- | :---
-#' *csex* | | child sex
-#' *calc_age_months* | | child age in month
-#' *child_bf* | Q1 | ever breastfed
-#' *child_eibf* | Q2 | first put to the breast - immediately
-#' *child_eibf_hrs* | Q2 | first put to the breast - hours
-#' *child_eibf_days* | Q2 | first put to the breast - days
-#' *bf_2days* | Q3 | given anything other than breast milk, first 2-days of child age
-#' *child_bfyest* | Q4 | breastfed yesterday during the day or at night
-#' *bf_bottle* | Q5 | drink anything from a bottle with a nipple yesterday
-#' *child_water* | Q6A | Plain water
-#' *child_bms* | Q6B | Infant formula
-#' *child_bms_freq* | Q6Bnum | Infant formula - frequency
-#' *child_milk* | Q6C | Milk from animals
-#' *child_milk_freq* | Q6Cnum | Milk from animals - frequency
-#' *child_milk_sweet* | Q6Cswt | Milk from animals - sweet or flavored type milk
-#' *child_mproduct* | Q6D | Yogurt drinks
-#' *child_mproduct_freq* | Q6Dnum | Yogurt drinks - frequency
+#' *csex* | | Sex of child; 1 = male; 0 = female.
+#' *calc_age_months* | | Age of child in months (calculated).
+#' *child_bf* | Q1 | Has child ever been breastfed?; 1 = Yes; 0 = No.
+#' *child_eibf* | Q2 | When was child first put to the breast: 0 = immediately; 1 = hours; 2 = days; 999 = Don't know/no response.
+#' *child_eibf_hrs* | Q2 | If *child_eibf* is 1, number of hours child first put to the breast; integer value.
+#' *child_eibf_days* | Q2 | If *child_eibf* is 2, number of days child first put to the breast; integer value.
+#' *bf_2days* | Q3 | Has child been given anything other than breast milk within the child's first 2 days of age? 1 = Yes; 0 = No.
+#' *child_bfyest* | Q4 | Has child been breastfed yesterday during the day or at night? 1 = Yes; 0 = No.
+#' *bf_bottle* | Q5 | Has child drank anything from a bottle with a nipple yesterday? 1 = Yes; 0 = No.
+#' *child_water* | Q6A | Has child drank *plain water* yesterday? 1 = Yes; 0 = No.
+#' *child_bms* | Q6B | Has child drank *infant formula* yesterday? 1 = Yes; 0 = No.
+#' *child_bms_freq* | Q6Bnum | How many times has child drank *infant formula*? Integer value.
+#' *child_milk* | Q6C | Has child drank *milk from animals* yesterday? 1 = Yes; 0 = No.
+#' *child_milk_freq* | Q6Cnum | How many times has child drank *milk from animals*? Integer value.
+#' *child_milk_sweet* | Q6Cswt | For children who drank *milk from animals*, was milk sweetened or flavoured? 1 = Yes; = No.
+#' *child_mproduct* | Q6D | Has child drank *yogurt drinks* yesterday? 1 = Yes; 0 = No.
+#' *child_mproduct_freq* | Q6Dnum | How many times has child rank *yogurt drinks*? Integer value.
 #' *child_mproduct_sweet* | Q6Dswt | Yogurt drinks - sweet or flavored type yogurt
 #' *child_chocolate* | Q6E | Chocolate-flavored drinks
 #' *child_juice* | Q6F| Fruit juice or fruit-flavored drinks
@@ -60,15 +56,12 @@
 #' *child_oth_food* | Q7R |Any other solid, semi-solid or soft food
 #' *child_food_freq* | Q8 | number of any solid, semi-solid or soft foods yesterday
 #'
-#'
 #' @source CARE Myanmar
 #'
 #' @examples
-#' # explore the first 6 observations from the dataset
-#' head(iycfData)
+#' iycfData
 #'
-#
-################################################################################
+
 "iycfData"
 
 

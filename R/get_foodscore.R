@@ -42,6 +42,8 @@
 #'  vita_fruveg <- round(runif(nrow(df), min = 0, max = 1), 0)
 #'  oth_fruveg <- round(runif(nrow(df), min = 0, max = 1), 0)
 #'
+#################################################################################
+
 #'  # Calculate Food Consumption Score
 #'  food_score <- get_foodscore(breastmilk, grains, pulses, dairy, meat,
 #'                              eggs, vita_fruveg, oth_fruveg)
