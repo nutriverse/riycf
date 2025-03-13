@@ -18,61 +18,61 @@ knitr::opts_chunk$set(
 )
 ```
 
-
-# Introduction 
-
-In the new WHO 2021 IYCF indicator guideline, there are 7 indicators related to breastfeeding practices list as below. This article will demonstrate how the `{riycf}` package can apply to calculating those indicators in a steps-by-step approach. 
-
-1. Ever Breastfeed (EvBF) 
-2. Early Initiation Of Breastfeeding (EIBF) 
-3. Exclusive Breastfeed For The First Two Days After Birth (BEF2D) 
-4. Exclusive Breastfeeding Under Six Months (EBF)
-5. Mixed Milk Feeding Under Six Months (MixMF) 
-6. Continuous Breastfeeding 12-23 Months (CBF) 
-7. Bootle Feeding 0-23 Months (BoF) 
-
-
-# Dataset Set-up 
-
-Firstly, load the required libraries for data analysis work. We will use `{riycf}` package for the IYCF indicator generation work. 
-
-```{r setup}
+```{r setup, echo = FALSE}
 library(riycf)
+library(tibble)
 ```
 
+## Introduction 
 
-For this guideline demonstration, we will use the sample dataset provided by the CARE Myanmar team on IYCF modules. A detailed description of the variable's name and variable labels are mentioned in the documentation. Use the following syntax to check for the dataset description. 
+There are 7 indicators related to breastfeeding practices in the updated WHO infant and young child feeding (IYCF) indicator guidelines.
 
-```{r df_load}
-?iycfData
+1. Ever breastfeed
+2. Early initiation of breastfeeding 
+3. Exclusive breastfeeding for the first two days after birth 
+4. Exclusive breastfeeding for under six months
+5. Mixed milk feeding for under six months 
+6. Continuous breastfeeding for 12-23 months 
+7. Bottle feeding for 0-23 Months
 
-df <- iycfData
-head(df[1:5])
-
+This article demonstrates how the `{riycf}` package calculates these indicators. The `iycfData` included in the `{riycf}` package will be used for this demonstration.
+ 
+```{r iycf-data}
+iycfData
 ```
 
-This dataset contains 359 observations and 46 variables, and all variables were organized based on the WHO IYCF sample questionnaire. We tried to mention explicitly matching function inputs parameters and question numbers from the WHO IYCF sample question. If your dataset did not have the same variables as the WHO sample one, please apply the most relevant ones in the respective input parameter. 
+## Breastfeeding Indicator Calculation 
 
+### Ever breastfed
 
-# Breastfeeding Indicator Calculation 
+Children less than 24 months who ever breastfed is defined as follows:
 
-## Ever Breastfeed (EvBF) 
+$$ \text{Ever breastfed} = \frac{\text{Children}_{\text{age < 24 months}} \text{who ever breastfed}}{\text{Children}_{\text{age < 24 months}}} $$
 
-According to the WHO definition, this is the proportion of under 2 years old children (< 24 months) who were ever breastfed. Therefore, this indicator only accounts for under 2 years old children, and the children outside of this age range should not include in the indicator calculation. To get this indicator, we will use the `get_evbf()` function as follows. We need two input parameters to calculate this indicator; child age in month and child was ever breastfed or not (*Questions 1* from WHO IYCF questionnaires). 
+This indicator can be calculated using the `get_evbf()` function as follows: 
 
+```{r evbf}
+df <- within(iycfData, {
+  evbf <- get_evbf(q4 = child_bf, age = calc_age_months)
+})
 
-```{r}
-df$evbf <- get_evbf(q4 = df$child_bf, 
-                    age = df$calc_age_months)
 table(df$evbf)
-
 ```
 
+Two input parameters are needed to calculate this indicator: *(1) child's age in months*; and, *(2) child was ever breastfed or not*. 
 
-We can also check whether this is correct or not using some manual data checking. There are 153 under 2 years old children available in this sample dataset. 
+Checking whether this is correct: 
 
-```{r}
-length(which(df$calc_age_months < 24))
+```{r evbf-check}
+evbf <- with(
+  df, 
+  ifelse(
+    calc_age_months < 24 & child_bf == 1, 1,
+    ifelse(calc_age_months < 24 & child_bf == 0, 0, NA)
+  )
+)
+
+table(evbf)
 ```
 
 Among them, 108 were breastfeeding, and the other 45 didn't. Therefore, the `get_evbf()` function yields the same result as our manual check, and you can go ahead and use it for reporting purposes. 
@@ -141,7 +141,7 @@ df$liquid_food <- get_dummy(var_list = liquid)
 table(df$liquid_food)
 ```
 
-### Soild or semi-solid food consumption 
+### Solid or semi-solid food consumption 
 
 For solid and semi-food consumption status, I used all the variables from 24 hours solid (or semi-solid) food recall *Question 7A* to *Question 7R* in WHO IYCF questionnaires. If the child got any food from this list, indicated as 1, and if he/she didn't, 0. 
 
@@ -196,7 +196,7 @@ length(which(df$calc_age_months < 6 & df$child_bfyest == 1 &
 ```
 
 
-## Continious Breastfeeding 12-23 Months (CBF) 
+## Continuous Breastfeeding 12-23 Months (CBF) 
 
 This continuous breastfeeding indicator only accounts for the age range between 12-23 months. Children out of this age range will not consider in the indicator calculation. We will use the `get_cbf()` function, and it requires only two input parameters; child age and breastfeeding status from the previous day. 
 
