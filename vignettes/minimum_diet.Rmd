@@ -40,12 +40,8 @@ library(riycf)
 
 For this guideline demonstration, we will use the sample dataset provided by the CARE Myanmar team on IYCF modules. A detailed description of the variable's name and variable labels are mentioned in the documentation. Use the following syntax to check for the dataset description. 
 
-```{r df_load}
-?iycfData
-
-df <- iycfData
-head(df[1:5])
-
+```{r iycf-data}
+iycfData
 ```
 
 This dataset contains 359 observations and 46 variables, and all variables were organized based on the WHO IYCF sample questionnaire. We tried to mention explicitly matching function inputs parameters and question numbers from the WHO IYCF sample question. If your dataset did not have the same variables as the WHO sample one, please apply the most relevant ones in the respective input parameter. 
@@ -79,6 +75,8 @@ Please note that the input parameter of the `get_dummy` function is the `list`, 
 For the breastfeeding dummy variable, the guideline-recommended to using the `Question  4`:  breastfed yesterday during the day or at night. 
 
 ```{r}
+df <- iycfData
+
 df$breastmilk <- get_dummy(var_list = list(df$child_bfyest))
 ```
 
@@ -131,7 +129,7 @@ df$oth_fruveg <- get_dummy(var_list = list(df$child_fruit, df$child_fruit))
 ```
 
 
-### Food groups score claculation  
+### Food groups score calculation  
 
 Then, we can now calculate the total food group score the children consumed on the previous day. We will use all the individual food group variables in this calculation. 
 
