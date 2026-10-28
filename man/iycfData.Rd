@@ -15,44 +15,44 @@ A data frame with 46 columns and 359 rows.\tabular{lll}{
    \emph{child_eibf_days} \tab Q2 \tab If \emph{child_eibf} is 2, number of days child first put to the breast; integer value. \cr
    \emph{bf_2days} \tab Q3 \tab Has child been given anything other than breast milk within the child's first 2 days of age? 1 = Yes; 0 = No. \cr
    \emph{child_bfyest} \tab Q4 \tab Has child been breastfed yesterday during the day or at night? 1 = Yes; 0 = No. \cr
-   \emph{bf_bottle} \tab Q5 \tab Has child drank anything from a bottle with a nipple yesterday? 1 = Yes; 0 = No. \cr
-   \emph{child_water} \tab Q6A \tab Has child drank \emph{plain water} yesterday? 1 = Yes; 0 = No. \cr
-   \emph{child_bms} \tab Q6B \tab Has child drank \emph{infant formula} yesterday? 1 = Yes; 0 = No. \cr
-   \emph{child_bms_freq} \tab Q6Bnum \tab How many times has child drank \emph{infant formula}? Integer value. \cr
-   \emph{child_milk} \tab Q6C \tab Has child drank \emph{milk from animals} yesterday? 1 = Yes; 0 = No. \cr
-   \emph{child_milk_freq} \tab Q6Cnum \tab How many times has child drank \emph{milk from animals}? Integer value. \cr
-   \emph{child_milk_sweet} \tab Q6Cswt \tab For children who drank \emph{milk from animals}, was milk sweetened or flavoured? 1 = Yes; = No. \cr
-   \emph{child_mproduct} \tab Q6D \tab Has child drank \emph{yogurt drinks} yesterday? 1 = Yes; 0 = No. \cr
-   \emph{child_mproduct_freq} \tab Q6Dnum \tab How many times has child rank \emph{yogurt drinks}? Integer value. \cr
-   \emph{child_mproduct_sweet} \tab Q6Dswt \tab Yogurt drinks - sweet or flavored type yogurt \cr
-   \emph{child_chocolate} \tab Q6E \tab Chocolate-flavored drinks \cr
-   \emph{child_juice} \tab Q6F \tab Fruit juice or fruit-flavored drinks \cr
-   \emph{child_soda} \tab Q6G \tab Sodas, malt drinks, sports drinks or energy drinks \cr
-   \emph{child_tea} \tab Q6H \tab Tea, coffee, or herbal drinks \cr
-   \emph{child_tea_sweet} \tab Q6Hswt \tab Tea, coffee, or herbal drinks - sweetened \cr
-   \emph{child_broth} \tab Q6I \tab Clear broth or clear soup \cr
-   \emph{child_oth_drink} \tab Q6J \tab Any other liquids \cr
-   \emph{child_oth_drink_sweet} \tab Q6Jswt \tab Other liquids - sweetened \cr
-   \emph{child_yogurt} \tab Q7A \tab Yogurt, other than yogurt drinks \cr
-   \emph{child_yogurt_frq} \tab Q7Anum \tab Yogurt, other than yogurt drinks - frequency \cr
-   \emph{child_rice} \tab Q7B \tab Porridge, bread, rice, noodles, pasta \cr
-   \emph{child_pumpkin} \tab Q7C \tab Pumpkin, carrots, sweet potatoes (yellow or orange inside) \cr
-   \emph{child_potatoes} \tab Q7D \tab Plantains, white potatoes, white yams, manioc, cassava \cr
-   \emph{child_leafyveg} \tab Q7E \tab Dark green leafy vegetables \cr
-   \emph{child_oth_veg} \tab Q7F \tab Any other vegetables \cr
-   \emph{child_mango} \tab Q7G \tab Ripe mangoes, ripe papayas \cr
-   \emph{child_fruit} \tab Q7H \tab Any other fruits \cr
-   \emph{child_organ} \tab Q7I \tab Liver, kidney, heart \cr
-   \emph{child_processmeat} \tab Q7J \tab Sausages, hot dogs, ham, bacon, salami, canned meat \cr
-   \emph{child_beef} \tab Q7K \tab Any other meat, such as beef, pork, lamb, goat, chicken, duck \cr
-   \emph{child_eggs} \tab Q7L \tab Eggs \cr
-   \emph{child_fish} \tab Q7M \tab Fresh fish, dried fish or shellfish \cr
-   \emph{child_beans} \tab Q7N \tab Beans, peas, lentils, nuts , seeds \cr
-   \emph{child_cheese} \tab Q7O \tab Hard or soft cheese \cr
-   \emph{child_sweets} \tab Q7P \tab Sweet foods such as chocolates, candies, cakes and biscuits \cr
-   \emph{child_snack} \tab Q7Q \tab Chips, crisps, puffs, French fries, instant noodles \cr
-   \emph{child_oth_food} \tab Q7R \tab Any other solid, semi-solid or soft food \cr
-   \emph{child_food_freq} \tab Q8 \tab number of any solid, semi-solid or soft foods yesterday \cr
+   \emph{bf_bottle} \tab Q5 \tab Has child had anything from a bottle with a nipple yesterday? 1 = Yes; 0 = No. \cr
+   \emph{child_water} \tab Q6A \tab Has child had \emph{plain water} yesterday? 1 = Yes; 0 = No. \cr
+   \emph{child_bms} \tab Q6B \tab Has child had \emph{infant formula} yesterday? 1 = Yes; 0 = No. \cr
+   \emph{child_bms_freq} \tab Q6Bnum \tab How many times has child had \emph{infant formula}? Integer value. \cr
+   \emph{child_milk} \tab Q6C \tab Has child had \emph{milk from animals} yesterday? 1 = Yes; 0 = No. \cr
+   \emph{child_milk_freq} \tab Q6Cnum \tab How many times has child had \emph{milk from animals}? Integer value. \cr
+   \emph{child_milk_sweet} \tab Q6Cswt \tab For children who had \emph{milk from animals}, was milk sweetened or flavoured? 1 = Yes; = No. \cr
+   \emph{child_mproduct} \tab Q6D \tab Has child had \emph{yogurt drinks} yesterday? 1 = Yes; 0 = No. \cr
+   \emph{child_mproduct_freq} \tab Q6Dnum \tab How many times has child had \emph{yogurt drinks}? Integer value. \cr
+   \emph{child_mproduct_sweet} \tab Q6Dswt \tab Has child had \emph{sweet or flavoured yogurt drinks} yesterday? 1 = Yes; 0 = No. \cr
+   \emph{child_chocolate} \tab Q6E \tab Has child had \emph{chocolate-flavoured drinks} yesterday? 1 = Yes; 0 = No. \cr
+   \emph{child_juice} \tab Q6F \tab Has child had \emph{fruit juice or fruit-flavoured drinks} yesterday? 1 = Yes; 0 = No. \cr
+   \emph{child_soda} \tab Q6G \tab Has child had \emph{sodas, malt drinks, sports drinks, or energy drinks} yesterday? 1 = Yes; 0 = No. \cr
+   \emph{child_tea} \tab Q6H \tab Has child had \emph{tea, coffee, or herbal drinks} yesterday? 1 = Yes; 0 = No. \cr
+   \emph{child_tea_sweet} \tab Q6Hswt \tab Has child had \emph{sweetened tea, coffee, or herbal drinks} yesterday? 1 = Yes; 0 = No. \cr
+   \emph{child_broth} \tab Q6I \tab Has child had \emph{clear broth or clear soup} yesterday? 1 = Yes; 0 = No. \cr
+   \emph{child_oth_drink} \tab Q6J \tab Has child had \emph{any other liquids} yesterday? 1 = Yes; 0 = No. \cr
+   \emph{child_oth_drink_sweet} \tab Q6Jswt \tab Has child had \emph{any other sweetened liquids} yesterday? 1 = Yes; 0 = No. \cr
+   \emph{child_yogurt} \tab Q7A \tab Has child had \emph{yogurt other than yogurt drinks} yesterday? 1 = Yes; 0 = No. \cr
+   \emph{child_yogurt_frq} \tab Q7Anum \tab How many times has child had \emph{yogurt other than yogurt drinks} yesterday? 1 = Yes; 0 = No. \cr
+   \emph{child_rice} \tab Q7B \tab Has child had \emph{porridge, bread, rice, noodles, pasta} yesterday? 1 = Yes; 0 = No. \cr
+   \emph{child_pumpkin} \tab Q7C \tab Has child had \emph{pumpkin, carrots, sweet potatoes (yellow or orange inside)} yesterday? 1 = Yes; 0 = No. \cr
+   \emph{child_potatoes} \tab Q7D \tab Has child had \emph{plantains, white potatoes, white yams, manioc, cassava} yesterday? 1 = Yes; 0 = No. \cr
+   \emph{child_leafyveg} \tab Q7E \tab Has child had \emph{dark green leafy vegetables} yesterday? 1 = Yes; 0 = No. \cr
+   \emph{child_oth_veg} \tab Q7F \tab Has child had \emph{any other vegetables} yesterday? 1 = Yes; 0 = No. \cr
+   \emph{child_mango} \tab Q7G \tab Has child had \emph{ripe mangoes, ripe papayas} yesterday? 1 = Yes; 0 = No. \cr
+   \emph{child_fruit} \tab Q7H \tab Has child had \emph{any other fruits} yesterday? 1 = Yes; 0 = No. \cr
+   \emph{child_organ} \tab Q7I \tab Has child had \emph{liver, kidney, heart} yesterday? 1 = Yes; 0 = No. \cr
+   \emph{child_processmeat} \tab Q7J \tab Has child had \emph{sausages, hot dogs, ham, bacon, salami, canned meat} yesterday? 1 = Yes; 0 = No. \cr
+   \emph{child_beef} \tab Q7K \tab Has child had \emph{any other meat, such as beef, pork, lamb, goat, chicken, duck} yesterday? 1 = Yes; 0 = No. \cr
+   \emph{child_eggs} \tab Q7L \tab Has child had \emph{eggs} yesterday? 1 = Yes; 0 = No. \cr
+   \emph{child_fish} \tab Q7M \tab Has child had \emph{fresh fish, dried fish, or shellfish} yesterday? 1 = Yes; 0 = No. \cr
+   \emph{child_beans} \tab Q7N \tab Has child had \emph{beans, peas, lentils, nuts, seeds} yesterday? 1 = Yes; 0 = No. \cr
+   \emph{child_cheese} \tab Q7O \tab Has child had \emph{hard or soft cheese} yesterday? 1 = Yes; 0 = No. \cr
+   \emph{child_sweets} \tab Q7P \tab Has child had \emph{sweet foods such as chocolates, candies, cakes, and biscuits} yesterday? 1 = Yes; 0 = No. \cr
+   \emph{child_snack} \tab Q7Q \tab Has child had \emph{chips, crisps, puffs, french fries, instant noodles} yesterday? 1 = Yes; 0 = No. \cr
+   \emph{child_oth_food} \tab Q7R \tab Has child had \emph{any other solid, semi-solid or soft food} yesterday? 1 = Yes; 0 = No. \cr
+   \emph{child_food_freq} \tab Q8 \tab How many times has child had \emph{any solid, semi-solid, or soft foods} yesterday? 1 = Yes; 0 = No. \cr
 }
 }
 \source{
@@ -62,9 +62,8 @@ CARE Myanmar
 iycfData
 }
 \description{
-This is an example IYCF dataset with 359 observations and 46
-variables. The dataset is from CARE International Myanmar country programme.
-All personally identifiable information have been excluded.
+This is an example IYCF dataset from CARE International Myanmar country
+programme. All personally identifiable information have been excluded.
 }
 \examples{
 iycfData

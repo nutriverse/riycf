@@ -33,3 +33,5 @@ URL: https://nutriverse.io/riycf/, https://github.com/nutriverse/riycf
 BugReports: https://github.com/nutriverse/mwana/issues
 VignetteBuilder: knitr
 Config/testthat/edition: 3
+Imports: 
+    cli

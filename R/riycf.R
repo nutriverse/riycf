@@ -1,5 +1,4 @@
-################################################################################
-#
+
 #'
 #' Utilities for Calculating Infant and Young Child Feeding Indicators
 #'
@@ -27,8 +26,7 @@
 #' @docType package
 #' @keywords internal
 #' @name riycf
+#' @importFrom cli cli_abort
 #'
-#
-################################################################################
 "_PACKAGE"
 

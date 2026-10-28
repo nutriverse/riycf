@@ -24,7 +24,7 @@ check_list <- c(check_1, check_2, check_3, check_4, check_5, check_6, check_7,
 
 exp_result <- c(1, 1, NA, 0, 0, NA, NA, NA, NA, NA)
 
-test_that("`get_evbf` function define the output values correctly", {
+test_that("get_evbf define the output values correctly", {
 
   for(i in 1:length(check_list)){
 
@@ -36,9 +36,9 @@ test_that("`get_evbf` function define the output values correctly", {
 # Early Initiation of Breastfeeding
 # get_eibf
 check_1 <- get_eibf(5, 0, NA)
-check_2 <- get_eibf(5, NA, 0)
+check_2 <- get_eibf(5, NA, NA)
 check_3 <- get_eibf(24, 0, NA)
-check_4 <- get_eibf(24, NA, 0)
+check_4 <- get_eibf(24, NA, NA)
 check_5 <- get_eibf(5, 1, 0)
 check_6 <- get_eibf(5, 1, 1)
 check_7 <- get_eibf(24, 1, 0)
@@ -53,7 +53,7 @@ check_list <- c(check_1, check_2, check_3, check_4, check_5, check_6, check_7,
 exp_result <- c(1, NA, NA, NA, 1, 0, NA, NA, NA, NA, NA)
 
 
-test_that("`get_eibf` function define the output values correctly", {
+test_that("get_eibf define the output values correctly", {
 
   for(i in 1:length(check_list)){
 

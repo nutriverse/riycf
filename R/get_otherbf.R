@@ -1,46 +1,39 @@
-################################################################################
-#
-#' @title Construct other breastfeeding related indicators (from IYCF)
+#' 
+#' Create other breastfeeding-related indicators
 #'
 #' @description Identification of individual 0-23 months old children
-#'    breastfeeding status; Ever breastfed, Early initiation of breastfeeding,
-#'    Exclusive breastfeeding for the first two days after birth, Mixed milk
-#'    feeding under 6 months, Continuous breastfeeding 12-23 months, and Bottle
-#'    feeding 0-23 months
+#'   breastfeeding status:
+#' 
+#'   * Ever breastfed;
+#'   * Early initiation of breastfeeding;
+#'   * Exclusive breastfeeding for the first two days after birth;
+#'   * Mixed milk feeding under 6 months;
+#'   * Continuous breastfeeding 12-23 months; and,
+#'   * Bottle feeding 0-23 months.
 #'
-#' @param age This parameter holds the information about child age in the month
-#'    format.
+#' @param age An integer vector of child's age in months.
+#' @param q4 An integer vector indicating whether the child breastfed in the
+#'   previous day. 1 = Yes; 0 = No.
+#' @param q2 An integer vector indicating whether the child was put to the
+#'   breast *immediately*, within *hours*, or within *days*. 0 = immediately;
+#'   1 = for hours; 2 = for days.
+#' @param q2_hour An integer vector for the number of hours after birth the
+#'   child was put to the breast.
+#' @param q3 An integer vector indicating whether the child had anything else
+#'   beside breastmilk within the first two days after birth. 1 = Yes; 0 = No.
+#' @param q5 An integer vector indicating whether the child fed with a bottle
+#'   in the previous day. 1 = Yes; 0 = No.
+#' @param q6b An integer vector indicating whether the child had infant formula
+#'   feeding in the previous day. 1 = Yes; 0 = No.
+#' @param q6c An integer vector indicating whether the child had any dairy
+#'   products such as milk from animals or fresh, tinned or powdered milk.
+#'   1 = Yes; 0 = No.
 #'
-#' @param q4 The binary variable which mentioned that the child was receiving
-#'    breastfeeding in the previous day (yes = "1", no = "0").
-#'
-#' @param q2 the parameter indicate how long after the child was put to the
-#'    barest immediately after birth (0 = immediately, 1 = for hours and 2 = for
-#'    days)
-#'
-#' @param q2_hour the integer parameter record the hour(s) after birth the child
-#'    was put to the breast
-#'
-#' @param q3 the binary variable indicating the child received anything else
-#'    beside breastmilk with the first two days after birth
-#'
-#' @param q5 the binary variable presents the child received the bottle feeding
-#'    in the previous day
-#'
-#' @param q6b the binary variable indicates that the child got infant formula
-#'    feeding in the previous day
-#'
-#' @param q6c the binary variable presents the child got any of the following
-#'    milk related food; Milk from animals, such as fresh, tinned or powdered
-#'    milk.
-#'
-#' @return binary variables indicate child met the respective breastfeeding
-#'    status or not (yes = 1 or no = 0)
-#'
+#' @returns An integer vector indicating whether the child meets the definition
+#'   of the respective breastfeeding indicator: 1 = Yes; 0 = No.
 #'
 #' @examples
-#'
-#'  df <- iycfData
+#' df <- iycfData
 #'
 #' # Ever Breastfed
 #' evbf <- get_evbf(df$child_bf, df$calc_age_months)
@@ -49,96 +42,96 @@
 #' eibf <- get_eibf(df$calc_age_months, df$child_eibf, df$child_eibf_hrs)
 #'
 #' # Exclusive Breastfeeding for the first two days after birth
-#' df$q3 <- rbinom(n = nrow(df), size = 1, prob = 0.5)
+#' q3 <- rbinom(n = nrow(df), size = 1, prob = 0.5)
 #'
-#' ebf2d <- get_ebf2d(df$q3, df$calc_age_months)
+#' ebf2d <- get_ebf2d(q3, df$calc_age_months)
 #'
 #' # Mixed Milk Feeding Under 6 months
-#' mixmf <- get_mixmf(df$child_bfyest, df$calc_age_months,
-#'                    df$child_bms, df$child_milk)
+#' mixmf <- get_mixmf(
+#'   df$child_bfyest, df$calc_age_months, df$child_bms, df$child_milk
+#' )
 #'
 #' # Continuous Breastfeeding 12-23 months
 #' cbf <- get_cbf(df$child_bfyest, df$calc_age_months)
 #'
 #' # Bottle Feeding 0-23 months
-#' df$q5 <- rbinom(n = nrow(df), size = 1, prob = 0.5)
+#' q5 <- rbinom(n = nrow(df), size = 1, prob = 0.5)
 #'
-#' bof <- get_bof(df$q5, df$calc_age_months)
+#' bof <- get_bof(q5, df$calc_age_months)
 #'
 #' @author Nicholus Tint Zaw
 #' @export
 #' @rdname get_otherbf
 #'
-#'
-#################################################################################
 
-# Ever Breastfed
-get_evbf <- function(q4, age){
+get_evbf <- function(q4, age) {
+  ## Checkers ----
+  check_if_number(q4)
+  check_if_number(age)
 
-  if(!is.null(q4) & !is.null(age)){
+  ## Recode ----
+  evbf <- ifelse(
+    age < 24 & q4 == 1L, 1L,
+    ifelse(
+      age < 24 & q4 == 0L, 0L, NA
+    )
+  )
 
-    evbf <- ifelse(age < 24 & q4 == 1, 1,
-                   ifelse(age >= 24, NA, 0))
-
-    evbf <- ifelse(is.na(q4) | is.na(age), NA, evbf)
-
-    return(evbf)
-  }
+  ## Return evbf ----
+  evbf
 }
 
-################################################################################
-#
+#' 
 #' @export
 #' @rdname get_otherbf
 #'
-#
-################################################################################
 
 # Early Initiation of Breastfeeding
 get_eibf <- function(age, q2, q2_hour){
+  ## Checkers ----
+  check_if_number(age)
+  check_if_number(q2)
+  check_if_number(q2_hour)
 
-  if(!is.null(age) & !is.null(q2) & !is.null(q2_hour)){
+  ## Recode ----
+  eibf <- ifelse(
+    age < 24 & (q2 == 0L | q2_hour == 0L), 1L,
+    ifelse(
+      age >= 24, NA, 0L
+    )
+  )
 
-    eibf <- ifelse(age < 24 & (q2 == 0 | q2_hour == 0), 1,
-                   ifelse(age >= 24, NA, 0))
-
-    eibf <- ifelse(is.na(age) | is.na(q2), NA, eibf)
-
-    return(eibf)
-  }
+  ## Return eibf ----
+  eibf
 }
 
-################################################################################
-#
+#' 
 #' @export
 #' @rdname get_otherbf
 #'
-#
-################################################################################
 
-# Exclusive Breastfeeding for the first two days after birth
 get_ebf2d <- function(q3, age){
+  ## Checkers ----
+  check_if_number(q3)
+  check_if_number(age)
 
-  if(!is.null(q3) & !is.null(age)){
+  ## Recode ----
+  ebf2d <- ifelse(
+    age < 24 & q3 == 0L, 1L,
+    ifelse(
+      age >= 24, NA, 0L
+    )
+  )
 
-    ebf2d <- ifelse(age < 24 & q3 == 0, 1,
-                    ifelse(age >= 24, NA, 0))
-
-    ebf2d <- ifelse(is.na(q3) |  is.na(age), NA, ebf2d)
-
-    return(ebf2d)
-  }
+  ## Return ebf2d ----
+  ebf2d
 }
 
-################################################################################
-#
+#' 
 #' @export
 #' @rdname get_otherbf
 #'
-#
-################################################################################
 
-# Mixed Milk Feeding Under 6 months
 get_mixmf <- function(q4, age, q6b, q6c){
 
   if(!is.null(q4) & !is.null(age) & !is.null(q6b) & !is.null(q6c)){
@@ -153,15 +146,11 @@ get_mixmf <- function(q4, age, q6b, q6c){
   }
 }
 
-################################################################################
-#
+#' 
 #' @export
 #' @rdname get_otherbf
 #'
-#
-################################################################################
 
-# Continuous Breastfeeding 12-23 months
 get_cbf <- function(q4, age){
 
   if(!is.null(q4) & !is.null(age)){
@@ -177,15 +166,11 @@ get_cbf <- function(q4, age){
   }
 }
 
-################################################################################
-#
+#' 
 #' @export
 #' @rdname get_otherbf
 #'
-#
-################################################################################
 
-# Bottle Feeding 0-23 months
 get_bof <- function(q5, age){
 
   if(!is.null(q5) & !is.null(age)){
@@ -196,6 +181,5 @@ get_bof <- function(q5, age){
     bof <- ifelse(is.na(q5) | is.na(age), NA, bof)
 
     return(bof)
-
   }
 }

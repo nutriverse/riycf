@@ -7,7 +7,7 @@
 \alias{get_mixmf}
 \alias{get_cbf}
 \alias{get_bof}
-\title{Construct other breastfeeding related indicators (from IYCF)}
+\title{Create other breastfeeding-related indicators}
 \usage{
 get_evbf(q4, age)
 
@@ -22,46 +22,49 @@ get_cbf(q4, age)
 get_bof(q5, age)
 }
 \arguments{
-\item{q4}{The binary variable which mentioned that the child was receiving
-breastfeeding in the previous day (yes = "1", no = "0").}
+\item{q4}{An integer vector indicating whether the child breastfed in the
+previous day. 1 = Yes; 0 = No.}
 
-\item{age}{This parameter holds the information about child age in the month
-format.}
+\item{age}{An integer vector of child's age in months.}
 
-\item{q2}{the parameter indicate how long after the child was put to the
-barest immediately after birth (0 = immediately, 1 = for hours and 2 = for
-days)}
+\item{q2}{An integer vector indicating whether the child was put to the
+breast \emph{immediately}, within \emph{hours}, or within \emph{days}. 0 = immediately;
+1 = for hours; 2 = for days.}
 
-\item{q2_hour}{the integer parameter record the hour(s) after birth the child
-was put to the breast}
+\item{q2_hour}{An integer vector for the number of hours after birth the
+child was put to the breast.}
 
-\item{q3}{the binary variable indicating the child received anything else
-beside breastmilk with the first two days after birth}
+\item{q3}{An integer vector indicating whether the child had anything else
+beside breastmilk within the first two days after birth. 1 = Yes; 0 = No.}
 
-\item{q6b}{the binary variable indicates that the child got infant formula
-feeding in the previous day}
+\item{q6b}{An integer vector indicating whether the child had infant formula
+feeding in the previous day. 1 = Yes; 0 = No.}
 
-\item{q6c}{the binary variable presents the child got any of the following
-milk related food; Milk from animals, such as fresh, tinned or powdered
-milk.}
+\item{q6c}{An integer vector indicating whether the child had any dairy
+products such as milk from animals or fresh, tinned or powdered milk.
+1 = Yes; 0 = No.}
 
-\item{q5}{the binary variable presents the child received the bottle feeding
-in the previous day}
+\item{q5}{An integer vector indicating whether the child fed with a bottle
+in the previous day. 1 = Yes; 0 = No.}
 }
 \value{
-binary variables indicate child met the respective breastfeeding
-status or not (yes = 1 or no = 0)
+An integer vector indicating whether the child meets the definition
+of the respective breastfeeding indicator: 1 = Yes; 0 = No.
 }
 \description{
 Identification of individual 0-23 months old children
-breastfeeding status; Ever breastfed, Early initiation of breastfeeding,
-Exclusive breastfeeding for the first two days after birth, Mixed milk
-feeding under 6 months, Continuous breastfeeding 12-23 months, and Bottle
-feeding 0-23 months
+breastfeeding status:
+\itemize{
+\item Ever breastfed;
+\item Early initiation of breastfeeding;
+\item Exclusive breastfeeding for the first two days after birth;
+\item Mixed milk feeding under 6 months;
+\item Continuous breastfeeding 12-23 months; and,
+\item Bottle feeding 0-23 months.
+}
 }
 \examples{
-
- df <- iycfData
+df <- iycfData
 
 # Ever Breastfed
 evbf <- get_evbf(df$child_bf, df$calc_age_months)
@@ -70,21 +73,22 @@ evbf <- get_evbf(df$child_bf, df$calc_age_months)
 eibf <- get_eibf(df$calc_age_months, df$child_eibf, df$child_eibf_hrs)
 
 # Exclusive Breastfeeding for the first two days after birth
-df$q3 <- rbinom(n = nrow(df), size = 1, prob = 0.5)
+q3 <- rbinom(n = nrow(df), size = 1, prob = 0.5)
 
-ebf2d <- get_ebf2d(df$q3, df$calc_age_months)
+ebf2d <- get_ebf2d(q3, df$calc_age_months)
 
 # Mixed Milk Feeding Under 6 months
-mixmf <- get_mixmf(df$child_bfyest, df$calc_age_months,
-                   df$child_bms, df$child_milk)
+mixmf <- get_mixmf(
+  df$child_bfyest, df$calc_age_months, df$child_bms, df$child_milk
+)
 
 # Continuous Breastfeeding 12-23 months
 cbf <- get_cbf(df$child_bfyest, df$calc_age_months)
 
 # Bottle Feeding 0-23 months
-df$q5 <- rbinom(n = nrow(df), size = 1, prob = 0.5)
+q5 <- rbinom(n = nrow(df), size = 1, prob = 0.5)
 
-bof <- get_bof(df$q5, df$calc_age_months)
+bof <- get_bof(q5, df$calc_age_months)
 
 }
 \author{
