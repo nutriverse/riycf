@@ -1,0 +1,385 @@
+# Breastfeeding Indicators
+
+## Introduction
+
+There are 7 indicators related to breastfeeding practices in the updated
+WHO infant and young child feeding (IYCF) indicator guidelines.
+
+1.  Ever breastfeed
+2.  Early initiation of breastfeeding
+3.  Exclusive breastfeeding for the first two days after birth
+4.  Exclusive breastfeeding for under six months
+5.  Mixed milk feeding for under six months
+6.  Continuous breastfeeding for 12-23 months
+7.  Bottle feeding for 0-23 Months
+
+This article demonstrates how the [riycf](https://nutriverse.io/riycf/)
+package calculates these indicators. The `iycfData` included in the
+[riycf](https://nutriverse.io/riycf/) package will be used for this
+demonstration.
+
+``` r
+
+iycfData
+#> # A tibble: 359 × 46
+#>     csex calc_age_months child_bf child_eibf child_eibf_hrs child_eibf_days
+#>    <int>           <int>    <int>      <int>          <int>           <int>
+#>  1     1               5        1          0             NA              NA
+#>  2     1               4        1          0             NA              NA
+#>  3     1               2        1          0             NA              NA
+#>  4     1               0        1          0             NA              NA
+#>  5     1               2        1          0             NA              NA
+#>  6     1               2        1          0             NA              NA
+#>  7     1               2        0         NA             NA              NA
+#>  8     1               1        1          0             NA              NA
+#>  9     1               5        1          1              2              NA
+#> 10     1               5        1          0             NA              NA
+#> # ℹ 349 more rows
+#> # ℹ 40 more variables: bf_2days <int>, child_bfyest <int>, bf_bottle <int>,
+#> #   child_water <int>, child_bms <int>, child_bms_freq <int>, child_milk <int>,
+#> #   child_milk_freq <int>, child_milk_sweet <int>, child_mproduct <int>,
+#> #   child_mproduct_freq <lgl>, child_mproduct_sweet <lgl>,
+#> #   child_chocolate <int>, child_juice <int>, child_soda <int>,
+#> #   child_tea <int>, child_tea_sweet <int>, child_broth <int>, …
+```
+
+## Breastfeeding Indicator Calculation
+
+### Ever breastfed
+
+Children less than 24 months who ever breastfed is defined as follows:
+
+\\ \text{Ever breastfed} = \frac{\text{Children}\_{\text{age \< 24
+months}} \text{who ever breastfed}}{\text{Children}\_{\text{age \< 24
+months}}} \\
+
+This indicator can be calculated using the
+[`get_evbf()`](https://nutriverse.io/riycf/reference/get_otherbf.md)
+function as follows:
+
+``` r
+
+df <- within(iycfData, {
+  evbf <- get_evbf(q4 = child_bf, age = calc_age_months)
+})
+
+table(df$evbf)
+#> 
+#>   0   1 
+#>   7 145
+```
+
+Two input parameters are needed to calculate this indicator: *(1)
+child’s age in months*; and, *(2) child was ever breastfed or not*.
+
+Checking whether this is correct:
+
+``` r
+
+evbf <- with(
+  df, 
+  ifelse(
+    calc_age_months < 24 & child_bf == 1, 1,
+    ifelse(calc_age_months < 24 & child_bf == 0, 0, NA)
+  )
+)
+
+table(evbf)
+#> evbf
+#>   0   1 
+#>   7 145
+```
+
+Among them, 108 were breastfeeding, and the other 45 didn’t. Therefore,
+the [`get_evbf()`](https://nutriverse.io/riycf/reference/get_otherbf.md)
+function yields the same result as our manual check, and you can go
+ahead and use it for reporting purposes.
+
+``` r
+
+length(which(df$calc_age_months < 24 & df$child_bfyest == 1))
+#> [1] 108
+length(which(df$calc_age_months < 24 & df$child_bfyest == 0))
+#> [1] 45
+```
+
+## Early Initiation Of Breastfeeding (EIBF)
+
+This early breastfeeding initiation only accounts for the children under
+2 years old who were put to the breast within one hour of birth. We need
+three parameters to calculate this indicator using the
+[`get_eibf()`](https://nutriverse.io/riycf/reference/get_otherbf.md)
+function. Because, according to the indicator definition, it allowed the
+two conditions to determine as EIBF; put immediately to the breast or
+within one hour. Although this information is asked by one question
+(*Question 2* from the WHO IYCF sample questionnaires), the response was
+normally recorded into three categories; one for immediately, one for
+recording hours, and the other for the days. We will use the first two
+variables related to WHO question number 2 (immediately and hours
+record) in this function. Look below for how to use this function.
+
+``` r
+
+df$eibf <- get_eibf(age = df$calc_age_months, 
+                    q2 = df$child_eibf, 
+                    q2_hour = df$child_eibf_hrs)
+table(df$eibf)
+#> 
+#>   0   1 
+#>  33 102
+```
+
+Again, we will make some manual checking on whether the result we got
+from
+[`get_eibf()`](https://nutriverse.io/riycf/reference/get_otherbf.md) was
+correct or not. 102 children met the indicator definition conditions,
+the other 33 did not, and 8 observations had missing information on the
+variable required for the `q2` argument.
+
+``` r
+
+length(which(df$calc_age_months < 24 & (df$child_eibf == 0 | df$child_eibf_hrs == 0)))
+#> [1] 102
+length(which(df$calc_age_months < 24 & df$child_eibf != 0 & df$child_eibf_hrs != 0))
+#> [1] 33
+length(which(df$calc_age_months < 24 & is.na(df$child_eibf)))
+#> [1] 8
+```
+
+## Exclusive Breastfeed For The First Two Days After Birth (BEF2D)
+
+The indicator count for under 2 years old children who were breastfed
+exclusively for the first two days after birth. Here, the exclusively
+breastfeeding condition was taken from the mother or caregiver’s
+self-reported answer, not like the calculation of the standard exclusive
+breastfeeding indicator (which will calculate in the following topic)
+calculation using the other different liquid and solid food recall
+variables. I will use the
+[`get_ebf2d()`](https://nutriverse.io/riycf/reference/get_otherbf.md)
+function for this one. It requires two input parameters, age and
+*Question 3* from WHO IYCF sample questionnaires - which capture the
+information about the children who were exclusively breastfed in their
+first two days of life.
+
+``` r
+
+df$ebf2d <- get_ebf2d(q3 = df$bf_2days, 
+                      age = df$calc_age_months)
+table(df$ebf2d)
+#> 
+#>   0   1 
+#>  50 103
+```
+
+The manual check and our
+[`get_ebf2d()`](https://nutriverse.io/riycf/reference/get_otherbf.md)
+function got the same result.
+
+``` r
+
+length(which(df$calc_age_months < 24 & df$bf_2days == 0))
+#> [1] 103
+length(which(df$calc_age_months < 24 & df$bf_2days == 1))
+#> [1] 50
+```
+
+## Exclusive Breastfeeding Under Six Months (EBF)
+
+Contract to previous breastfeeding indicator, this indicator needs more
+than one step of calculation as the indicator definition demands it. The
+EBF indicator only considers under 6 months children who were
+exclusively breastfed yesterday. The child did not receive any liquids
+or foods during the previous day except breastmilk. We need four input
+parameters; age and breastfeeding and liquids and foods consumption of
+the previous day.
+
+### Liquid consumption
+
+First, we need to calculate the liquid and food consumption status from
+the 24 hours diet recall from IYCF questionnaires. For this calculation,
+we can use the
+[`get_dummy()`](https://nutriverse.io/riycf/reference/get_dummy.md)
+function and include all the food items variables to get the respective
+liquid or solid (or semi-solid) food consumption status. If the child
+receives any food items from the inputs foods items, the function will
+return as 1, and if not, 0.
+
+Below is the sample code to get the dummy variables to calculate the
+liquid consumption status. I used all the liquid recall questions as
+input parameters in this calculation (from *Question 6A* to *Question
+6J* in WHO IYCF sample questionnaires). Whoever received any liquids
+from input parameters will score as 1 and did not 0.
+
+Please note that the input parameter for the
+[`get_dummy()`](https://nutriverse.io/riycf/reference/get_dummy.md)
+function is `list type`. We need to create a list of liquid variables we
+can include in our analysis first and then apply that list in the
+[`get_dummy()`](https://nutriverse.io/riycf/reference/get_dummy.md)
+function to calculate the dummy variable, which indicates whether the
+child received any liquid on the previous day.
+
+``` r
+
+liquid <- list(df$child_vitdrop, df$child_ors, df$child_water, df$child_juice, 
+               df$child_broth, df$child_porridge, df$child_bms, df$child_milk, 
+               df$child_mproduct, df$child_liquid)
+
+df$liquid_food <- get_dummy(var_list = liquid)
+table(df$liquid_food)
+#> 
+#>   0   1 
+#>  24 138
+```
+
+### Solid or semi-solid food consumption
+
+For solid and semi-food consumption status, I used all the variables
+from 24 hours solid (or semi-solid) food recall *Question 7A* to
+*Question 7R* in WHO IYCF questionnaires. If the child got any food from
+this list, indicated as 1, and if he/she didn’t, 0.
+
+``` r
+
+solid <- list(df$child_rice, df$child_potatoes, df$child_pumpkin, 
+              df$child_beans, df$child_leafyveg, df$child_mango, df$child_fruit, 
+              df$child_organ, df$child_beef, df$child_fish, df$child_insects, 
+              df$child_eggs, df$child_yogurt, df$child_fat, df$child_plam, 
+              df$child_sweets, df$child_condiments)
+
+df$solid_food <- get_dummy(var_list = solid)
+table(df$solid_food)
+#> 
+#>   0   1 
+#>  31 131
+```
+
+### Calculation Of EBF indicator
+
+Now, we got all the input parameters required for EBF indicator
+calculation. This
+[`get_ebf()`](https://nutriverse.io/riycf/reference/get_ebf.md) function
+will identify the children who exclusively breastfed during the previous
+day, which means they only got breastmilk and no liquid or solid food
+feedings.
+
+``` r
+
+df$ebf <- get_ebf(q4 = df$child_bfyest, 
+                  age = df$calc_age_months, 
+                  liquid_food = df$liquid_food, 
+                  solid_food = df$solid_food)
+table(df$ebf)
+#> 
+#>  0  1 
+#> 25 15
+```
+
+You can also cross-check the result with the below manual calculation
+syntax. The dataset has 40 under 6 months children, and among them, only
+15 were exclusively breastfed.
+
+``` r
+
+length(which(df$calc_age_months < 6))
+#> [1] 40
+length(which(df$calc_age_months < 6 & df$child_bfyest == 1 & 
+               df$liquid_food == 0 & df$solid_food == 0))
+#> [1] 15
+```
+
+## Mixed Milk Feeding Under Six Months (MixMF)
+
+This indicator count for all under 6 months old children who received
+formula and/or animal milk in addition to breastmilk during the previous
+day. We can use the
+[`get_mixmf()`](https://nutriverse.io/riycf/reference/get_otherbf.md)
+function to calculate this indicator. According to the definition, we
+need four parameters; age, breastfeeding status, infant formula
+(*Question 6B*), and animal milk (*Question 6C*) consumption status from
+the previous day.
+
+``` r
+
+df$mixmf <- get_mixmf(q4 = df$child_bfyest, 
+                      age = df$calc_age_months, 
+                      q6b = df$child_bms, 
+                      q6c = df$child_milk)
+table(df$mixmf)
+#> 
+#>  0  1 
+#> 37  3
+```
+
+Below is the manual calculation for checking the
+[`get_mixmf()`](https://nutriverse.io/riycf/reference/get_otherbf.md)
+function result. Of 40 under 6 months old children, only 3 children get
+mixed milk feeding.
+
+``` r
+
+length(which(df$calc_age_months < 6 & df$child_bfyest == 1 & 
+               (df$child_bms == 1 | df$child_milk ==  1)))
+#> [1] 3
+```
+
+## Continuous Breastfeeding 12-23 Months (CBF)
+
+This continuous breastfeeding indicator only accounts for the age range
+between 12-23 months. Children out of this age range will not consider
+in the indicator calculation. We will use the
+[`get_cbf()`](https://nutriverse.io/riycf/reference/get_otherbf.md)
+function, and it requires only two input parameters; child age and
+breastfeeding status from the previous day.
+
+``` r
+
+df$cbf <- get_cbf(q4 = df$child_bfyest, 
+                  age = df$calc_age_months)
+table(df$cbf)
+#> 
+#>  0  1 
+#> 31 33
+```
+
+Out of 64 children 12-23 months old, only 33 were continuously breastfed
+after one year of their age. Below is the manual calculation syntax, and
+you will see that we got the same results as what the
+[`get_cbf()`](https://nutriverse.io/riycf/reference/get_otherbf.md)
+function did.
+
+``` r
+
+length(which(df$calc_age_months >= 12 & df$calc_age_months < 24))
+#> [1] 64
+length(which(df$calc_age_months >= 12 & df$calc_age_months < 24 & 
+               df$child_bfyest == 1))
+#> [1] 33
+```
+
+## Bootle Feeding 0-23 Months (BoF)
+
+This is the last indicator in the breastfeeding session, and it counts
+for the children (under 2 years old) who received the bottle feeding
+during the previous day. With the
+[`get_bof()`](https://nutriverse.io/riycf/reference/get_otherbf.md)
+function, we can calculate this indicator and its only require two input
+parameters; child age and bottle feeding status (*Question 5*).
+
+``` r
+
+df$bof <- get_bof(q5 = df$bf_bottle, 
+                  age = df$calc_age_months)
+table(df$bof)
+#> 
+#>   0   1 
+#> 127  26
+```
+
+Among 153 under 2 years old children, only 24 were fed from the bottle
+with a nipple during the previous day.
+
+``` r
+
+length(which(df$calc_age_months < 24 & df$bf_bottle == 1))
+#> [1] 26
+```
