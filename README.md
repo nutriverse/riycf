@@ -18,6 +18,14 @@ coverage](https://codecov.io/gh/nutriverse/riycf/branch/main/graph/badge.svg)](h
 [![DOI](https://zenodo.org/badge/410309510.svg)](https://zenodo.org/badge/latestdoi/410309510)
 <!-- badges: end -->
 
+> **Status: experimental.** `{riycf}` is under active development and
+> has not had a stable release. Function names, arguments and results
+> may change. Known issues: some indicator functions treat non-standard
+> codes (for example `999`) as “no”, and child age is not checked for
+> invalid values. Please check results against an independent
+> calculation before using them in any report or decision. See the [open
+> issues](https://github.com/nutriverse/riycf/issues).
+
 ## What are the IYCF Indicators?
 
 The first 1,000 days of life (from pregnancy to a child’s 2nd birthday)
