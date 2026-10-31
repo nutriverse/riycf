@@ -12,8 +12,10 @@
 #'   * Bottle feeding 0-23 months.
 #'
 #' @param age An integer vector of child's age in months.
-#' @param q4 An integer vector indicating whether the child breastfed in the
-#'   previous day. 1 = Yes; 0 = No.
+#' @param q4 An integer vector of the child's breastfeeding status. For
+#'   `get_evbf()`, whether the child was **ever** breastfed (e.g. `child_bf`
+#'   in `iycfData`); for `get_mixmf()` and `get_cbf()`, whether the child was
+#'   breastfed in the previous day (e.g. `child_bfyest`). 1 = Yes; 0 = No.
 #' @param q2 An integer vector indicating whether the child was put to the
 #'   breast *immediately*, within *hours*, or within *days*. 0 = immediately;
 #'   1 = for hours; 2 = for days.

@@ -42,6 +42,7 @@ Useful links:
 
 Authors:
 \itemize{
+  \item Nicholus Tint Zaw \email{nicholustintzaw@katilingban.io} [copyright holder]
   \item Ernest Guevarra \email{ernest@guevarra.io} (\href{https://orcid.org/0000-0002-4887-4415}{ORCID}) [copyright holder]
 }
 
