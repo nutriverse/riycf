@@ -18,7 +18,10 @@
 #'   breast *immediately*, within *hours*, or within *days*. 0 = immediately;
 #'   1 = for hours; 2 = for days.
 #' @param q2_hour An integer vector for the number of hours after birth the
-#'   child was put to the breast.
+#'   child was put to the breast. Only used when `q2` is 1 (by skip logic it is
+#'   `NA` when `q2` is 0 or 2); 0 hours (less than one hour) counts as early
+#'   initiation. In `get_eibf()`, a child with `q2` = 2 (put to the breast
+#'   after days) is counted as not having early initiation (0).
 #' @param q3 An integer vector indicating whether the child had anything else
 #'   beside breastmilk within the first two days after birth. 1 = Yes; 0 = No.
 #' @param q5 An integer vector indicating whether the child fed with a bottle
