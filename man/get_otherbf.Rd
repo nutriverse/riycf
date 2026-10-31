@@ -22,8 +22,10 @@ get_cbf(q4, age)
 get_bof(q5, age)
 }
 \arguments{
-\item{q4}{An integer vector indicating whether the child breastfed in the
-previous day. 1 = Yes; 0 = No.}
+\item{q4}{An integer vector of the child's breastfeeding status. For
+\code{get_evbf()}, whether the child was \strong{ever} breastfed (e.g. \code{child_bf}
+in \code{iycfData}); for \code{get_mixmf()} and \code{get_cbf()}, whether the child was
+breastfed in the previous day (e.g. \code{child_bfyest}). 1 = Yes; 0 = No.}
 
 \item{age}{An integer vector of child's age in months.}
 
