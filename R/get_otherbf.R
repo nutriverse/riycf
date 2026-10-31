@@ -93,13 +93,22 @@ get_eibf <- function(age, q2, q2_hour){
   check_if_number(q2)
   check_if_number(q2_hour)
 
+  ## Set invalid codes and out-of-range ages to NA ----
+  age <- check_if_valid_age(age)
+  q2 <- check_if_valid_code(q2, valid = 0:2)
+
   ## Recode ----
+  ## (q2: 0 = immediately; 1 = after hours, given in q2_hour; 2 = after days.
+  ## Early initiation is being put to the breast within one hour of birth, so
+  ## q2 = 2 counts as 0 rather than NA; q2_hour is only used when q2 = 1.)
   eibf <- ifelse(
-    age < 24 & (q2 == 0L | q2_hour == 0L), 1L,
+    q2 == 0L | (q2 == 1L & q2_hour == 0L), 1L,
     ifelse(
-      age >= 24, NA, 0L
+      q2 == 2L | (q2 == 1L & q2_hour > 0L), 0L, NA
     )
   )
+
+  eibf <- ifelse(age < 24, eibf, NA)
 
   ## Return eibf ----
   eibf

@@ -62,6 +62,31 @@ test_that("get_eibf define the output values correctly", {
 
 })
 
+test_that("get_eibf returns 0 when first put to the breast after days (#51)", {
+  expect_equal(get_eibf(5, 2, NA), 0)
+  expect_equal(get_eibf(5, 1, 3), 0)
+  expect_true(is.na(get_eibf(5, 1, NA)))
+})
+
+test_that("get_eibf sets invalid codes and ages to NA with a warning (#51)", {
+  expect_warning(get_eibf(5, 3, NA), "q2: 1 invalid value was set to NA \\(3\\)")
+  expect_true(is.na(suppressWarnings(get_eibf(5, 3, NA))))
+  expect_warning(get_eibf(5, 999, NA), "q2: 1 invalid value was set to NA")
+
+  expect_warning(get_eibf(-4, 0, NA), "age: 1 value was outside the valid range")
+  expect_true(is.na(suppressWarnings(get_eibf(-4, 0, NA))))
+})
+
+test_that("get_eibf gives the expected counts on iycfData (#51)", {
+  eibf <- suppressWarnings(
+    get_eibf(
+      iycfData$calc_age_months, iycfData$child_eibf, iycfData$child_eibf_hrs
+    )
+  )
+  expect_equal(sum(eibf == 1, na.rm = TRUE), 101)
+  expect_equal(sum(eibf == 0, na.rm = TRUE), 41)
+})
+
 # Exclusive Breastfeeding for the first two days after birth
 # get_ebf2d
 check_1 <- get_ebf2d(1, 5)
