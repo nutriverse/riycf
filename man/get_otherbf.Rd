@@ -32,7 +32,10 @@ breast \emph{immediately}, within \emph{hours}, or within \emph{days}. 0 = immed
 1 = for hours; 2 = for days.}
 
 \item{q2_hour}{An integer vector for the number of hours after birth the
-child was put to the breast.}
+child was put to the breast. Only used when \code{q2} is 1 (by skip logic it is
+\code{NA} when \code{q2} is 0 or 2); 0 hours (less than one hour) counts as early
+initiation. In \code{get_eibf()}, a child with \code{q2} = 2 (put to the breast
+after days) is counted as not having early initiation (0).}
 
 \item{q3}{An integer vector indicating whether the child had anything else
 beside breastmilk within the first two days after birth. 1 = Yes; 0 = No.}

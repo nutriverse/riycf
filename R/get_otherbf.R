@@ -18,7 +18,10 @@
 #'   breast *immediately*, within *hours*, or within *days*. 0 = immediately;
 #'   1 = for hours; 2 = for days.
 #' @param q2_hour An integer vector for the number of hours after birth the
-#'   child was put to the breast.
+#'   child was put to the breast. Only used when `q2` is 1 (by skip logic it is
+#'   `NA` when `q2` is 0 or 2); 0 hours (less than one hour) counts as early
+#'   initiation. In `get_eibf()`, a child with `q2` = 2 (put to the breast
+#'   after days) is counted as not having early initiation (0).
 #' @param q3 An integer vector indicating whether the child had anything else
 #'   beside breastmilk within the first two days after birth. 1 = Yes; 0 = No.
 #' @param q5 An integer vector indicating whether the child fed with a bottle
@@ -93,13 +96,22 @@ get_eibf <- function(age, q2, q2_hour){
   check_if_number(q2)
   check_if_number(q2_hour)
 
+  ## Set invalid codes and out-of-range ages to NA ----
+  age <- check_if_valid_age(age)
+  q2 <- check_if_valid_code(q2, valid = 0:2)
+
   ## Recode ----
+  ## (q2: 0 = immediately; 1 = after hours, given in q2_hour; 2 = after days.
+  ## Early initiation is being put to the breast within one hour of birth, so
+  ## q2 = 2 counts as 0 rather than NA; q2_hour is only used when q2 = 1.)
   eibf <- ifelse(
-    age < 24 & (q2 == 0L | q2_hour == 0L), 1L,
+    q2 == 0L | (q2 == 1L & q2_hour == 0L), 1L,
     ifelse(
-      age >= 24, NA, 0L
+      q2 == 2L | (q2 == 1L & q2_hour > 0L), 0L, NA
     )
   )
+
+  eibf <- ifelse(age < 24, eibf, NA)
 
   ## Return eibf ----
   eibf
