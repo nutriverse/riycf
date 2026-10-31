@@ -69,6 +69,10 @@ get_evbf <- function(q4, age) {
   check_if_number(q4)
   check_if_number(age)
 
+  ## Set invalid codes and out-of-range ages to NA ----
+  q4 <- check_if_valid_code(q4, valid = c(0, 1))
+  age <- check_if_valid_age(age)
+
   ## Recode ----
   evbf <- ifelse(
     age < 24 & q4 == 1L, 1L,

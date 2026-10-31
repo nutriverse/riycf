@@ -33,6 +33,22 @@ test_that("get_evbf define the output values correctly", {
 
 })
 
+test_that("get_evbf sets invalid codes and ages to NA with a warning (#50)", {
+  expect_warning(get_evbf(999, 5), "q4: 1 invalid value was set to NA")
+  expect_true(is.na(suppressWarnings(get_evbf(999, 5))))
+
+  expect_warning(get_evbf(1, -4), "age: 1 value was outside the valid range")
+  expect_true(is.na(suppressWarnings(get_evbf(1, -4))))
+})
+
+test_that("get_evbf gives the manually checked counts on iycfData (#50)", {
+  evbf <- suppressWarnings(
+    get_evbf(iycfData$child_bf, iycfData$calc_age_months)
+  )
+  expect_equal(sum(evbf == 0, na.rm = TRUE), 7)
+  expect_equal(sum(evbf == 1, na.rm = TRUE), 144)
+})
+
 # Early Initiation of Breastfeeding
 # get_eibf
 check_1 <- get_eibf(5, 0, NA)
