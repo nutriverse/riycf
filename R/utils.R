@@ -95,3 +95,44 @@ check_if_number <- function(x) {
       "{.strong {arg_name}} is not an integer or is not numeric."
     )
 }
+
+#'
+#' Check if values are valid response codes
+#'
+#' Values of `x` that are not `NA` and not in `valid` (for example a
+#' non-standard missing code such as `999`) are set to `NA`, with a warning
+#' reporting how many values were changed.
+#'
+#' @param x A numeric vector of response codes.
+#' @param valid A numeric vector of the documented valid codes. Default is
+#'   `c(0, 1)` for No/Yes questions.
+#'
+#' @returns `x` with invalid values set to `NA`.
+#'
+#' @noRd
+#'
+
+check_if_valid_code <- function(x, valid = c(0, 1)) {
+  arg_name <- deparse(substitute(x))
+
+  ## Identify invalid codes ----
+  invalid <- !is.na(x) & !(x %in% valid)
+
+  ## Set invalid codes to NA and warn ----
+  if (any(invalid)) {
+    n_invalid <- sum(invalid)
+    invalid_codes <- unique(x[invalid])
+
+    cli::cli_warn(
+      paste0(
+        "{.strong {arg_name}}: {n_invalid} invalid value{?s} {?was/were} ",
+        "set to NA ({invalid_codes}); valid codes are {valid}."
+      )
+    )
+
+    x[invalid] <- NA
+  }
+
+  ## Return x ----
+  x
+}
