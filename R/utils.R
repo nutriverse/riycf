@@ -136,3 +136,45 @@ check_if_valid_code <- function(x, valid = c(0, 1)) {
   ## Return x ----
   x
 }
+
+#'
+#' Check if child age values are within the valid range
+#'
+#' Values of `age` that are not `NA` and fall outside `min_age` to `max_age`
+#' months (for example a negative age) are set to `NA`, with a warning
+#' reporting how many values were changed.
+#'
+#' @param age A numeric vector of child's age in months.
+#' @param min_age Minimum valid age in months. Default is 0.
+#' @param max_age Maximum valid age in months. Default is 59.
+#'
+#' @returns `age` with out-of-range values set to `NA`.
+#'
+#' @noRd
+#'
+
+check_if_valid_age <- function(age, min_age = 0, max_age = 59) {
+  arg_name <- deparse(substitute(age))
+
+  ## Identify out-of-range ages ----
+  invalid <- !is.na(age) & (age < min_age | age > max_age)
+
+  ## Set out-of-range ages to NA and warn ----
+  if (any(invalid)) {
+    n_invalid <- sum(invalid)
+    invalid_ages <- unique(age[invalid])
+
+    cli::cli_warn(
+      paste0(
+        "{.strong {arg_name}}: {n_invalid} value{?s} {?was/were} outside ",
+        "the valid range and set to NA ({invalid_ages}); valid range is ",
+        "{min_age} to {max_age} months."
+      )
+    )
+
+    age[invalid] <- NA
+  }
+
+  ## Return age ----
+  age
+}

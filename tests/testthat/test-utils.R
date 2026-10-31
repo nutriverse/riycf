@@ -65,3 +65,34 @@ test_that("check_if_valid_code keeps the integer type", {
   q4 <- c(1L, 999L)
   expect_type(suppressWarnings(check_if_valid_code(q4)), "integer")
 })
+
+# check_if_valid_age
+test_that("check_if_valid_age keeps ages from 0 to 59 months and NA", {
+  age <- c(0, 5, 23.5, 59, NA)
+  expect_no_warning(check_if_valid_age(age))
+  expect_equal(check_if_valid_age(age), c(0, 5, 23.5, 59, NA))
+})
+
+test_that("check_if_valid_age sets out-of-range ages to NA with a warning", {
+  age <- c(-4, 5, NA)
+  expect_warning(
+    check_if_valid_age(age),
+    "age: 1 value was outside the valid range and set to NA \\(-4\\)"
+  )
+  expect_equal(suppressWarnings(check_if_valid_age(age)), c(NA, 5, NA))
+
+  age <- c(60, 12, 300)
+  expect_warning(
+    check_if_valid_age(age),
+    "age: 2 values were outside the valid range and set to NA \\(60 and 300\\)"
+  )
+  expect_equal(suppressWarnings(check_if_valid_age(age)), c(NA, 12, NA))
+})
+
+test_that("check_if_valid_age respects custom limits and integer type", {
+  age <- c(10L, 30L)
+  expect_warning(check_if_valid_age(age, max_age = 23), "valid range is 0 to 23")
+  expect_identical(
+    suppressWarnings(check_if_valid_age(age, max_age = 23)), c(10L, NA)
+  )
+})
