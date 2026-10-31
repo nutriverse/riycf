@@ -18,6 +18,14 @@ coverage](https://codecov.io/gh/nutriverse/riycf/branch/main/graph/badge.svg)](h
 [![DOI](https://zenodo.org/badge/410309510.svg)](https://zenodo.org/badge/latestdoi/410309510)
 <!-- badges: end -->
 
+> **Status: experimental.** `{riycf}` is under active development and
+> has not had a stable release. Function names, arguments and results
+> may change. Known issues: some indicator functions treat non-standard
+> codes (for example `999`) as “no”, and child age is not checked for
+> invalid values. Please check results against an independent
+> calculation before using them in any report or decision. See the [open
+> issues](https://github.com/nutriverse/riycf/issues).
+
 ## What are the IYCF Indicators?
 
 The first 1,000 days of life (from pregnancy to a child’s 2nd birthday)
@@ -135,6 +143,8 @@ citation("riycf")
 #>   Infant and Young Child Feeding Indicators_. R package version
 #>   0.0.0.9000, https://github.com/nutriverse/riycf,
 #>   <https://nutriverse.io/riycf/>.
+#>   Infant and Young Child Feeding Indicators_.
+#>   https://nutriverse.io/riycf/, https://github.com/nutriverse/riycf.
 #> 
 #> A BibTeX entry for LaTeX users is
 #> 
@@ -143,6 +153,7 @@ citation("riycf")
 #>     author = {Nicholus {Tint Zaw} and Ernest Guevarra},
 #>     note = {R package version 0.0.0.9000, https://github.com/nutriverse/riycf},
 #>     url = {https://nutriverse.io/riycf/},
+#>     note = {https://nutriverse.io/riycf/, https://github.com/nutriverse/riycf},
 #>   }
 ```
 

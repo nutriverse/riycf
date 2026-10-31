@@ -26,8 +26,10 @@ knitr::opts_chunk$set(
 [![DOI](https://zenodo.org/badge/410309510.svg)](https://zenodo.org/badge/latestdoi/410309510)
 <!-- badges: end -->
 
+> **Status: experimental.** `{riycf}` is under active development and has not had a stable release. Function names, arguments and results may change. Known issues: some indicator functions treat non-standard codes (for example `999`) as "no", and child age is not checked for invalid values. Please check results against an independent calculation before using them in any report or decision. See the [open issues](https://github.com/nutriverse/riycf/issues).
 
-## What are the IYCF Indicators? 
+
+## What are the IYCF Indicators?
 
 The first 1,000 days of life (from pregnancy to a child’s 2nd birthday) are critical for addressing childhood malnutrition, especially stunting. Infant and young child feeding practices (IYCF) largely overlap with this period as they cover breastfeeding and complementary feeding practices for the first two years of a child’s life. They also have a significant impact on childhood health, nutrition outcomes, and child survival. It is, therefore, critical for countries to measure IYCF practices as part of their efforts to monitor their progress toward Sustainable Development Goal 2. It is also important for development agencies to be able to monitor and evaluate their programs aimed at improving infant and young child feeding practices towards improved overall childhood nutrition.
 
