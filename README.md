@@ -143,8 +143,6 @@ citation("riycf")
 #>   Infant and Young Child Feeding Indicators_. R package version
 #>   0.0.0.9000, https://github.com/nutriverse/riycf,
 #>   <https://nutriverse.io/riycf/>.
-#>   Infant and Young Child Feeding Indicators_.
-#>   https://nutriverse.io/riycf/, https://github.com/nutriverse/riycf.
 #> 
 #> A BibTeX entry for LaTeX users is
 #> 
@@ -153,7 +151,6 @@ citation("riycf")
 #>     author = {Nicholus {Tint Zaw} and Ernest Guevarra},
 #>     note = {R package version 0.0.0.9000, https://github.com/nutriverse/riycf},
 #>     url = {https://nutriverse.io/riycf/},
-#>     note = {https://nutriverse.io/riycf/, https://github.com/nutriverse/riycf},
 #>   }
 ```
 
