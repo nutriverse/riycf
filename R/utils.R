@@ -75,11 +75,23 @@ check_if_number <- function(x) {
   arg_name <- deparse(substitute(x))
 
   ## Check if missing ----
-  check_if_missing(x)
+  ## (checked here rather than via check_if_missing() so that the message
+  ## reports the caller's argument name instead of "x")
+  if (missing(x))
+    cli::cli_abort(
+      "{.strong {arg_name}} is missing."
+    )
+
+  ## Check if NULL ----
+  if (is.null(x))
+    cli::cli_abort(
+      "{.strong {arg_name}} is NULL."
+    )
 
   ## Check if number ----
-  if (!is.numeric(x) && !is.integer(x) && !is.na(x))
+  ## (an all-NA vector is accepted, as NA is logical rather than numeric)
+  if (!is.numeric(x) && !all(is.na(x)))
     cli::cli_abort(
-      "{.strong .var {arg_name}} is not an integer or is not numeric."
+      "{.strong {arg_name}} is not an integer or is not numeric."
     )
 }
