@@ -115,6 +115,10 @@ get_ebf2d <- function(q3, age){
   check_if_number(q3)
   check_if_number(age)
 
+  ## Set invalid codes and out-of-range ages to NA ----
+  q3 <- check_if_valid_code(q3, valid = c(0, 1))
+  age <- check_if_valid_age(age)
+
   ## Recode ----
   ebf2d <- ifelse(
     age < 24 & q3 == 0L, 1L,

@@ -89,6 +89,14 @@ test_that("`get_ebf2d` function define the output values correctly", {
 
 })
 
+test_that("get_ebf2d sets invalid codes and ages to NA with a warning (#67)", {
+  expect_warning(get_ebf2d(999, 5), "q3: 1 invalid value was set to NA \\(999\\)")
+  expect_true(is.na(suppressWarnings(get_ebf2d(999, 5))))
+
+  expect_warning(get_ebf2d(0, -4), "age: 1 value was outside the valid range")
+  expect_true(is.na(suppressWarnings(get_ebf2d(0, -4))))
+})
+
 # Mixed Milk Feeding Under 6 months
 # get_mixmf
 check_1 <- get_mixmf(1, 5, 1, 1)
