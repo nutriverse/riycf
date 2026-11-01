@@ -89,6 +89,14 @@ test_that("`get_ebf2d` function define the output values correctly", {
 
 })
 
+test_that("get_ebf2d sets invalid codes and ages to NA with a warning (#67)", {
+  expect_warning(get_ebf2d(999, 5), "q3: 1 invalid value was set to NA \\(999\\)")
+  expect_true(is.na(suppressWarnings(get_ebf2d(999, 5))))
+
+  expect_warning(get_ebf2d(0, -4), "age: 1 value was outside the valid range")
+  expect_true(is.na(suppressWarnings(get_ebf2d(0, -4))))
+})
+
 # Mixed Milk Feeding Under 6 months
 # get_mixmf
 check_1 <- get_mixmf(1, 5, 1, 1)
@@ -126,6 +134,29 @@ test_that("`get_mixmf` function define the output values correctly", {
 
 })
 
+test_that("get_mixmf checks input, codes and ages (#67)", {
+  expect_error(get_mixmf(NULL, 5, 1, 1), "q4 is NULL")
+  expect_error(get_mixmf(1, 5, "1", 1), "q6b is not an integer or is not numeric")
+
+  expect_warning(get_mixmf(1, 5, 999, 1), "q6b: 1 invalid value was set to NA")
+  expect_equal(suppressWarnings(get_mixmf(1, 5, 999, 1)), 1)
+  expect_true(is.na(suppressWarnings(get_mixmf(1, 5, 999, 0))))
+
+  expect_warning(get_mixmf(1, -4, 1, 0), "age: 1 value was outside the valid range")
+  expect_true(is.na(suppressWarnings(get_mixmf(1, -4, 1, 0))))
+})
+
+test_that("get_mixmf gives the expected counts on iycfData (#67)", {
+  mixmf <- suppressWarnings(
+    get_mixmf(
+      iycfData$child_bfyest, iycfData$calc_age_months,
+      iycfData$child_bms, iycfData$child_milk
+    )
+  )
+  expect_equal(sum(mixmf == 1, na.rm = TRUE), 3)
+  expect_equal(sum(mixmf == 0, na.rm = TRUE), 36)
+})
+
 
 
 # Continuous Breastfeeding 12-23 months
@@ -157,6 +188,24 @@ test_that("`get_cbf` function define the output values correctly", {
 
 })
 
+test_that("get_cbf checks input, codes and ages (#67)", {
+  expect_error(get_cbf(NULL, 12), "q4 is NULL")
+
+  expect_warning(get_cbf(999, 12), "q4: 1 invalid value was set to NA \\(999\\)")
+  expect_true(is.na(suppressWarnings(get_cbf(999, 12))))
+
+  expect_warning(get_cbf(1, 300), "age: 1 value was outside the valid range")
+  expect_true(is.na(suppressWarnings(get_cbf(1, 300))))
+})
+
+test_that("get_cbf gives the expected counts on iycfData (#67)", {
+  cbf <- suppressWarnings(
+    get_cbf(iycfData$child_bfyest, iycfData$calc_age_months)
+  )
+  expect_equal(sum(cbf == 1, na.rm = TRUE), 33)
+  expect_equal(sum(cbf == 0, na.rm = TRUE), 31)
+})
+
 # Bottle Feeding 0-23 months
 # get_bof
 check_1 <- get_bof(1, 5)
@@ -182,5 +231,21 @@ test_that("`get_bof` function define the output values correctly", {
     expect_equal(check_list[i], exp_result[i])
   }
 
+})
+
+test_that("get_bof checks input, codes and ages (#67)", {
+  expect_error(get_bof(NULL, 5), "q5 is NULL")
+
+  expect_warning(get_bof(999, 5), "q5: 1 invalid value was set to NA \\(999\\)")
+  expect_true(is.na(suppressWarnings(get_bof(999, 5))))
+
+  expect_warning(get_bof(0, -4), "age: 1 value was outside the valid range")
+  expect_true(is.na(suppressWarnings(get_bof(0, -4))))
+})
+
+test_that("get_bof gives the expected counts on iycfData (#67)", {
+  bof <- suppressWarnings(get_bof(iycfData$bf_bottle, iycfData$calc_age_months))
+  expect_equal(sum(bof == 1, na.rm = TRUE), 26)
+  expect_equal(sum(bof == 0, na.rm = TRUE), 126)
 })
 

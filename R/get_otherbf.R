@@ -115,6 +115,10 @@ get_ebf2d <- function(q3, age){
   check_if_number(q3)
   check_if_number(age)
 
+  ## Set invalid codes and out-of-range ages to NA ----
+  q3 <- check_if_valid_code(q3, valid = c(0, 1))
+  age <- check_if_valid_age(age)
+
   ## Recode ----
   ebf2d <- ifelse(
     age < 24 & q3 == 0L, 1L,
@@ -133,17 +137,27 @@ get_ebf2d <- function(q3, age){
 #'
 
 get_mixmf <- function(q4, age, q6b, q6c){
+  ## Checkers ----
+  check_if_number(q4)
+  check_if_number(age)
+  check_if_number(q6b)
+  check_if_number(q6c)
 
-  if(!is.null(q4) & !is.null(age) & !is.null(q6b) & !is.null(q6c)){
+  ## Set invalid codes and out-of-range ages to NA ----
+  q4 <- check_if_valid_code(q4, valid = c(0, 1))
+  age <- check_if_valid_age(age)
+  q6b <- check_if_valid_code(q6b, valid = c(0, 1))
+  q6c <- check_if_valid_code(q6c, valid = c(0, 1))
 
-    mixmf <- ifelse(age < 6 & q4 == 1 & (q6b == 1 | q6c == 1), 1,
-                    ifelse(age >= 6, NA, 0))
+  ## Recode ----
+  mixmf <- ifelse(age < 6 & q4 == 1 & (q6b == 1 | q6c == 1), 1,
+                  ifelse(age >= 6, NA, 0))
 
-    mixmf <- ifelse(is.na(q4) | is.na(age) | (is.na(q6b) & is.na(q6c)),
-                    NA, mixmf)
+  mixmf <- ifelse(is.na(q4) | is.na(age) | (is.na(q6b) & is.na(q6c)),
+                  NA, mixmf)
 
-    return(mixmf)
-  }
+  ## Return mixmf ----
+  mixmf
 }
 
 #' 
@@ -152,18 +166,23 @@ get_mixmf <- function(q4, age, q6b, q6c){
 #'
 
 get_cbf <- function(q4, age){
+  ## Checkers ----
+  check_if_number(q4)
+  check_if_number(age)
 
-  if(!is.null(q4) & !is.null(age)){
+  ## Set invalid codes and out-of-range ages to NA ----
+  q4 <- check_if_valid_code(q4, valid = c(0, 1))
+  age <- check_if_valid_age(age)
 
-    cbf <- ifelse(age >= 12 & age < 24 & q4 == 1, 1,
-                  ifelse(age < 12, NA,
-                         ifelse(age >= 24, NA, 0)))
+  ## Recode ----
+  cbf <- ifelse(age >= 12 & age < 24 & q4 == 1, 1,
+                ifelse(age < 12, NA,
+                       ifelse(age >= 24, NA, 0)))
 
-    cbf <- ifelse(is.na(q4) | is.na(age), NA, cbf)
+  cbf <- ifelse(is.na(q4) | is.na(age), NA, cbf)
 
-    return(cbf)
-
-  }
+  ## Return cbf ----
+  cbf
 }
 
 #' 
@@ -172,14 +191,20 @@ get_cbf <- function(q4, age){
 #'
 
 get_bof <- function(q5, age){
+  ## Checkers ----
+  check_if_number(q5)
+  check_if_number(age)
 
-  if(!is.null(q5) & !is.null(age)){
+  ## Set invalid codes and out-of-range ages to NA ----
+  q5 <- check_if_valid_code(q5, valid = c(0, 1))
+  age <- check_if_valid_age(age)
 
-    bof <- ifelse(age < 24 & q5 == 1, 1,
-                  ifelse(age >= 24, NA, 0))
+  ## Recode ----
+  bof <- ifelse(age < 24 & q5 == 1, 1,
+                ifelse(age >= 24, NA, 0))
 
-    bof <- ifelse(is.na(q5) | is.na(age), NA, bof)
+  bof <- ifelse(is.na(q5) | is.na(age), NA, bof)
 
-    return(bof)
-  }
+  ## Return bof ----
+  bof
 }
