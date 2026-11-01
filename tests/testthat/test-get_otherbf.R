@@ -233,3 +233,19 @@ test_that("`get_bof` function define the output values correctly", {
 
 })
 
+test_that("get_bof checks input, codes and ages (#67)", {
+  expect_error(get_bof(NULL, 5), "q5 is NULL")
+
+  expect_warning(get_bof(999, 5), "q5: 1 invalid value was set to NA \\(999\\)")
+  expect_true(is.na(suppressWarnings(get_bof(999, 5))))
+
+  expect_warning(get_bof(0, -4), "age: 1 value was outside the valid range")
+  expect_true(is.na(suppressWarnings(get_bof(0, -4))))
+})
+
+test_that("get_bof gives the expected counts on iycfData (#67)", {
+  bof <- suppressWarnings(get_bof(iycfData$bf_bottle, iycfData$calc_age_months))
+  expect_equal(sum(bof == 1, na.rm = TRUE), 26)
+  expect_equal(sum(bof == 0, na.rm = TRUE), 126)
+})
+

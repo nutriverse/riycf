@@ -191,14 +191,20 @@ get_cbf <- function(q4, age){
 #'
 
 get_bof <- function(q5, age){
+  ## Checkers ----
+  check_if_number(q5)
+  check_if_number(age)
 
-  if(!is.null(q5) & !is.null(age)){
+  ## Set invalid codes and out-of-range ages to NA ----
+  q5 <- check_if_valid_code(q5, valid = c(0, 1))
+  age <- check_if_valid_age(age)
 
-    bof <- ifelse(age < 24 & q5 == 1, 1,
-                  ifelse(age >= 24, NA, 0))
+  ## Recode ----
+  bof <- ifelse(age < 24 & q5 == 1, 1,
+                ifelse(age >= 24, NA, 0))
 
-    bof <- ifelse(is.na(q5) | is.na(age), NA, bof)
+  bof <- ifelse(is.na(q5) | is.na(age), NA, bof)
 
-    return(bof)
-  }
+  ## Return bof ----
+  bof
 }
