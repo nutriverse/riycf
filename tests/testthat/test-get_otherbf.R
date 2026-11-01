@@ -134,6 +134,29 @@ test_that("`get_mixmf` function define the output values correctly", {
 
 })
 
+test_that("get_mixmf checks input, codes and ages (#67)", {
+  expect_error(get_mixmf(NULL, 5, 1, 1), "q4 is NULL")
+  expect_error(get_mixmf(1, 5, "1", 1), "q6b is not an integer or is not numeric")
+
+  expect_warning(get_mixmf(1, 5, 999, 1), "q6b: 1 invalid value was set to NA")
+  expect_equal(suppressWarnings(get_mixmf(1, 5, 999, 1)), 1)
+  expect_true(is.na(suppressWarnings(get_mixmf(1, 5, 999, 0))))
+
+  expect_warning(get_mixmf(1, -4, 1, 0), "age: 1 value was outside the valid range")
+  expect_true(is.na(suppressWarnings(get_mixmf(1, -4, 1, 0))))
+})
+
+test_that("get_mixmf gives the expected counts on iycfData (#67)", {
+  mixmf <- suppressWarnings(
+    get_mixmf(
+      iycfData$child_bfyest, iycfData$calc_age_months,
+      iycfData$child_bms, iycfData$child_milk
+    )
+  )
+  expect_equal(sum(mixmf == 1, na.rm = TRUE), 3)
+  expect_equal(sum(mixmf == 0, na.rm = TRUE), 36)
+})
+
 
 
 # Continuous Breastfeeding 12-23 months

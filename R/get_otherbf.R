@@ -137,17 +137,27 @@ get_ebf2d <- function(q3, age){
 #'
 
 get_mixmf <- function(q4, age, q6b, q6c){
+  ## Checkers ----
+  check_if_number(q4)
+  check_if_number(age)
+  check_if_number(q6b)
+  check_if_number(q6c)
 
-  if(!is.null(q4) & !is.null(age) & !is.null(q6b) & !is.null(q6c)){
+  ## Set invalid codes and out-of-range ages to NA ----
+  q4 <- check_if_valid_code(q4, valid = c(0, 1))
+  age <- check_if_valid_age(age)
+  q6b <- check_if_valid_code(q6b, valid = c(0, 1))
+  q6c <- check_if_valid_code(q6c, valid = c(0, 1))
 
-    mixmf <- ifelse(age < 6 & q4 == 1 & (q6b == 1 | q6c == 1), 1,
-                    ifelse(age >= 6, NA, 0))
+  ## Recode ----
+  mixmf <- ifelse(age < 6 & q4 == 1 & (q6b == 1 | q6c == 1), 1,
+                  ifelse(age >= 6, NA, 0))
 
-    mixmf <- ifelse(is.na(q4) | is.na(age) | (is.na(q6b) & is.na(q6c)),
-                    NA, mixmf)
+  mixmf <- ifelse(is.na(q4) | is.na(age) | (is.na(q6b) & is.na(q6c)),
+                  NA, mixmf)
 
-    return(mixmf)
-  }
+  ## Return mixmf ----
+  mixmf
 }
 
 #' 
