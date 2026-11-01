@@ -166,18 +166,23 @@ get_mixmf <- function(q4, age, q6b, q6c){
 #'
 
 get_cbf <- function(q4, age){
+  ## Checkers ----
+  check_if_number(q4)
+  check_if_number(age)
 
-  if(!is.null(q4) & !is.null(age)){
+  ## Set invalid codes and out-of-range ages to NA ----
+  q4 <- check_if_valid_code(q4, valid = c(0, 1))
+  age <- check_if_valid_age(age)
 
-    cbf <- ifelse(age >= 12 & age < 24 & q4 == 1, 1,
-                  ifelse(age < 12, NA,
-                         ifelse(age >= 24, NA, 0)))
+  ## Recode ----
+  cbf <- ifelse(age >= 12 & age < 24 & q4 == 1, 1,
+                ifelse(age < 12, NA,
+                       ifelse(age >= 24, NA, 0)))
 
-    cbf <- ifelse(is.na(q4) | is.na(age), NA, cbf)
+  cbf <- ifelse(is.na(q4) | is.na(age), NA, cbf)
 
-    return(cbf)
-
-  }
+  ## Return cbf ----
+  cbf
 }
 
 #' 
