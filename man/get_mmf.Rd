@@ -81,10 +81,14 @@ the minimum meal frequency based on their breastfeeding status.
   mmf_bf <- get_mmf_bf(mmfbf_6to8, mmfbf_9to23)
 
   # non-breastfeeding children
-  nonbf_frq <- get_nonbf_frq(df$child_bms_freq,
-                             df$child_milk_freq,
-                             df$child_mproduct_freq,
-                             df$child_food_freq)
+  # (the milk "how many times" questions are only asked when the child had
+  # that milk; get_followup() turns a skipped count into 0 times)
+  nonbf_frq <- get_nonbf_frq(
+    get_followup(df$child_bms, df$child_bms_freq, valid = 0:20),
+    get_followup(df$child_milk, df$child_milk_freq, valid = 0:20),
+    get_followup(df$child_mproduct, df$child_mproduct_freq, valid = 0:20),
+    df$child_food_freq
+  )
 
   mmf_nonbf <- get_mmf_nonbf(df$child_bfyest,
                              df$child_food_freq,

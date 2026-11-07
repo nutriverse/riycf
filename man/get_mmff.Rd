@@ -49,8 +49,14 @@ milk feeding frequency for non-breastfeed children 6-23 months (MMFF)
 # Calculate Non-breastfeed Children Milk Frequency
  df <- iycfData
 
- df$milk_frq <- get_milk_frq(df$child_bms_freq, df$child_milk_freq,
-                             df$child_mproduct_freq, df$child_yogurt)
+# The "how many times" questions are only asked when the child had that
+# food; get_followup() turns a skipped count into 0 times
+ df$milk_frq <- get_milk_frq(
+   get_followup(df$child_bms, df$child_bms_freq, valid = 0:20),
+   get_followup(df$child_milk, df$child_milk_freq, valid = 0:20),
+   get_followup(df$child_mproduct, df$child_mproduct_freq, valid = 0:20),
+   get_followup(df$child_yogurt, df$child_yogurt_frq, valid = 0:20)
+ )
 
 # MMFF
 df$mmff <- get_mmff(df$child_bfyest, df$calc_age_months, df$milk_frq)
