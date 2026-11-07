@@ -32,4 +32,19 @@ test_that("`get_mdd` output has correct variable type", {
   expect_true(typeof(result_3) == "double")
 })
 
+test_that("get_mdd checks input, food score range and ages (#67)", {
+  expect_error(get_mdd(NULL, 12), "food_score is NULL")
+
+  expect_warning(
+    get_mdd(9, 12), "food_score: 1 invalid value was set to NA \\(9\\)"
+  )
+  expect_true(is.na(suppressWarnings(get_mdd(9, 12))))
+  expect_warning(get_mdd(5.5, 12), "food_score: 1 invalid value")
+
+  expect_warning(get_mdd(6, -4), "age: 1 value was outside the valid range")
+  expect_true(is.na(suppressWarnings(get_mdd(6, -4))))
+
+  expect_equal(c(get_mdd(5, 12), get_mdd(4, 12), get_mdd(8, 23)), c(1, 0, 1))
+})
+
 

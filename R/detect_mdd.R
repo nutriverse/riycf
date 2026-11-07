@@ -34,15 +34,21 @@
 
 
 get_mdd <- function(food_score, age){
+  ## Checkers ----
+  check_if_number(food_score)
+  check_if_number(age)
 
-  if(!is.null(age) & !is.null(food_score)){
+  ## Set invalid scores and out-of-range ages to NA ----
+  food_score <- check_if_valid_code(food_score, valid = 0:8)
+  age <- check_if_valid_age(age)
 
-    mdd <- ifelse(age >= 6 & age < 24 & food_score >= 5, 1,
-                  ifelse(age < 6, NA,
-                         ifelse(age >= 24, NA,
-                                ifelse(is.na(food_score), NA, 0))))
+  ## Recode ----
+  mdd <- ifelse(age >= 6 & age < 24 & food_score >= 5, 1,
+                ifelse(age < 6, NA,
+                       ifelse(age >= 24, NA,
+                              ifelse(is.na(food_score), NA, 0))))
 
-    return(mdd)
-  }
+  ## Return mdd ----
+  mdd
 }
 
