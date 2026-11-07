@@ -19,6 +19,25 @@ input parameter was true, that observation's newly generated dummy
 variable will return as true (1). And, if all input parameters were false,
 the return will be false (0).
 }
+\details{
+\strong{Data preparation.} \code{get_dummy()} expects each variable in
+\code{var_list} to be coded 1 = Yes and 0 = No. Before using it, check the
+data for:
+\itemize{
+\item \strong{missing or "don't know" codes} such as \code{98}, \code{99} or \code{999}: values
+other than 0 and 1 are set to \code{NA} with a warning;
+\item \strong{variables that do not exist} in the dataset: \code{df$name} then returns
+\code{NULL}; such items are ignored with a warning, so check the variable
+names;
+\item \strong{skip-pattern follow-up questions} (for example "Was the milk
+sweetened?", only asked if the child had milk): a skipped follow-up is
+\code{NA} and makes the result \code{NA}; resolve it first, for example with
+\code{get_followup()}.
+}
+
+If any variable in \code{var_list} is \code{NA} for a child, the result for that
+child is \code{NA}.
+}
 \examples{
 
 # Individual Food Group Variable Construction
