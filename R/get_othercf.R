@@ -90,17 +90,23 @@
 
 # Introduction of Solid, Semi-solid or soft foods (6-8 months)
 get_isssf <- function(solid_food, age){
+  ## Checkers ----
+  check_if_number(solid_food)
+  check_if_number(age)
 
-  if(!is.null(solid_food) & !is.null(age)){
+  ## Set invalid codes and out-of-range ages to NA ----
+  solid_food <- check_if_valid_code(solid_food, valid = c(0, 1))
+  age <- check_if_valid_age(age)
 
-    isssf <- ifelse(age >= 6 & age < 9 & solid_food == 1, 1,
-                    ifelse(age < 6, NA,
-                           ifelse(age >= 9, NA, 0)))
+  ## Recode ----
+  isssf <- ifelse(age >= 6 & age < 9 & solid_food == 1, 1,
+                  ifelse(age < 6, NA,
+                         ifelse(age >= 9, NA, 0)))
 
-    isssf <- ifelse(is.na(solid_food) | is.na(age), NA, isssf)
+  isssf <- ifelse(is.na(solid_food) | is.na(age), NA, isssf)
 
-    return(isssf)
-  }
+  ## Return isssf ----
+  isssf
 }
 
 ################################################################################
@@ -113,17 +119,23 @@ get_isssf <- function(solid_food, age){
 
 # Egg and/or Flesh food consumption (6-23 months)
 get_eff <- function(egg_meat, age){
+  ## Checkers ----
+  check_if_number(egg_meat)
+  check_if_number(age)
 
-  if(!is.null(egg_meat) & !is.null(age)){
+  ## Set invalid codes and out-of-range ages to NA ----
+  egg_meat <- check_if_valid_code(egg_meat, valid = c(0, 1))
+  age <- check_if_valid_age(age)
 
-    eff <- ifelse(age >= 6 & age < 24 & egg_meat == 1, 1,
-                  ifelse(age < 6, NA,
-                         ifelse(age >= 24, NA, 0)))
+  ## Recode ----
+  eff <- ifelse(age >= 6 & age < 24 & egg_meat == 1, 1,
+                ifelse(age < 6, NA,
+                       ifelse(age >= 24, NA, 0)))
 
-    eff <- ifelse(is.na(egg_meat) | is.na(age), NA, eff)
+  eff <- ifelse(is.na(egg_meat) | is.na(age), NA, eff)
 
-    return(eff)
-  }
+  ## Return eff ----
+  eff
 }
 
 ################################################################################
@@ -136,17 +148,23 @@ get_eff <- function(egg_meat, age){
 
 # Sweet beverage consumption (6-23 months)
 get_swb <- function(sweet, age){
+  ## Checkers ----
+  check_if_number(sweet)
+  check_if_number(age)
 
-  if(!is.null(sweet) & !is.null(age)){
+  ## Set invalid codes and out-of-range ages to NA ----
+  sweet <- check_if_valid_code(sweet, valid = c(0, 1))
+  age <- check_if_valid_age(age)
 
-    swb <- ifelse(age >= 6 & age < 24 & sweet == 1, 1,
-                  ifelse(age < 6, NA,
-                         ifelse(age >= 24, NA, 0)))
+  ## Recode ----
+  swb <- ifelse(age >= 6 & age < 24 & sweet == 1, 1,
+                ifelse(age < 6, NA,
+                       ifelse(age >= 24, NA, 0)))
 
-    swb <- ifelse(is.na(sweet) | is.na(age), NA, swb)
+  swb <- ifelse(is.na(sweet) | is.na(age), NA, swb)
 
-    return(swb)
-  }
+  ## Return swb ----
+  swb
 }
 
 ################################################################################
@@ -159,17 +177,23 @@ get_swb <- function(sweet, age){
 
 # Unhealthy food consumption (6-23 months)
 get_ufc <- function(unhealthy, age){
+  ## Checkers ----
+  check_if_number(unhealthy)
+  check_if_number(age)
 
-  if(!is.null(unhealthy) & !is.null(age)){
+  ## Set invalid codes and out-of-range ages to NA ----
+  unhealthy <- check_if_valid_code(unhealthy, valid = c(0, 1))
+  age <- check_if_valid_age(age)
 
-    ufc <- ifelse(age >= 6 & age < 24 & unhealthy == 1, 1,
-                  ifelse(age < 6, NA,
-                         ifelse(age >= 24, NA, 0)))
+  ## Recode ----
+  ufc <- ifelse(age >= 6 & age < 24 & unhealthy == 1, 1,
+                ifelse(age < 6, NA,
+                       ifelse(age >= 24, NA, 0)))
 
-    ufc <- ifelse(is.na(unhealthy) | is.na(age), NA, ufc)
+  ufc <- ifelse(is.na(unhealthy) | is.na(age), NA, ufc)
 
-    return(ufc)
-  }
+  ## Return ufc ----
+  ufc
 }
 
 
@@ -183,17 +207,23 @@ get_ufc <- function(unhealthy, age){
 
 # Zero vegetable or fruit consumption (6-23 months)
 get_zvf <- function(vege_fruit, age){
+  ## Checkers ----
+  check_if_number(vege_fruit)
+  check_if_number(age)
 
-  if(!is.null(vege_fruit) & !is.null(age)){
+  ## Set invalid codes and out-of-range ages to NA ----
+  vege_fruit <- check_if_valid_code(vege_fruit, valid = c(0, 1))
+  age <- check_if_valid_age(age)
 
-    zvf <- ifelse(age >= 6 & age < 24 & vege_fruit == 0, 1,
-                  ifelse(age < 6, NA,
-                         ifelse(age >= 24, NA, 0)))
+  ## Recode ----
+  zvf <- ifelse(age >= 6 & age < 24 & vege_fruit == 0, 1,
+                ifelse(age < 6, NA,
+                       ifelse(age >= 24, NA, 0)))
 
-    zvf <- ifelse(is.na(vege_fruit) |is.na(age), NA, zvf)
+  zvf <- ifelse(is.na(vege_fruit) | is.na(age), NA, zvf)
 
-    return(zvf)
-  }
+  ## Return zvf ----
+  zvf
 }
 
 

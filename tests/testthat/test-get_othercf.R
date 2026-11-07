@@ -155,4 +155,31 @@ test_that("`get_zvf` function define the output values correctly", {
 
 })
 
+test_that("get_othercf functions give a clear error for NULL input (#67)", {
+  expect_error(get_isssf(NULL, 7), "solid_food is NULL")
+  expect_error(get_eff(NULL, 12), "egg_meat is NULL")
+  expect_error(get_swb(NULL, 12), "sweet is NULL")
+  expect_error(get_ufc(NULL, 12), "unhealthy is NULL")
+  expect_error(get_zvf(NULL, 12), "vege_fruit is NULL")
+})
+
+test_that("get_othercf functions set invalid codes to NA with a warning (#67)", {
+  expect_warning(get_isssf(999, 7), "solid_food: 1 invalid value was set to NA")
+  expect_warning(get_eff(999, 12), "egg_meat: 1 invalid value was set to NA")
+  expect_warning(get_swb(999, 12), "sweet: 1 invalid value was set to NA")
+  expect_warning(get_ufc(999, 12), "unhealthy: 1 invalid value was set to NA")
+  expect_warning(get_zvf(999, 12), "vege_fruit: 1 invalid value was set to NA")
+
+  expect_true(all(is.na(suppressWarnings(c(
+    get_isssf(999, 7), get_eff(999, 12), get_swb(999, 12),
+    get_ufc(999, 12), get_zvf(999, 12)
+  )))))
+})
+
+test_that("get_othercf functions set out-of-range ages to NA with a warning (#67)", {
+  expect_warning(get_eff(1, 300), "age: 1 value was outside the valid range")
+  expect_true(is.na(suppressWarnings(get_eff(1, 300))))
+  expect_true(is.na(suppressWarnings(get_zvf(0, -4))))
+})
+
 
