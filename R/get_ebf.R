@@ -52,16 +52,25 @@
 
 # Exclusive Breastfeeding
 get_ebf <- function(q4, age, liquid_food, solid_food){
+  ## Checkers ----
+  check_if_number(q4)
+  check_if_number(age)
+  check_if_number(liquid_food)
+  check_if_number(solid_food)
 
-  if(!is.null(q4) & !is.null(age) & !is.null(liquid_food) &
-     !is.null(solid_food)){
+  ## Set invalid codes and out-of-range ages to NA ----
+  q4 <- check_if_valid_code(q4, valid = c(0, 1))
+  age <- check_if_valid_age(age)
+  liquid_food <- check_if_valid_code(liquid_food, valid = c(0, 1))
+  solid_food <- check_if_valid_code(solid_food, valid = c(0, 1))
 
-    ebf <- ifelse(age < 6 & q4 == 1 & liquid_food == 0 & solid_food == 0, 1,
-                  ifelse(age >= 6, NA, 0))
+  ## Recode ----
+  ebf <- ifelse(age < 6 & q4 == 1 & liquid_food == 0 & solid_food == 0, 1,
+                ifelse(age >= 6, NA, 0))
 
-    ebf <- ifelse(is.na(q4) | is.na(age) | is.na(liquid_food) |
-                    is.na(solid_food), NA, ebf)
+  ebf <- ifelse(is.na(q4) | is.na(age) | is.na(liquid_food) |
+                  is.na(solid_food), NA, ebf)
 
-    ebf
-  }
+  ## Return ebf ----
+  ebf
 }
