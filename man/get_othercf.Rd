@@ -74,9 +74,13 @@ breastfeeding status
 
 # Sweet beverage consumption (6-23 months)
 # Sweet beverage consumption previous day - yes/no
- sweet <- list(df$child_milk_sweet, df$child_mproduct_sweet,
+# The "sweetened" items are follow-up questions that are skipped when the
+# main question is "no"; get_followup() turns those skips into 0
+ sweet <- list(get_followup(df$child_milk, df$child_milk_sweet),
+               get_followup(df$child_mproduct, df$child_mproduct_sweet),
                df$child_chocolate, df$child_juice, df$child_soda,
-               df$child_tea_sweet, df$child_oth_drink_swee)
+               get_followup(df$child_tea, df$child_tea_sweet),
+               get_followup(df$child_oth_drink, df$child_oth_drink_sweet))
 
  df$sweet <- get_dummy(var_list = sweet)
 
