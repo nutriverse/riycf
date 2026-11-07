@@ -53,4 +53,22 @@ test_that("`fg_score` output has correct variable type", {
   expect_true(typeof(score_3) == "double")
 })
 
+test_that("get_foodscore checks input and codes (#67)", {
+  expect_error(
+    get_foodscore(NULL, 1, 1, 1, 1, 1, 1, 1), "breastmilk is NULL"
+  )
+  expect_error(
+    get_foodscore(1, 1, 1, 1, "1", 1, 1, 1),
+    "meat is not an integer or is not numeric"
+  )
+
+  expect_warning(
+    get_foodscore(1, 1, 1, 1, 1, 999, 1, 1),
+    "eggs: 1 invalid value was set to NA \\(999\\)"
+  )
+  expect_true(is.na(suppressWarnings(get_foodscore(1, 1, 1, 1, 1, 999, 1, 1))))
+
+  expect_equal(unname(get_foodscore(1, 1, 0, 1, 0, 1, 0, 1)), 5)
+})
+
 
