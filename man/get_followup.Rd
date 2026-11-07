@@ -4,30 +4,35 @@
 \alias{get_followup}
 \title{Resolve a skip-pattern follow-up question using its main question}
 \usage{
-get_followup(main, followup)
+get_followup(main, followup, valid = c(0, 1))
 }
 \arguments{
 \item{main}{An integer vector for the main ("gate") question. 1 = Yes
 (the follow-up is asked); 0 = No (the follow-up is skipped).}
 
 \item{followup}{An integer vector for the follow-up question, of the same
-length as \code{main}. 1 = Yes; 0 = No.}
+length as \code{main}. 1 = Yes; 0 = No; or a count when \code{valid} is a range of
+counts.}
+
+\item{valid}{A numeric vector of the valid values of \code{followup}. Default is
+\code{c(0, 1)} for a Yes/No follow-up. Use, for example, \code{0:20} for the number
+of times something was eaten or drunk.}
 }
 \value{
-A numeric vector of 0, 1 or \code{NA}:\tabular{lll}{
+A numeric vector:\tabular{lll}{
    \code{main} \tab \code{followup} \tab Result \cr
    0 \tab \code{NA} (correctly skipped) or 0 \tab 0 \cr
-   1 \tab 1 \tab 1 \cr
+   1 \tab 1 (or a count) \tab 1 (or the count) \cr
    1 \tab 0 \tab 0 \cr
    1 \tab \code{NA} (should have been asked) \tab \code{NA}, with a warning \cr
-   0 \tab 1 (skip pattern broken) \tab \code{NA}, with a warning \cr
+   0 \tab above 0 (skip pattern broken) \tab \code{NA}, with a warning \cr
    \code{NA} \tab any \tab \code{NA} \cr
 }
 
 
-Values of \code{main} or \code{followup} other than 0 and 1 (for example the
-missing code \code{999}) are set to \code{NA} with a warning before the above is
-applied.
+Values of \code{main} other than 0 and 1, and values of \code{followup} not in
+\code{valid} (for example the missing codes \code{98}, \code{99} or \code{999}), are set to
+\code{NA} with a warning before the above is applied.
 }
 \description{
 Many IYCF questions have a follow-up question that is only
@@ -40,6 +45,12 @@ usually stored as \code{NA}, which means \emph{"did not have it"} rather than
 \code{get_followup()} combines a main question and its follow-up into one
 variable that can be passed to \code{\link[=get_dummy]{get_dummy()}} and to the indicator
 functions (for example, the sweet beverage items used by \code{\link[=get_swb]{get_swb()}}).
+
+The follow-up can also be a count. For example, \emph{"How many times did the
+child drink infant formula?"} is only asked if the child had infant
+formula; when it is skipped, the child had it 0 times. Use \code{valid} to give
+the accepted range of counts (for example \code{valid = 0:20}), and pass the
+result to \code{\link[=get_milk_frq]{get_milk_frq()}} or \code{\link[=get_nonbf_frq]{get_nonbf_frq()}}.
 }
 \details{
 \strong{Limitation:} \code{get_followup()} only handles the skip pattern in
@@ -71,6 +82,17 @@ sweet <- list(
 )
 
 swb <- get_swb(get_dummy(var_list = sweet), df$calc_age_months)
+
+# Milk feeding frequency, using counts (number of times)
+milk_frq <- get_milk_frq(
+  q6bnum = get_followup(df$child_bms, df$child_bms_freq, valid = 0:20),
+  q6cnum = get_followup(df$child_milk, df$child_milk_freq, valid = 0:20),
+  q6dnum = get_followup(df$child_mproduct, df$child_mproduct_freq,
+                        valid = 0:20),
+  q7anum = get_followup(df$child_yogurt, df$child_yogurt_frq, valid = 0:20)
+)
+
+mmff <- get_mmff(df$child_bfyest, df$calc_age_months, milk_frq)
 
 }
 \author{

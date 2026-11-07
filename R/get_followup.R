@@ -12,25 +12,35 @@
 #'   variable that can be passed to [get_dummy()] and to the indicator
 #'   functions (for example, the sweet beverage items used by [get_swb()]).
 #'
+#'   The follow-up can also be a count. For example, *"How many times did the
+#'   child drink infant formula?"* is only asked if the child had infant
+#'   formula; when it is skipped, the child had it 0 times. Use `valid` to give
+#'   the accepted range of counts (for example `valid = 0:20`), and pass the
+#'   result to [get_milk_frq()] or [get_nonbf_frq()].
+#'
 #' @param main An integer vector for the main ("gate") question. 1 = Yes
 #'   (the follow-up is asked); 0 = No (the follow-up is skipped).
 #' @param followup An integer vector for the follow-up question, of the same
-#'   length as `main`. 1 = Yes; 0 = No.
+#'   length as `main`. 1 = Yes; 0 = No; or a count when `valid` is a range of
+#'   counts.
+#' @param valid A numeric vector of the valid values of `followup`. Default is
+#'   `c(0, 1)` for a Yes/No follow-up. Use, for example, `0:20` for the number
+#'   of times something was eaten or drunk.
 #'
-#' @returns A numeric vector of 0, 1 or `NA`:
+#' @returns A numeric vector:
 #'
 #'   `main` | `followup` | Result
 #'   :--- | :--- | :---
 #'   0 | `NA` (correctly skipped) or 0 | 0
-#'   1 | 1 | 1
+#'   1 | 1 (or a count) | 1 (or the count)
 #'   1 | 0 | 0
 #'   1 | `NA` (should have been asked) | `NA`, with a warning
-#'   0 | 1 (skip pattern broken) | `NA`, with a warning
+#'   0 | above 0 (skip pattern broken) | `NA`, with a warning
 #'   `NA` | any | `NA`
 #'
-#'   Values of `main` or `followup` other than 0 and 1 (for example the
-#'   missing code `999`) are set to `NA` with a warning before the above is
-#'   applied.
+#'   Values of `main` other than 0 and 1, and values of `followup` not in
+#'   `valid` (for example the missing codes `98`, `99` or `999`), are set to
+#'   `NA` with a warning before the above is applied.
 #'
 #' @details **Limitation:** `get_followup()` only handles the skip pattern in
 #'   which a main question coded 1 means the follow-up is asked and 0 means it
@@ -61,14 +71,26 @@
 #'
 #' swb <- get_swb(get_dummy(var_list = sweet), df$calc_age_months)
 #'
+#' # Milk feeding frequency, using counts (number of times)
+#' milk_frq <- get_milk_frq(
+#'   q6bnum = get_followup(df$child_bms, df$child_bms_freq, valid = 0:20),
+#'   q6cnum = get_followup(df$child_milk, df$child_milk_freq, valid = 0:20),
+#'   q6dnum = get_followup(df$child_mproduct, df$child_mproduct_freq,
+#'                         valid = 0:20),
+#'   q7anum = get_followup(df$child_yogurt, df$child_yogurt_frq, valid = 0:20)
+#' )
+#'
+#' mmff <- get_mmff(df$child_bfyest, df$calc_age_months, milk_frq)
+#'
 #' @author Nicholus Tint Zaw
 #' @export
 #'
 
-get_followup <- function(main, followup) {
+get_followup <- function(main, followup, valid = c(0, 1)) {
   ## Checkers ----
   check_if_number(main)
   check_if_number(followup)
+  check_if_number(valid)
 
   if (length(main) != length(followup))
     cli::cli_abort(
@@ -77,11 +99,11 @@ get_followup <- function(main, followup) {
 
   ## Set invalid codes to NA ----
   main <- check_if_valid_code(main, valid = c(0, 1))
-  followup <- check_if_valid_code(followup, valid = c(0, 1))
+  followup <- check_if_valid_code(followup, valid = valid)
 
   ## Flag records that do not follow the skip pattern ----
   missing_followup <- !is.na(main) & main == 1 & is.na(followup)
-  broken_skip <- !is.na(main) & main == 0 & !is.na(followup) & followup == 1
+  broken_skip <- !is.na(main) & main == 0 & !is.na(followup) & followup != 0
 
   if (any(missing_followup)) {
     n_missing <- sum(missing_followup)
@@ -97,8 +119,8 @@ get_followup <- function(main, followup) {
     n_broken <- sum(broken_skip)
     cli::cli_warn(
       paste0(
-        "{n_broken} record{?s} {?has/have} main question 0 (no) but ",
-        "follow-up 1 (yes), which breaks the skip pattern; set to NA."
+        "{n_broken} record{?s} {?has/have} main question 0 (no) but a ",
+        "follow-up value above 0, which breaks the skip pattern; set to NA."
       )
     )
   }
