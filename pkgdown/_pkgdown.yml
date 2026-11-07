@@ -102,3 +102,4 @@ reference:
   - title: Utilities
     contents:
     - get_dummy
+    - get_followup
