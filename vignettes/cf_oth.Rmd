@@ -102,27 +102,60 @@ table(df$eff)
 
 We can use the Sweet Beverage Consumption indicator to identify the children who get the sweet beverage food from the previous day. Like other indicators from this complementary feeding indicator, use `get_dummy()` to identify the children who get those types of food, and then calculate the specific indicator "SwB" using `get_swb()`. 
 
-According to the WHO guideline, the following questions were considered in the sweet beverage foods category. 
+According to the WHO guideline, the following questions were considered in the sweet beverage foods category.
 
-+ `Question 6Cswt`: Milk from animals - sweet or flavoured type milk 
-+ `Question 6Dswt`: Yogurt drinks - sweet or flavoured type yogurt
++ `Question 6Cswt`: Milk from animals - sweet or flavoured type milk (asked only if `Question 6C` = yes)
++ `Question 6Dswt`: Yogurt drinks - sweet or flavoured type yogurt (asked only if `Question 6D` = yes)
 + `Question 6E`: Chocolate-flavoured drinks
 + `Question 6F`: Fruit juice or fruit-flavoured drinks
 + `Question 6G`: Sodas, malt drinks, sports drinks or energy drinks
-+ `Question 6Hswt`: Tea, coffee, or herbal drinks - sweetened
-+ `Question 6Jswt`: Other liquids - sweetened 
++ `Question 6Hswt`: Tea, coffee, or herbal drinks - sweetened (asked only if `Question 6H` = yes)
++ `Question 6Jswt`: Other liquids - sweetened (asked only if `Question 6J` = yes)
+
+#### Handling the skip pattern in the follow-up questions
+
+Four of these questions (6Cswt, 6Dswt, 6Hswt and 6Jswt) are follow-up questions. For example, *"Was the milk sweetened or flavoured?"* is only asked if the child had milk from animals. When the main question is answered "no", the follow-up question is skipped and is stored as `NA` in the dataset. Here, `NA` means *"did not have it"*, not *"unknown"*.
+
+`get_dummy()` returns `NA` for a child when any of the listed questions is `NA`. If the follow-up questions are passed to `get_dummy()` as they are, almost every child gets `NA`. In this sample dataset, no child had a yogurt drink, so `child_mproduct_sweet` is `NA` for every child and the sweet beverage indicator would be `NA` for all children.
+
+The `get_followup()` function resolves each follow-up question using its main question before it is passed to `get_dummy()`:
+
+| Main question | Follow-up question | Result |
+|---|---|---|
+| 0 (no) | `NA` (correctly skipped) or 0 | 0 |
+| 1 (yes) | 1 | 1 |
+| 1 (yes) | 0 | 0 |
+| 1 (yes) | `NA` (should have been asked) | `NA`, with a warning |
+| 0 (no) | 1 (skip pattern broken) | `NA`, with a warning |
+| `NA` | any | `NA` |
+
+```{r}
+get_followup(main = c(1, 1, 0, 0, NA), followup = c(1, 0, NA, 0, NA))
+```
+
+The warnings help to check whether the skip pattern was followed during data collection. They are hidden in this document but appear in the R console.
+
+Now, build the list of sweet beverage questions, using `get_followup()` for the four follow-up questions, and calculate the indicator.
 
 ```{r}
 sweet <- list(
-  df$child_milk_sweet, df$child_mproduct_sweet, df$child_chocolate, df$child_juice, df$child_soda,  df$child_tea_sweet, df$child_oth_drink_sweet
+  get_followup(df$child_milk, df$child_milk_sweet),
+  get_followup(df$child_mproduct, df$child_mproduct_sweet),
+  df$child_chocolate, df$child_juice, df$child_soda,
+  get_followup(df$child_tea, df$child_tea_sweet),
+  get_followup(df$child_oth_drink, df$child_oth_drink_sweet)
 )
 
 df$sweet <- get_dummy(var_list = sweet)
 
-df$swb <- get_swb(sweet = df$sweet, 
+df$swb <- get_swb(sweet = df$sweet,
                   age = df$calc_age_months)
-table(df$swb)
+table(df$swb, useNA = "ifany")
 ```
+
+Children who are not 6-23 months old, or whose age is missing, get `NA` because they are outside the age range of this indicator.
+
+**Limitation:** `get_followup()` only handles the skip pattern in which the main question coded 1 (yes) means the follow-up is asked and 0 (no) means it is skipped. It does not handle other kinds of skip pattern, such as a categorical main question (for example, the number of hours after birth asked only when the early initiation answer is "hours", which `get_eibf()` handles itself), follow-ups that depend on more than one question or on the child's age, or follow-ups asked when the main answer is "no". Such questions need to be recoded before they are used.
 
 ### Unhealthy food consumption for 6-23 month old children 
 
