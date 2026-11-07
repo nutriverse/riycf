@@ -44,3 +44,17 @@ test_that("`get_ebf` function define the output values correctly", {
   }
 
 })
+
+test_that("get_ebf checks input, codes and ages (#67)", {
+  expect_error(get_ebf(NULL, 5, 0, 0), "q4 is NULL")
+  expect_error(get_ebf(1, 5, "0", 0), "liquid_food is not an integer or is not numeric")
+
+  expect_warning(get_ebf(999, 5, 0, 0), "q4: 1 invalid value was set to NA \\(999\\)")
+  expect_true(is.na(suppressWarnings(get_ebf(999, 5, 0, 0))))
+
+  expect_warning(get_ebf(1, 5, 0, 9), "solid_food: 1 invalid value was set to NA")
+  expect_true(is.na(suppressWarnings(get_ebf(1, 5, 0, 9))))
+
+  expect_warning(get_ebf(1, -4, 0, 0), "age: 1 value was outside the valid range")
+  expect_true(is.na(suppressWarnings(get_ebf(1, -4, 0, 0))))
+})
