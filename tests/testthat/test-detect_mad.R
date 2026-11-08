@@ -48,3 +48,15 @@ test_that("`get_mad` function define the output values correctly", {
 test_that("errors are produced as expected", {
   expect_error(get_mad(NULL, 0, 1, 1, 0))
 })
+
+test_that("get_mad names the problem argument and checks codes and ages (#67)", {
+  expect_error(get_mad(NULL, 0, 1, 1, 0), "age is NULL")
+  expect_error(get_mad(12, 1, "1", 1, NA), "mdd is not an integer or is not numeric")
+
+  expect_warning(get_mad(12, 1, 999, 1, NA), "mdd: 1 invalid value was set to NA")
+  expect_true(is.na(suppressWarnings(get_mad(12, 1, 999, 1, NA))))
+  expect_warning(get_mad(12, 0, 1, 1, 2), "mmff: 1 invalid value was set to NA")
+
+  expect_warning(get_mad(-4, 1, 1, 1, NA), "age: 1 value was outside the valid range")
+  expect_true(is.na(suppressWarnings(get_mad(-4, 1, 1, 1, NA))))
+})
