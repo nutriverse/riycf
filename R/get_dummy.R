@@ -27,11 +27,11 @@
 #'
 #'  dairy_list <- list(df$child_bms, df$child_milk,
 #'                     df$child_mproduct, df$child_yogurt,
-#'                     df$child_yogurt)
+#'                     df$child_cheese)
 #'
 #'  dairy <- get_dummy(var_list = dairy_list)
 #'
-#'  meat_list <- list(df$child_organ, df$child_insects,
+#'  meat_list <- list(df$child_organ, df$child_processmeat,
 #'                    df$child_beef, df$child_fish)
 #'
 #'  meat <- get_dummy(var_list = meat_list)
@@ -44,7 +44,7 @@
 #'
 #'  vita_fruveg <- get_dummy(var_list = vita_fruveg_list)
 #'
-#'  oth_fruveg <- get_dummy(var_list = list(df$child_fruit, df$child_fruit))
+#'  oth_fruveg <- get_dummy(var_list = list(df$child_oth_veg, df$child_fruit))
 #'
 #'
 #' @author Nicholus Tint Zaw

@@ -34,7 +34,7 @@ A data frame with 46 columns and 359 rows.\tabular{lll}{
    \emph{child_oth_drink} \tab Q6J \tab Has child had \emph{any other liquids} yesterday? 1 = Yes; 0 = No. \cr
    \emph{child_oth_drink_sweet} \tab Q6Jswt \tab Has child had \emph{any other sweetened liquids} yesterday? 1 = Yes; 0 = No. \cr
    \emph{child_yogurt} \tab Q7A \tab Has child had \emph{yogurt other than yogurt drinks} yesterday? 1 = Yes; 0 = No. \cr
-   \emph{child_yogurt_frq} \tab Q7Anum \tab How many times has child had \emph{yogurt other than yogurt drinks} yesterday? 1 = Yes; 0 = No. \cr
+   \emph{child_yogurt_frq} \tab Q7Anum \tab How many times has child had \emph{yogurt other than yogurt drinks} yesterday? Integer value (constructed; see Details). \cr
    \emph{child_rice} \tab Q7B \tab Has child had \emph{porridge, bread, rice, noodles, pasta} yesterday? 1 = Yes; 0 = No. \cr
    \emph{child_pumpkin} \tab Q7C \tab Has child had \emph{pumpkin, carrots, sweet potatoes (yellow or orange inside)} yesterday? 1 = Yes; 0 = No. \cr
    \emph{child_potatoes} \tab Q7D \tab Has child had \emph{plantains, white potatoes, white yams, manioc, cassava} yesterday? 1 = Yes; 0 = No. \cr
@@ -52,7 +52,7 @@ A data frame with 46 columns and 359 rows.\tabular{lll}{
    \emph{child_sweets} \tab Q7P \tab Has child had \emph{sweet foods such as chocolates, candies, cakes, and biscuits} yesterday? 1 = Yes; 0 = No. \cr
    \emph{child_snack} \tab Q7Q \tab Has child had \emph{chips, crisps, puffs, french fries, instant noodles} yesterday? 1 = Yes; 0 = No. \cr
    \emph{child_oth_food} \tab Q7R \tab Has child had \emph{any other solid, semi-solid or soft food} yesterday? 1 = Yes; 0 = No. \cr
-   \emph{child_food_freq} \tab Q8 \tab How many times has child had \emph{any solid, semi-solid, or soft foods} yesterday? 1 = Yes; 0 = No. \cr
+   \emph{child_food_freq} \tab Q8 \tab How many times has child had \emph{any solid, semi-solid, or soft foods} yesterday? Integer value. \cr
 }
 }
 \source{
@@ -64,6 +64,45 @@ iycfData
 \description{
 This is an example IYCF dataset from CARE International Myanmar country
 programme. All personally identifiable information have been excluded.
+}
+\details{
+\strong{Constructed variables.} The original CARE Myanmar data did not
+include every question of the WHO 2021 questionnaire, so some variables
+were added when the dataset was built (see \code{data-raw/processData.R}):
+\itemize{
+\item \strong{Simulated} at random, with the same probability for every child
+regardless of age: \emph{bf_2days} (30\% yes), \emph{bf_bottle} (15\% yes),
+\emph{child_chocolate}, \emph{child_soda}, \emph{child_oth_drink}, \emph{child_oth_veg}
+and \emph{child_oth_food} (30\% yes each). Indicators that use these
+variables (for example exclusive breastfeeding, minimum dietary
+diversity, sweet beverage consumption and bottle feeding) give
+illustrative results only.
+\item \strong{Derived from the main question:} \emph{child_milk_sweet},
+\emph{child_mproduct_sweet}, \emph{child_tea_sweet} and \emph{child_oth_drink_sweet}
+are 1 whenever the main question is 1, and \code{NA} (skipped) otherwise.
+\emph{child_yogurt_frq} is 1 whenever \emph{child_yogurt} is not 0, and \code{NA}
+otherwise.
+\item \strong{Copied from original variables:} \emph{child_tea} (from an original
+"other liquids" variable), \emph{child_processmeat} (insects),
+\emph{child_cheese} (fats) and \emph{child_snack} (condiments).
+}
+
+\strong{Intentional data quality issues.} The dataset deliberately keeps some
+problems that are common in real survey data, to show how \code{{riycf}}
+checks its inputs:
+\itemize{
+\item the "don't know"/no answer code \code{999} in several variables, for example
+\emph{child_bf}, \emph{child_eibf}, food items such as \emph{child_rice} and
+\emph{child_fish}, and \emph{child_food_freq};
+\item an undocumented code \code{3} in \emph{child_eibf};
+\item a child with an impossible age of -4 months in \emph{calc_age_months};
+\item follow-up questions that are skipped (\code{NA}) when the main question is
+"no", for example \emph{child_milk_sweet} and \emph{child_bms_freq}.
+}
+
+The indicator functions set invalid codes and ages to \code{NA} with a
+warning. Check and prepare your own data in the same way before
+calculating indicators.
 }
 \examples{
 iycfData

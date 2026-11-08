@@ -95,7 +95,7 @@ df$pulses <- get_dummy(var_list = list(df$child_beans))
 In the dairy products food group, the following foods items are included; milk, infant formula, yogurt, and cheese) and the following questions from WHO guidelines provide that information; `Question 6B`, `Question 6C`, `Question 6D`, `Question 7A`, and `Question 7O`. 
 
 ```{r}
-dairy_list <- list(df$child_bms, df$child_milk, df$child_mproduct, df$child_yogurt, df$child_yogurt)
+dairy_list <- list(df$child_bms, df$child_milk, df$child_mproduct, df$child_yogurt, df$child_cheese)
 
 df$dairy <- get_dummy(var_list = dairy_list)
 ```
@@ -103,7 +103,7 @@ df$dairy <- get_dummy(var_list = dairy_list)
 The information about flesh foods, meat, fish, poultry, and organ meats, is available from the following four questions from the guideline; `Question 7I`, `Question 7J`, `Question 7K`, and `Question 7M`. 
 
 ```{r}
-meat_list <- list(df$child_organ, df$child_insects,  df$child_beef, df$child_fish)
+meat_list <- list(df$child_organ, df$child_processmeat, df$child_beef, df$child_fish)
 
 df$meat <- get_dummy(var_list = meat_list)
 ```
@@ -125,8 +125,10 @@ df$vita_fruveg <- get_dummy(var_list = vita_fruveg_list)
 We used the following two variables for other fruits and vegetable food groups; `Question 7F` and `Question 7H`. 
 
 ```{r}
-df$oth_fruveg <- get_dummy(var_list = list(df$child_fruit, df$child_fruit))
+df$oth_fruveg <- get_dummy(var_list = list(df$child_oth_veg, df$child_fruit))
 ```
+
+**Note on the sample dataset:** some variables in `iycfData` are simulated with the same probability for children of every age, including other vegetables (`child_oth_veg`). The food group score and MDD results below show how the functions work; they are not estimates.
 
 
 ### Food groups score calculation  
@@ -167,8 +169,8 @@ Unlike MDD, the MMF requires more complex criteria, and those depend on the chil
 The minimum meal frequency for breastfeeding varies by the child's age. It only requires at least two meals for 6-8 months old children, but at least three times for children of 9-23 months old. Below are the sample syntax using three functions to calculate the minimum meal frequency for breastfeeding children. 
 
 + `get_mmf_bf_6to8` - to calculate the minimum meal frequency for 6-8 months old breastfed children 
-+ `get_mmf_bf_9to23` - to calculate the minimum meal frequency for 6-8 months old breastfed children 
-+ `get_mmf_bf` - to calculate the minimum meal frequency for 6-8 months old breastfed children 
++ `get_mmf_bf_9to23` - to calculate the minimum meal frequency for 9-23 months old breastfed children
++ `get_mmf_bf` - to combine the two into the minimum meal frequency for 6-23 months old breastfed children
 
 ```{r}
 # BF 6-8 months 
