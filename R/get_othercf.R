@@ -32,13 +32,13 @@
 #'   df <- iycfData
 #'
 #' # Introduction of Solid, Semi-solid or soft foods (6-8 months)
-#' # Solid food consumption previous day - yes/no
-#'  solid <- list(df$child_rice, df$child_potatoes, df$child_pumpkin,
-#'                df$child_beans, df$child_leafyveg, df$child_mango,
-#'                df$child_fruit, df$child_organ, df$child_beef, df$child_fish,
-#'                df$child_insects, df$child_eggs, df$child_yogurt,
-#'                df$child_fat, df$child_plam, df$child_sweets,
-#'                df$child_condiments)
+#' # Solid food consumption previous day - yes/no (Questions 7A to 7R)
+#'  solid <- list(df$child_yogurt, df$child_rice, df$child_pumpkin,
+#'                df$child_potatoes, df$child_leafyveg, df$child_oth_veg,
+#'                df$child_mango, df$child_fruit, df$child_organ,
+#'                df$child_processmeat, df$child_beef, df$child_eggs,
+#'                df$child_fish, df$child_beans, df$child_cheese,
+#'                df$child_sweets, df$child_snack, df$child_oth_food)
 #'
 #'  df$solid_food <- get_dummy(var_list = solid)
 #'
@@ -48,7 +48,7 @@
 #' # Egg and/or Flesh food consumption (6-23 months)
 #' # Egg and/or Flesh food consumption previous day - yes/no
 #'  egg_meat <- list(df$child_organ, df$child_beef, df$child_fish,
-#'                   df$child_insects, df$child_eggs)
+#'                   df$child_processmeat, df$child_eggs)
 #'
 #'  df$egg_meat <- get_dummy(var_list = egg_meat)
 #'
@@ -66,7 +66,7 @@
 #'
 #' # Unhealthy food consumption (6-23 months)
 #' # Unhealthy food consumption previous day - yes/no
-#'  unhealthy <- list(df$child_sweets, df$child_condiments)
+#'  unhealthy <- list(df$child_sweets, df$child_snack)
 #'
 #'  df$unhealthy <- get_dummy(var_list = unhealthy)
 #'
@@ -74,8 +74,8 @@
 #'
 #' # Zero vegetable or fruit consumption (6-23 months)
 #' # Zero vegetable or fruit consumption previous day - yes/no
-#'  vege_fruit <- list(df$child_pumpkin, df$child_leafyveg, df$child_mango,
-#'                     df$child_fruit)
+#'  vege_fruit <- list(df$child_pumpkin, df$child_leafyveg, df$child_oth_veg,
+#'                     df$child_mango, df$child_fruit)
 #'
 #'  df$vege_fruit <- get_dummy(var_list = vege_fruit)
 #'

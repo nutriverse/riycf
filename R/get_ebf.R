@@ -21,22 +21,22 @@
 #'
 #'  df <- iycfData
 #'
-#' # Liquid consumption previous day - yes/no
-#'  liquid <- list(df$child_vitdrop, df$child_ors, df$child_water,
-#'                 df$child_juice, df$child_broth, df$child_porridge,
-#'                 df$child_bms, df$child_milk, df$child_mproduct,
-#'                 df$child_liquid)
+#' # Liquid consumption previous day - yes/no (Questions 6A to 6J)
+#'  liquid <- list(df$child_water, df$child_bms, df$child_milk,
+#'                 df$child_mproduct, df$child_chocolate, df$child_juice,
+#'                 df$child_soda, df$child_tea, df$child_broth,
+#'                 df$child_oth_drink)
 #'
 #'  df$liquid_food <- get_dummy(var_list = liquid)
 #'
 #'
-#' # Solid food consumption previous day - yes/no
-#'  solid <- list(df$child_rice, df$child_potatoes, df$child_pumpkin,
-#'                df$child_beans, df$child_leafyveg, df$child_mango,
-#'                df$child_fruit, df$child_organ, df$child_beef, df$child_fish,
-#'                df$child_insects, df$child_eggs, df$child_yogurt,
-#'                df$child_fat, df$child_plam, df$child_sweets,
-#'                df$child_condiments)
+#' # Solid food consumption previous day - yes/no (Questions 7A to 7R)
+#'  solid <- list(df$child_yogurt, df$child_rice, df$child_pumpkin,
+#'                df$child_potatoes, df$child_leafyveg, df$child_oth_veg,
+#'                df$child_mango, df$child_fruit, df$child_organ,
+#'                df$child_processmeat, df$child_beef, df$child_eggs,
+#'                df$child_fish, df$child_beans, df$child_cheese,
+#'                df$child_sweets, df$child_snack, df$child_oth_food)
 #'
 #'  df$solid_food <- get_dummy(var_list = solid)
 #'
