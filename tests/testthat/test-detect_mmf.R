@@ -164,6 +164,39 @@ test_that("`get_mmf` function define the output values correctly", {
 
 })
 
+test_that("MMF functions give a clear error for NULL input (#67)", {
+  expect_error(get_mmf(NULL, 1), "mmf_bf is NULL")
+  expect_error(get_mmf_bf(1, NULL), "mmfbf_9to23 is NULL")
+  expect_error(get_mmf_bf_6to8(1, NULL, 7), "q8 is NULL")
+  expect_error(get_mmf_bf_9to23(NULL, 3, 12), "q4 is NULL")
+  expect_error(get_mmf_nonbf(0, 1, NULL, 12), "nonbf_frq is NULL")
+  expect_error(get_nonbf_frq(0, 0, 0, NULL), "q8 is NULL")
+})
+
+test_that("MMF functions set invalid codes and counts to NA (#67)", {
+  expect_warning(get_mmf(999, 0), "mmf_bf: 1 invalid value was set to NA")
+  expect_warning(get_mmf_bf(0, 2), "mmfbf_9to23: 1 invalid value was set to NA")
+
+  expect_warning(
+    get_mmf_bf_6to8(1, 999, 7), "q8: 1 invalid value was set to NA \\(999\\)"
+  )
+  expect_true(is.na(suppressWarnings(get_mmf_bf_6to8(1, 999, 7))))
+  expect_warning(get_mmf_bf_9to23(1, 21, 12), "q8: 1 invalid value was set to NA")
+
+  expect_warning(get_mmf_nonbf(0, 1, 81, 12), "nonbf_frq: 1 invalid value")
+  expect_true(is.na(suppressWarnings(get_mmf_nonbf(0, 1, 81, 12))))
+
+  expect_warning(
+    get_nonbf_frq(0, 0, 0, 999), "q8: 1 invalid value was set to NA \\(999\\)"
+  )
+  expect_true(is.na(suppressWarnings(get_nonbf_frq(0, 0, 0, 999))))
+})
+
+test_that("MMF functions set out-of-range ages to NA (#67)", {
+  expect_warning(get_mmf_bf_6to8(1, 2, -4), "age: 1 value was outside the valid range")
+  expect_true(is.na(suppressWarnings(get_mmf_nonbf(0, 1, 4, 300))))
+})
+
 
 
 

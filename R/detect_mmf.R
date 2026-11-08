@@ -89,15 +89,23 @@
 ################################################################################
 # Child - MMF 6-23 months
 get_mmf <- function(mmf_bf, mmf_nonbf){
+  ## Checkers ----
+  ## (replaces the old NULL check, which tested the function get_mmf_bf
+  ## instead of the argument mmf_bf)
+  check_if_number(mmf_bf)
+  check_if_number(mmf_nonbf)
 
-  if(!is.null(get_mmf_bf) & !is.null(mmf_nonbf)){
+  ## Set invalid codes to NA ----
+  mmf_bf <- check_if_valid_code(mmf_bf, valid = c(0, 1))
+  mmf_nonbf <- check_if_valid_code(mmf_nonbf, valid = c(0, 1))
 
-    mmf <- ifelse((!is.na(mmf_bf) & mmf_bf == 1) |
-                    (!is.na(mmf_nonbf) & mmf_nonbf == 1), 1,
-                  ifelse(is.na(mmf_bf) & is.na(mmf_nonbf), NA, 0))
+  ## Recode ----
+  mmf <- ifelse((!is.na(mmf_bf) & mmf_bf == 1) |
+                  (!is.na(mmf_nonbf) & mmf_nonbf == 1), 1,
+                ifelse(is.na(mmf_bf) & is.na(mmf_nonbf), NA, 0))
 
-    return(mmf)
-  }
+  ## Return mmf ----
+  mmf
 }
 
 
@@ -111,14 +119,21 @@ get_mmf <- function(mmf_bf, mmf_nonbf){
 ################################################################################
 # Breastfeeding Child - MMF 6-23 months
 get_mmf_bf <- function(mmfbf_6to8, mmfbf_9to23){
+  ## Checkers ----
+  check_if_number(mmfbf_6to8)
+  check_if_number(mmfbf_9to23)
 
-  if(!is.null(mmfbf_6to8) & !is.null(mmfbf_9to23)){
+  ## Set invalid codes to NA ----
+  mmfbf_6to8 <- check_if_valid_code(mmfbf_6to8, valid = c(0, 1))
+  mmfbf_9to23 <- check_if_valid_code(mmfbf_9to23, valid = c(0, 1))
 
-    mmf_bf <- ifelse((!is.na(mmfbf_6to8) & mmfbf_6to8 == 1) |
-                       (!is.na(mmfbf_9to23) & mmfbf_9to23 == 1), 1,
-                     ifelse(is.na(mmfbf_6to8) & is.na(mmfbf_9to23), NA, 0))
-    return(mmf_bf)
-  }
+  ## Recode ----
+  mmf_bf <- ifelse((!is.na(mmfbf_6to8) & mmfbf_6to8 == 1) |
+                     (!is.na(mmfbf_9to23) & mmfbf_9to23 == 1), 1,
+                   ifelse(is.na(mmfbf_6to8) & is.na(mmfbf_9to23), NA, 0))
+
+  ## Return mmf_bf ----
+  mmf_bf
 }
 
 ################################################################################
@@ -129,18 +144,26 @@ get_mmf_bf <- function(mmfbf_6to8, mmfbf_9to23){
 ################################################################################
 # Breastfeeding Child - MMF 6-8 months
 get_mmf_bf_6to8 <- function(q4, q8, age){
+  ## Checkers ----
+  check_if_number(q4)
+  check_if_number(q8)
+  check_if_number(age)
 
-  if(!is.null(q4) & !is.null(q8) & !is.null(age)){
+  ## Set invalid codes, counts and ages to NA ----
+  q4 <- check_if_valid_code(q4, valid = c(0, 1))
+  q8 <- check_if_valid_code(q8, valid = 0:20)
+  age <- check_if_valid_age(age)
 
-    mmfbf_6to8 <- ifelse(q4 == 1 & age >= 6 & age < 9 & q8 >= 2, 1,
-                         ifelse(age < 6, NA,
-                                ifelse(age >= 9, NA, 0)))
+  ## Recode ----
+  mmfbf_6to8 <- ifelse(q4 == 1 & age >= 6 & age < 9 & q8 >= 2, 1,
+                       ifelse(age < 6, NA,
+                              ifelse(age >= 9, NA, 0)))
 
-    mmfbf_6to8 <- ifelse(is.na(q4) | is.na(q8) | is.na(age) | q4 == 0,
-                         NA, mmfbf_6to8)
+  mmfbf_6to8 <- ifelse(is.na(q4) | is.na(q8) | is.na(age) | q4 == 0,
+                       NA, mmfbf_6to8)
 
-    return(mmfbf_6to8)
-  }
+  ## Return mmfbf_6to8 ----
+  mmfbf_6to8
 }
 
 ################################################################################
@@ -151,18 +174,26 @@ get_mmf_bf_6to8 <- function(q4, q8, age){
 ################################################################################
 # Breastfeeding Child - MMF 9-23 months
 get_mmf_bf_9to23 <- function(q4, q8, age){
+  ## Checkers ----
+  check_if_number(q4)
+  check_if_number(q8)
+  check_if_number(age)
 
-  if(!is.null(q4) & !is.null(q8) & !is.null(age)){
+  ## Set invalid codes, counts and ages to NA ----
+  q4 <- check_if_valid_code(q4, valid = c(0, 1))
+  q8 <- check_if_valid_code(q8, valid = 0:20)
+  age <- check_if_valid_age(age)
 
-    mmfbf_9to23 <- ifelse(q4 == 1 & age >= 9 & age < 24 & q8 >= 3, 1,
-                          ifelse(age < 9, NA,
-                                 ifelse(age >= 24, NA, 0)))
+  ## Recode ----
+  mmfbf_9to23 <- ifelse(q4 == 1 & age >= 9 & age < 24 & q8 >= 3, 1,
+                        ifelse(age < 9, NA,
+                               ifelse(age >= 24, NA, 0)))
 
-    mmfbf_9to23 <- ifelse(is.na(q4) | is.na(q8) | is.na(age) | q4 == 0,
-                          NA, mmfbf_9to23)
+  mmfbf_9to23 <- ifelse(is.na(q4) | is.na(q8) | is.na(age) | q4 == 0,
+                        NA, mmfbf_9to23)
 
-    return(mmfbf_9to23)
-  }
+  ## Return mmfbf_9to23 ----
+  mmfbf_9to23
 }
 
 
@@ -176,20 +207,31 @@ get_mmf_bf_9to23 <- function(q4, q8, age){
 ################################################################################
 # Non-Breastfeeding Child - MMF 6-23 months
 get_mmf_nonbf <- function(q4, q8, nonbf_frq, age){
+  ## Checkers ----
+  check_if_number(q4)
+  check_if_number(q8)
+  check_if_number(nonbf_frq)
+  check_if_number(age)
 
-    if(!is.null(q4) & !is.null(q8) & !is.null(nonbf_frq) & !is.null(age)){
+  ## Set invalid codes, counts and ages to NA ----
+  ## (nonbf_frq is the sum of up to 4 counts of 0-20 each, so 0-80)
+  q4 <- check_if_valid_code(q4, valid = c(0, 1))
+  q8 <- check_if_valid_code(q8, valid = 0:20)
+  nonbf_frq <- check_if_valid_code(nonbf_frq, valid = 0:80)
+  age <- check_if_valid_age(age)
 
-      mmf_nonbf <- ifelse(q4 == 0 & age >= 6 & age < 24 & q8 >= 1 &
-                            nonbf_frq >= 4, 1,
-                          ifelse(age < 6, NA,
-                                 ifelse(age >= 24, NA, 0)))
+  ## Recode ----
+  mmf_nonbf <- ifelse(q4 == 0 & age >= 6 & age < 24 & q8 >= 1 &
+                        nonbf_frq >= 4, 1,
+                      ifelse(age < 6, NA,
+                             ifelse(age >= 24, NA, 0)))
 
-      mmf_nonbf <- ifelse(is.na(q4) | is.na(q8) | is.na(nonbf_frq) |
-                            is.na(age) | q4 == 1, NA, mmf_nonbf)
+  mmf_nonbf <- ifelse(is.na(q4) | is.na(q8) | is.na(nonbf_frq) |
+                        is.na(age) | q4 == 1, NA, mmf_nonbf)
 
-      return(mmf_nonbf)
-    }
-  }
+  ## Return mmf_nonbf ----
+  mmf_nonbf
+}
 
 
 ################################################################################
@@ -200,17 +242,27 @@ get_mmf_nonbf <- function(q4, q8, nonbf_frq, age){
 ################################################################################
 # Non-Breastfeeding Child Meal Frequency including milk feeding
 get_nonbf_frq <- function(q6bnum, q6cnum, q6dnum, q8){
+  ## Checkers ----
+  check_if_number(q6bnum)
+  check_if_number(q6cnum)
+  check_if_number(q6dnum)
+  check_if_number(q8)
 
-  if(!is.null(q6bnum) & !is.null(q6cnum) & !is.null(q6dnum) & !is.null(q8)){
+  ## Set invalid counts to NA ----
+  q6bnum <- check_if_valid_code(q6bnum, valid = 0:20)
+  q6cnum <- check_if_valid_code(q6cnum, valid = 0:20)
+  q6dnum <- check_if_valid_code(q6dnum, valid = 0:20)
+  q8 <- check_if_valid_code(q8, valid = 0:20)
 
-    nonbf_frq <- as.data.frame(
-      cbind(q6bnum, q6cnum, q6dnum, q8)
-    )
+  ## Sum milk and meal feeds ----
+  nonbf_frq <- as.data.frame(
+    cbind(q6bnum, q6cnum, q6dnum, q8)
+  )
 
-    nonbf_frq <- rowSums(nonbf_frq, na.rm = FALSE)
+  nonbf_frq <- rowSums(nonbf_frq, na.rm = FALSE)
 
-    return(nonbf_frq)
-  }
+  ## Return nonbf_frq ----
+  nonbf_frq
 }
 
 

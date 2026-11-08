@@ -60,17 +60,34 @@
 get_foodscore <- function(breastmilk, grains, pulses, dairy, meat, eggs,
                      vita_fruveg, oth_fruveg){
 
-  if(!is.null(breastmilk) & !is.null(grains) & !is.null(pulses) &
-     !is.null(dairy) & !is.null(meat) & !is.null(eggs) &
-     !is.null(vita_fruveg) & !is.null(oth_fruveg)){
+  ## Checkers ----
+  check_if_number(breastmilk)
+  check_if_number(grains)
+  check_if_number(pulses)
+  check_if_number(dairy)
+  check_if_number(meat)
+  check_if_number(eggs)
+  check_if_number(vita_fruveg)
+  check_if_number(oth_fruveg)
 
-       fg_group <- as.data.frame(
-         cbind(breastmilk, grains, pulses, dairy, meat, eggs, vita_fruveg,
-               oth_fruveg)
-         )
+  ## Set invalid codes to NA ----
+  breastmilk <- check_if_valid_code(breastmilk, valid = c(0, 1))
+  grains <- check_if_valid_code(grains, valid = c(0, 1))
+  pulses <- check_if_valid_code(pulses, valid = c(0, 1))
+  dairy <- check_if_valid_code(dairy, valid = c(0, 1))
+  meat <- check_if_valid_code(meat, valid = c(0, 1))
+  eggs <- check_if_valid_code(eggs, valid = c(0, 1))
+  vita_fruveg <- check_if_valid_code(vita_fruveg, valid = c(0, 1))
+  oth_fruveg <- check_if_valid_code(oth_fruveg, valid = c(0, 1))
 
-       food_score <- rowSums(fg_group, na.rm = FALSE)
+  ## Sum food groups ----
+  fg_group <- as.data.frame(
+    cbind(breastmilk, grains, pulses, dairy, meat, eggs, vita_fruveg,
+          oth_fruveg)
+  )
 
-       return(food_score)
-  }
+  food_score <- rowSums(fg_group, na.rm = FALSE)
+
+  ## Return food_score ----
+  food_score
 }

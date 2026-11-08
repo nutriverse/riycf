@@ -64,21 +64,27 @@
 ################################################################################
 # Minimum Milk Feeding Frequency
 get_mmff <- function(q4, age, milk_frq){
+  ## Checkers ----
+  check_if_number(q4)
+  check_if_number(age)
+  check_if_number(milk_frq)
 
-  if(!is.null(q4) & !is.null(milk_frq) & !is.null(age)){
+  ## Set invalid codes, ages and frequencies to NA ----
+  ## (milk_frq is the sum of up to 4 counts of 0-20 each, so 0-80)
+  q4 <- check_if_valid_code(q4, valid = c(0, 1))
+  age <- check_if_valid_age(age)
+  milk_frq <- check_if_valid_code(milk_frq, valid = 0:80)
 
-    mmff <- ifelse(q4 == 0 & age >= 6 & age < 24 & milk_frq >= 2, 1,
-                   ifelse(age < 6, NA,
-                          ifelse(age >= 24, NA, 0)))
+  ## Recode ----
+  mmff <- ifelse(q4 == 0 & age >= 6 & age < 24 & milk_frq >= 2, 1,
+                 ifelse(age < 6, NA,
+                        ifelse(age >= 24, NA, 0)))
 
-    mmff <- ifelse(is.na(q4) | is.na(age) | is.na(milk_frq) | q4 == 1,
-                   NA, mmff)
+  mmff <- ifelse(is.na(q4) | is.na(age) | is.na(milk_frq) | q4 == 1,
+                 NA, mmff)
 
-    return(mmff)
-
-  } else{
-    stop("One or more of the input variables was missing!")
-  }
+  ## Return mmff ----
+  mmff
 }
 
 ################################################################################
@@ -89,21 +95,26 @@ get_mmff <- function(q4, age, milk_frq){
 ################################################################################
 # Milk Feeding Frequency Score
 get_milk_frq <- function(q6bnum, q6cnum, q6dnum, q7anum){
+  ## Checkers ----
+  check_if_number(q6bnum)
+  check_if_number(q6cnum)
+  check_if_number(q6dnum)
+  check_if_number(q7anum)
 
-  if(!is.null(q6bnum) & !is.null(q6cnum) & !is.null(q6dnum) &
-     !is.null(q7anum)){
+  ## Set invalid counts to NA ----
+  q6bnum <- check_if_valid_code(q6bnum, valid = 0:20)
+  q6cnum <- check_if_valid_code(q6cnum, valid = 0:20)
+  q6dnum <- check_if_valid_code(q6dnum, valid = 0:20)
+  q7anum <- check_if_valid_code(q7anum, valid = 0:20)
 
-    milk_frq <- as.data.frame(
-      cbind(q6bnum, q6cnum, q6dnum, q7anum)
-    )
+  ## Sum milk feeds ----
+  milk_frq <- as.data.frame(
+    cbind(q6bnum, q6cnum, q6dnum, q7anum)
+  )
 
-    milk_frq <- rowSums(milk_frq, na.rm = FALSE)
+  milk_frq <- rowSums(milk_frq, na.rm = FALSE)
 
-    return(milk_frq)
-
-  } else{
-    stop("One or more of the input variables was missing!")
-  }
-
+  ## Return milk_frq ----
+  milk_frq
 }
 

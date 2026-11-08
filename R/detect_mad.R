@@ -44,25 +44,32 @@
 ################################################################################
 
 get_mad <- function(age, q4, mdd, mmf, mmff){
+  ## Checkers ----
+  check_if_number(age)
+  check_if_number(q4)
+  check_if_number(mdd)
+  check_if_number(mmf)
+  check_if_number(mmff)
 
-  if(!is.null(q4) & !is.null(age) & !is.null(mdd) & !is.null(mmf) &
-     !is.null(mmff)){
+  ## Set invalid codes and out-of-range ages to NA ----
+  age <- check_if_valid_age(age)
+  q4 <- check_if_valid_code(q4, valid = c(0, 1))
+  mdd <- check_if_valid_code(mdd, valid = c(0, 1))
+  mmf <- check_if_valid_code(mmf, valid = c(0, 1))
+  mmff <- check_if_valid_code(mmff, valid = c(0, 1))
 
-    mad <- ifelse(age >= 6 & age < 24 &
-                    (q4 == 1 | mmff == 1) &
-                    mdd == 1 & mmf == 1, 1,
-                  ifelse(age < 6, NA,
-                         ifelse(age >= 24, NA, 0)))
+  ## Recode ----
+  mad <- ifelse(age >= 6 & age < 24 &
+                  (q4 == 1 | mmff == 1) &
+                  mdd == 1 & mmf == 1, 1,
+                ifelse(age < 6, NA,
+                       ifelse(age >= 24, NA, 0)))
 
-    mad <- ifelse(is.na(age) | is.na(mdd) | is.na(mmf) |
-                    (is.na(q4) & is.na(mmff)), NA, mad)
+  mad <- ifelse(is.na(age) | is.na(mdd) | is.na(mmf) |
+                  (is.na(q4) & is.na(mmff)), NA, mad)
 
-    return(mad)
-
-  } else{
-    stop("One or more of the input variables was missing!")
-  }
-
+  ## Return mad ----
+  mad
 }
 
 
