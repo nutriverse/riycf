@@ -3,7 +3,7 @@ Type: Package
 Title: Utilities for Calculating Infant and Young Child Feeding Indicators
 Version: 0.0.0.9000
 Authors@R: c(
-    person("Nicholus", "Tint Zaw", email = "nicholustintzaw@katilingban.io",
+    person("Nicholus", "Tint Zaw", email = "nicholustintzaw@gmail.com",
            role = c("aut", "cre", "cph")),
     person("Ernest", "Guevarra", comment = c(ORCID = "0000-0002-4887-4415"), 
            email = "ernest@guevarra.io", role = c("aut", "cph")), 

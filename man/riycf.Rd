@@ -33,12 +33,12 @@ Useful links:
 \itemize{
   \item \url{https://nutriverse.io/riycf/}
   \item \url{https://github.com/nutriverse/riycf}
-  \item Report bugs at \url{https://github.com/nutriverse/mwana/issues}
+  \item Report bugs at \url{https://github.com/nutriverse/riycf/issues}
 }
 
 }
 \author{
-\strong{Maintainer}: Nicholus Tint Zaw \email{nicholustintzaw@katilingban.io} [copyright holder]
+\strong{Maintainer}: Nicholus Tint Zaw \email{nicholustintzaw@gmail.com} [copyright holder]
 
 Authors:
 \itemize{
