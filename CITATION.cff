@@ -20,17 +20,17 @@ abstract: 'This package aims to generate updated indicators to assess infant and
 authors:
 - family-names: Tint Zaw
   given-names: Nicholus
-  email: nicholustintzaw@katilingban.io
+  email: nicholustintzaw@gmail.com
 - family-names: Guevarra
   given-names: Ernest
   email: ernest@guevarra.io
   orcid: https://orcid.org/0000-0002-4887-4415
-repository-code: https://github.com/nutriverse/mwana
+repository-code: https://github.com/nutriverse/riycf
 url: https://nutriverse.io/riycf/
 contact:
 - family-names: Tint Zaw
   given-names: Nicholus
-  email: nicholustintzaw@katilingban.io
+  email: nicholustintzaw@gmail.com
 references:
 - type: software
   title: 'R: A Language and Environment for Statistical Computing'
