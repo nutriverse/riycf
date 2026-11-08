@@ -35,7 +35,7 @@
 #' *child_oth_drink* | Q6J | Has child had *any other liquids* yesterday? 1 = Yes; 0 = No.
 #' *child_oth_drink_sweet* | Q6Jswt | Has child had *any other sweetened liquids* yesterday? 1 = Yes; 0 = No.
 #' *child_yogurt* | Q7A | Has child had *yogurt other than yogurt drinks* yesterday? 1 = Yes; 0 = No.
-#' *child_yogurt_frq* | Q7Anum | How many times has child had *yogurt other than yogurt drinks* yesterday? 1 = Yes; 0 = No.
+#' *child_yogurt_frq* | Q7Anum | How many times has child had *yogurt other than yogurt drinks* yesterday? Integer value (constructed; see Details).
 #' *child_rice* | Q7B | Has child had *porridge, bread, rice, noodles, pasta* yesterday? 1 = Yes; 0 = No.
 #' *child_pumpkin* | Q7C | Has child had *pumpkin, carrots, sweet potatoes (yellow or orange inside)* yesterday? 1 = Yes; 0 = No.
 #' *child_potatoes* | Q7D | Has child had *plantains, white potatoes, white yams, manioc, cassava* yesterday? 1 = Yes; 0 = No.
@@ -53,7 +53,43 @@
 #' *child_sweets* | Q7P | Has child had *sweet foods such as chocolates, candies, cakes, and biscuits* yesterday? 1 = Yes; 0 = No.
 #' *child_snack* | Q7Q | Has child had *chips, crisps, puffs, french fries, instant noodles* yesterday? 1 = Yes; 0 = No.
 #' *child_oth_food* | Q7R | Has child had *any other solid, semi-solid or soft food* yesterday? 1 = Yes; 0 = No.
-#' *child_food_freq* | Q8 | How many times has child had *any solid, semi-solid, or soft foods* yesterday? 1 = Yes; 0 = No.
+#' *child_food_freq* | Q8 | How many times has child had *any solid, semi-solid, or soft foods* yesterday? Integer value.
+#'
+#' @details **Constructed variables.** The original CARE Myanmar data did not
+#'   include every question of the WHO 2021 questionnaire, so some variables
+#'   were added when the dataset was built (see `data-raw/processData.R`):
+#'
+#'   * **Simulated** at random, with the same probability for every child
+#'     regardless of age: *bf_2days* (30% yes), *bf_bottle* (15% yes),
+#'     *child_chocolate*, *child_soda*, *child_oth_drink*, *child_oth_veg*
+#'     and *child_oth_food* (30% yes each). Indicators that use these
+#'     variables (for example exclusive breastfeeding, minimum dietary
+#'     diversity, sweet beverage consumption and bottle feeding) give
+#'     illustrative results only.
+#'   * **Derived from the main question:** *child_milk_sweet*,
+#'     *child_mproduct_sweet*, *child_tea_sweet* and *child_oth_drink_sweet*
+#'     are 1 whenever the main question is 1, and `NA` (skipped) otherwise.
+#'     *child_yogurt_frq* is 1 whenever *child_yogurt* is not 0, and `NA`
+#'     otherwise.
+#'   * **Copied from original variables:** *child_tea* (from an original
+#'     "other liquids" variable), *child_processmeat* (insects),
+#'     *child_cheese* (fats) and *child_snack* (condiments).
+#'
+#'   **Intentional data quality issues.** The dataset deliberately keeps some
+#'   problems that are common in real survey data, to show how `{riycf}`
+#'   checks its inputs:
+#'
+#'   * the "don't know"/no answer code `999` in several variables, for example
+#'     *child_bf*, *child_eibf*, food items such as *child_rice* and
+#'     *child_fish*, and *child_food_freq*;
+#'   * an undocumented code `3` in *child_eibf*;
+#'   * a child with an impossible age of -4 months in *calc_age_months*;
+#'   * follow-up questions that are skipped (`NA`) when the main question is
+#'     "no", for example *child_milk_sweet* and *child_bms_freq*.
+#'
+#'   The indicator functions set invalid codes and ages to `NA` with a
+#'   warning. Check and prepare your own data in the same way before
+#'   calculating indicators.
 #'
 #' @source CARE Myanmar
 #'
