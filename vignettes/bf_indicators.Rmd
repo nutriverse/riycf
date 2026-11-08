@@ -132,10 +132,12 @@ Below is the sample code to get the dummy variables to calculate the liquid cons
 
 Please note that the input parameter for the `get_dummy()` function is `list type`. We need to create a list of liquid variables we can include in our analysis first and then apply that list in the `get_dummy()` function to calculate the dummy variable, which indicates whether the child received any liquid on the previous day. 
 
+The liquids are, in questionnaire order: plain water (`Question 6A`), infant formula (`6B`), milk from animals (`6C`), yogurt drinks (`6D`), chocolate-flavoured drinks (`6E`), fruit juice or fruit-flavoured drinks (`6F`), sodas, malt, sports or energy drinks (`6G`), tea, coffee or herbal drinks (`6H`), clear broth or clear soup (`6I`) and any other liquids (`6J`). Oral rehydration solution (ORS) and drops or syrups of vitamins, minerals and medicines are not in this list, because the WHO definition of exclusive breastfeeding allows them.
+
 ```{r}
-liquid <- list(df$child_vitdrop, df$child_ors, df$child_water, df$child_juice, 
-               df$child_broth, df$child_porridge, df$child_bms, df$child_milk, 
-               df$child_mproduct, df$child_liquid)
+liquid <- list(df$child_water, df$child_bms, df$child_milk, df$child_mproduct,
+               df$child_chocolate, df$child_juice, df$child_soda, df$child_tea,
+               df$child_broth, df$child_oth_drink)
 
 df$liquid_food <- get_dummy(var_list = liquid)
 table(df$liquid_food)
@@ -145,16 +147,21 @@ table(df$liquid_food)
 
 For solid and semi-food consumption status, I used all the variables from 24 hours solid (or semi-solid) food recall *Question 7A* to *Question 7R* in WHO IYCF questionnaires. If the child got any food from this list, indicated as 1, and if he/she didn't, 0. 
 
+The foods are, in questionnaire order: yogurt (`Question 7A`), porridge, bread, rice or noodles (`7B`), pumpkin, carrots or sweet potatoes (`7C`), white potatoes, yams or cassava (`7D`), dark green leafy vegetables (`7E`), other vegetables (`7F`), ripe mangoes or papayas (`7G`), other fruits (`7H`), organ meats (`7I`), processed meats (`7J`), other meat (`7K`), eggs (`7L`), fish or shellfish (`7M`), beans, peas, lentils, nuts or seeds (`7N`), cheese (`7O`), sweet foods (`7P`), chips, crisps or fried foods (`7Q`) and any other solid, semi-solid or soft food (`7R`).
+
 ```{r}
-solid <- list(df$child_rice, df$child_potatoes, df$child_pumpkin, 
-              df$child_beans, df$child_leafyveg, df$child_mango, df$child_fruit, 
-              df$child_organ, df$child_beef, df$child_fish, df$child_insects, 
-              df$child_eggs, df$child_yogurt, df$child_fat, df$child_plam, 
-              df$child_sweets, df$child_condiments)
+solid <- list(df$child_yogurt, df$child_rice, df$child_pumpkin,
+              df$child_potatoes, df$child_leafyveg, df$child_oth_veg,
+              df$child_mango, df$child_fruit, df$child_organ,
+              df$child_processmeat, df$child_beef, df$child_eggs, df$child_fish,
+              df$child_beans, df$child_cheese, df$child_sweets, df$child_snack,
+              df$child_oth_food)
 
 df$solid_food <- get_dummy(var_list = solid)
 table(df$solid_food)
 ```
+
+**Note on the sample dataset:** some variables in `iycfData` are simulated with the same probability for children of every age (for example chocolate-flavoured drinks, sodas, other liquids, other vegetables and other foods). As a result, unusually many young infants appear to have had liquids or foods other than breastmilk, and the number of exclusively breastfed children below is lower than would be expected in real data. The result shows how the functions work; it is not an estimate.
 
 ### Calculation Of EBF indicator
 
@@ -168,7 +175,7 @@ df$ebf <- get_ebf(q4 = df$child_bfyest,
 table(df$ebf)
 ```
 
-You can also cross-check the result with the below manual calculation syntax. The dataset has 40 under 6 months children, and among them, only 15 were exclusively breastfed. 
+You can also cross-check the result with the below manual calculation syntax: the first line counts the children under 6 months and the second line counts those among them who were exclusively breastfed, which should match the number of 1s in the table above.
 
 ```{r}
 length(which(df$calc_age_months < 6))
