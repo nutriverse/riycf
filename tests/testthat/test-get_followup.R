@@ -86,7 +86,9 @@ test_that("MMFF and non-breastfed MMF are non-missing on iycfData (#74)", {
     count(df$child_mproduct, df$child_mproduct_freq),
     count(df$child_yogurt, df$child_yogurt_frq)
   ))
-  mmff <- get_mmff(df$child_bfyest, df$calc_age_months, milk_frq)
+  mmff <- suppressWarnings(
+    get_mmff(df$child_bfyest, df$calc_age_months, milk_frq)
+  )
   expect_equal(sum(mmff == 1, na.rm = TRUE), 8)
   expect_equal(sum(mmff == 0, na.rm = TRUE), 31)
 
@@ -96,9 +98,9 @@ test_that("MMFF and non-breastfed MMF are non-missing on iycfData (#74)", {
     count(df$child_mproduct, df$child_mproduct_freq),
     df$child_food_freq
   ))
-  mmf_nonbf <- get_mmf_nonbf(
+  mmf_nonbf <- suppressWarnings(get_mmf_nonbf(
     df$child_bfyest, df$child_food_freq, nonbf_frq, df$calc_age_months
-  )
+  ))
   expect_equal(sum(mmf_nonbf == 1, na.rm = TRUE), 15)
   expect_equal(sum(mmf_nonbf == 0, na.rm = TRUE), 25)
 })
