@@ -1,0 +1,198 @@
+---
+title: "Preparing and Checking IYCF Data"
+author: "Nicholus Tint Zaw"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Preparing and Checking IYCF Data}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  message = FALSE,
+  warning = TRUE,
+  error = TRUE,
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Introduction
+
+Survey data rarely arrive clean. Infant and young child feeding (IYCF) modules use "don't know" codes, skip patterns and many yes/no questions, and data entry errors happen. If such problems are not handled, an indicator can be quietly wrong: a "don't know" answer counted as "yes", or a whole group of children dropped because one follow-up question was skipped.
+
+`{riycf}` checks the inputs of its functions and tells you when something looks wrong. This article explains what the package expects, how it responds to problems, and how to prepare your data before calculating indicators. Unlike the other articles, this one **shows the warnings** produced by the functions, because they are the point of the article.
+
+```{r setup}
+library(riycf)
+```
+
+## What `{riycf}` expects
+
+| Type of input | Expected values | Examples |
+|---|---|---|
+| Yes/No questions | 1 = Yes, 0 = No, `NA` = missing | breastfed yesterday, each food item |
+| Child age | months, from 0 to 59 | `calc_age_months` |
+| Early initiation of breastfeeding | 0 = immediately, 1 = hours, 2 = days | `child_eibf` |
+| Number of times (milk feeds, meals) | whole numbers from 0 to 20 | `child_bms_freq`, `child_food_freq` |
+| Sums of counts | whole numbers from 0 to 80 | `milk_frq`, `nonbf_frq` |
+| Food group score | whole numbers from 0 to 8 | `food_score` |
+
+## How `{riycf}` responds to problems
+
+The functions respond in two ways.
+
+**Errors stop the calculation** when an input cannot be used at all: it is missing, `NULL`, or not numeric. The message names the problem argument.
+
+```{r}
+get_evbf(NULL, 5)
+get_evbf(c("1", "0"), c(5, 6))
+```
+
+**Warnings let the calculation continue** when some values are invalid: values outside the expected codes or ranges are set to `NA`, and a warning says how many values were changed and in which argument. Those children are then left out of that indicator.
+
+```{r}
+get_evbf(q4 = c(1, 0, 999), age = c(5, 12, 20))
+```
+
+## Common problems, shown on the sample dataset
+
+The sample dataset `iycfData` deliberately keeps some data quality problems that are common in real surveys, so that the checks can be demonstrated (see `?iycfData`).
+
+```{r}
+df <- iycfData
+```
+
+### "Don't know" or no answer codes
+
+Many surveys record "don't know" or no answer as `98`, `99`, `999` or similar. In `iycfData`, the code `999` appears in several variables, for example whether the child was ever breastfed:
+
+```{r}
+table(df$child_bf, useNA = "ifany")
+```
+
+If such a code were treated as an answer, the child could be counted as "no" (or, in a food group, as "yes"). The functions set it to `NA` with a warning instead:
+
+```{r}
+table(get_evbf(df$child_bf, df$calc_age_months), useNA = "ifany")
+```
+
+### Codes that are not documented
+
+The early initiation question uses 0 (immediately), 1 (hours) and 2 (days). `iycfData` also contains a code `3`, which is not documented:
+
+```{r}
+table(df$child_eibf, useNA = "ifany")
+table(get_eibf(df$calc_age_months, df$child_eibf, df$child_eibf_hrs), useNA = "ifany")
+```
+
+### Impossible ages
+
+One child in `iycfData` has an age of -4 months:
+
+```{r}
+summary(df$calc_age_months)
+```
+
+Ages outside 0-59 months are set to `NA` with a warning, as in the outputs above. Check the age calculation (for example the date of birth and the interview date) for such children.
+
+### Variable names that do not exist
+
+`df$name` returns `NULL` when a variable does not exist, for example because of a typing error. `get_dummy()` ignores such items with a warning, so the mistake is not silent:
+
+```{r}
+grains <- get_dummy(var_list = list(df$child_rice, df$child_potatos))
+```
+
+Here the variable is called `child_potatoes`, not `child_potatos`. The first warning comes from `get_dummy()` and names the missing item; the second reports a `999` code in `child_rice`. Use `names(df)` to check the variable names.
+
+Note that `$` on a data frame also accepts a *shortened* name without any message: `df$child_potato` silently returns `child_potatoes`. To avoid this, refer to variables by their full names, or use `df[["child_potato"]]`, which returns `NULL` for a name that does not match exactly.
+
+### Counts outside the expected range
+
+The number of solid, semi-solid or soft food meals (`child_food_freq`) contains a `999` code:
+
+```{r}
+table(df$child_food_freq, useNA = "ifany")
+```
+
+Counts outside 0-20 are set to `NA` with a warning, for example when the meal frequency is used for minimum meal frequency:
+
+```{r}
+mmfbf_6to8 <- get_mmf_bf_6to8(df$child_bfyest, df$child_food_freq, df$calc_age_months)
+```
+
+## Skip patterns
+
+Many questions are only asked when an earlier answer was "yes". For example, *"Was the milk sweetened or flavoured?"* is only asked if the child had milk from animals, and *"How many times did the child drink infant formula?"* is only asked if the child had infant formula. When the main answer is "no", the follow-up question is skipped and is usually stored as `NA`. Here `NA` means *"did not have it"* (or *0 times*), not *"unknown"*.
+
+If skipped follow-up questions are used as they are, whole indicators can become `NA`. For example, sweet beverage consumption uses four "sweetened" follow-up questions:
+
+```{r}
+sweet_raw <- list(
+  df$child_milk_sweet, df$child_mproduct_sweet, df$child_chocolate,
+  df$child_juice, df$child_soda, df$child_tea_sweet, df$child_oth_drink_sweet
+)
+table(get_swb(get_dummy(var_list = sweet_raw), df$calc_age_months), useNA = "ifany")
+```
+
+`get_followup()` resolves each follow-up question using its main question:
+
+| Main question | Follow-up question | Result |
+|---|---|---|
+| 0 (no) | `NA` (correctly skipped) or 0 | 0 |
+| 1 (yes) | 1 (or a count) | 1 (or the count) |
+| 1 (yes) | 0 | 0 |
+| 1 (yes) | `NA` (should have been asked) | `NA`, with a warning |
+| 0 (no) | 1 or a count above 0 (skip pattern broken) | `NA`, with a warning |
+| `NA` | any | `NA` |
+
+```{r}
+sweet <- list(
+  get_followup(df$child_milk, df$child_milk_sweet),
+  get_followup(df$child_mproduct, df$child_mproduct_sweet),
+  df$child_chocolate, df$child_juice, df$child_soda,
+  get_followup(df$child_tea, df$child_tea_sweet),
+  get_followup(df$child_oth_drink, df$child_oth_drink_sweet)
+)
+table(get_swb(get_dummy(var_list = sweet), df$calc_age_months), useNA = "ifany")
+```
+
+For "how many times" questions, give the accepted range of counts with `valid`:
+
+```{r}
+get_followup(main = c(1, 1, 0, 0), followup = c(3, 0, NA, 0), valid = 0:20)
+```
+
+The warnings also help to check data collection. For example, a record where the main answer is "no" but the follow-up was answered breaks the skip pattern:
+
+```{r}
+get_followup(main = c(0, 1), followup = c(1, NA))
+```
+
+**Limitation:** `get_followup()` only handles the skip pattern in which a main question coded 1 means the follow-up is asked and 0 means it is skipped. It does not handle other skip patterns, such as a categorical main question (for example, the number of hours after birth is only asked when the early initiation answer is "hours"; `get_eibf()` handles this itself), follow-ups that depend on more than one question or on the child's age, or follow-ups asked when the main answer is "no". Such questions need to be recoded before they are used.
+
+## What the warnings mean and what to do
+
+| Warning | Meaning | What to do |
+|---|---|---|
+| *"x: n invalid values were set to NA (999); valid codes are 0 and 1."* | values outside the documented codes | check the questionnaire codes; recode documented "don't know" codes to `NA` yourself, and investigate any other codes |
+| *"age: n values were outside the valid range and set to NA (-4) …"* | impossible or out-of-range ages | check the date of birth, interview date and age calculation |
+| *"Item 2 of `var_list` is NULL and was ignored …"* | a variable name that does not exist | check the spelling with `names(df)` |
+| *"n follow-up values are missing although the main question is 1 (yes) …"* | a follow-up question was not answered | check the data collection form and the data export |
+| *"n records have main question 0 (no) but a follow-up value above 0 …"* | the skip pattern was broken | check the skip logic of the form; decide which answer to trust |
+
+## A checklist before calculating indicators
+
+1. Look at the codes of every variable you will use, for example with `table(x, useNA = "ifany")`, and compare them with the questionnaire.
+2. Recode documented "don't know" and no answer codes (such as `98`, `99`, `999`) to `NA`.
+3. Check child age for negative, very large or missing values.
+4. Check that all variable names exist in your data (`names(df)`).
+5. Resolve skip-pattern follow-up questions with `get_followup()` (yes/no) or `get_followup(..., valid = 0:20)` (counts).
+6. Calculate the indicators and **read every warning**. Each one tells you which input and how many values were affected.
+7. Record the cleaning decisions you made, so the analysis can be repeated and reported.
+
+## Note on the sample dataset
+
+Some variables in `iycfData` were simulated or derived when the dataset was built, so results from the sample dataset show how the functions work and are not estimates. See `?iycfData` for details.
