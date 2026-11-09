@@ -127,22 +127,23 @@ citation provided by a call to the `citation` function as follows:
 
 ``` r
 citation("riycf")
-#> Warning in citation("riycf"): could not determine year for 'riycf' from package
-#> DESCRIPTION file
-#> To cite package 'riycf' in publications use:
+#> To cite riycf in publications use:
 #> 
-#>   Tint Zaw N, Guevarra E (????). _riycf: Utilities for Calculating
-#>   Infant and Young Child Feeding Indicators_. R package version
-#>   0.0.0.9000, https://github.com/nutriverse/riycf,
-#>   <https://nutriverse.io/riycf/>.
+#>   Tint Zaw N, Guevarra E (2025). _riycf: Utilities for Calculating
+#>   Infant and Young Child Feeding Indicators_.
+#>   doi:10.5281/zenodo.14825751
+#>   <https://doi.org/10.5281/zenodo.14825751>, R package version
+#>   0.0.0.9000, <https://nutriverse.io/riycf/>.
 #> 
 #> A BibTeX entry for LaTeX users is
 #> 
 #>   @Manual{,
 #>     title = {riycf: Utilities for Calculating Infant and Young Child Feeding Indicators},
 #>     author = {Nicholus {Tint Zaw} and Ernest Guevarra},
-#>     note = {R package version 0.0.0.9000, https://github.com/nutriverse/riycf},
+#>     year = {2025},
+#>     note = {R package version 0.0.0.9000},
 #>     url = {https://nutriverse.io/riycf/},
+#>     doi = {10.5281/zenodo.14825751},
 #>   }
 ```
 
@@ -156,3 +157,10 @@ guidelines](https://nutriverse.io/riycf/CONTRIBUTING.html).
 This project is released with a [Contributor Code of
 Conduct](https://nutriverse.io/riycf/CODE_OF_CONDUCT.html). By
 contributing to this project, you agree to abide by its terms.
+
+ 
+
+[![This is part of the nutriverse project under the Oxford iHealth
+initiative of the MSc in International Health and Tropical Medicine,
+Nuffield Department of Medicine, University of
+Oxford](https://github.com/nutriverse/nutriverse-images/blob/main/nutriverse/nutriverse_footer.png?raw=true)](https://nutriverse.io)

@@ -2,9 +2,9 @@ bibentry(
   bibtype  = "Manual",
   header   = "To cite riycf in publications use:",
   title    = "riycf: Utilities for Calculating Infant and Young Child Feeding Indicators",
-  author   = c(person("Nicholus Tint Zaw"), person("Ernest Guevarra")),
+  author   = c(person("Nicholus", "Tint Zaw"), person("Ernest", "Guevarra")),
   year     = "2025",
-  note     = "R package version 0.1.0.9000",
+  note     = paste("R package version", meta$Version),
   url      = "https://nutriverse.io/riycf/",
-  doi      = "10.5281/zenodo.410309510"
+  doi      = "10.5281/zenodo.14825751"
 )
